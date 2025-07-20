@@ -36,6 +36,7 @@ if (!$user) {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>DreamBoard Profile</title>
+          <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="Admin.profile.css" />
@@ -54,11 +55,14 @@ if (!$user) {
           <li class="user">
             <a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a>
         </li>
+        <li>
+            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+        </li>
           <li>
             <a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a>
         </li>
           <li>
-            <a href="Admin-project.php"><i class="fas fa-folder-open"></i> Project</a>
+            <a href="Admin-project.php"><i class="fas fa-folder-open"></i>Classes</a>
         </li>
           <li>
             <a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a>

@@ -135,9 +135,11 @@ header {
     width: 1200px;
     height: 550px;
     padding: 10px 20px 20px 20px; /* top right bottom left */
-    margin-left:200px;
+    margin-left:100px;
     box-sizing: border-box;
     position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
 }
     
 
