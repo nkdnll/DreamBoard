@@ -147,14 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         placeholder="Team Description"
       ></textarea>
 
-      <textarea
-        id="usernames"
-        name="usernames"
-        rows="5"
-        placeholder="Usernames (one per line or comma-separated)"
-        required
-      ></textarea>
-
       <div class="buttons">
         <button type="reset" class="cancel">
           <a href="Admin-project.php" style="color: inherit; text-decoration: none;">Cancel</a>

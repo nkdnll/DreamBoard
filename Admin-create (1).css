@@ -39,27 +39,28 @@ header {
     margin: 0;
     padding: 0;
 
-    background-color: #F2F2F2;
+    background-color: #F7F2F2;
   }
 
 /*sidebar*/
 .container {
-  display: flex;
-  height: 100vh;
-  padding-top: 10vh; /* space for fixed header */
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.sidebar {
-  width: 210px;
-  background-color: #75483D;
-  color: #f0e8d5;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-
-}
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+  }
+  .sidebar {
+    width: 210px;
+    background-color: #75483D; /* Adjusted to match your screenshot's base color */
+    color: #f0e8d5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    height: 91vh;
+    font-family: 'Domine'; /* Clean modern font */
+  }
+  
   .sidebar ul {
     padding: 0;
     padding-top: 40px;
@@ -115,7 +116,7 @@ header {
   
   .logout i {
     margin-right: 8px;
-  } 
+  }
   
   .logout:hover {
     color: #4e3b34;
@@ -124,29 +125,24 @@ header {
     padding-left: 35px;
     border-radius: 0 20px 20px 0;
   }
-  
 
+/*header*/
 
 /*END OF SIDE BAR*/
 .project-form {
     background-color: #ffffff;
+    padding: 20px;
     border-radius: 8px;
-    margin-top: 100px;
+    margin-top: -43.5%;
+    margin-left: 300px;
     width: 1200px;
-    height: 550px;
-    padding: 10px 20px 20px 20px; /* top right bottom left */
-    margin-left:200px;
-    box-sizing: border-box;
+    height: 700px;
+    justify-content: center;
     position: relative;
-}
+    /* adjust as needed */
     
-
-.content{
-  margin: 20px;
-  overflow: hidden;
-  flex: 1;
-
-}
+  }
+  
   .form-group {
     margin-bottom: 20px; /* even spacing */
   }
@@ -171,30 +167,46 @@ header {
     font-size: large;
 
   }
- 
+  .project-form textarea:nth-of-type(odd) {
+    background-color: #BEB5A9;
+    color: rgb(0, 0, 0); /* optional for better contrast */
+  }
   .project-form textarea::placeholder {
     color: #000000;
     opacity: 1;
     font-family: "Domine";
     font-size:20px;
   }
-
-  
+ 
+  .project-form textarea:nth-of-type(even) {
+    background-color: #BEB5A9;
+    color: black;
+  }
   .project-form textarea {
     width: 100%;
     padding: 8px;
     margin-top: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #e4e4e4;
     box-sizing: border-box;
-  } 
+  }
+    
+  .name {
+    background-color: #4e3b34;
+  }
+  
+  
   .buttons {
     display: flex;
     justify-content: flex-end;
     gap: 10px; /* optional */
     padding: 14px 4px;         /* Increases button height and width */            /* Increases text size */
     border-radius: 6px;         /* Optional: slightly larger rounded corners */
+  
+    
+
+    
+    
   }
   
   .buttons button {
