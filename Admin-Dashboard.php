@@ -36,15 +36,18 @@ $submissionQuery = "
         p.project_name, 
         u.FIRSTNAME, u.LASTNAME, 
         s.file_name, s.uploaded_at,
-        s.assigned_id
+        s.assigned_id,
+        astu.grade
     FROM student_submissions s
     JOIN assignment_students astu ON astu.assigned_id = s.assigned_id AND astu.userinfo_id = s.userinfo_id
     JOIN assigned a ON a.ass_id = s.assigned_id
     JOIN projects p ON p.proj_id = a.proj_id
     JOIN userinfo u ON u.userinfo_ID = s.userinfo_id
     WHERE p.admininfoID = '$adminID'
+      AND astu.grade IS NULL
     ORDER BY s.uploaded_at DESC
 ";
+
 $submissionResult = mysqli_query($conn, $submissionQuery);
 while ($row = mysqli_fetch_assoc($submissionResult)) {
     $submissions[] = $row;
@@ -185,7 +188,7 @@ $completionPercent = $totalStudents > 0 ? round(($completedStudentsCount / $tota
 <div class="container">
   <div class="sidebar">
     <ul>
-      <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> User</a></li>
+      <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a></li>
       <li><a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
       <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Project</a></li>
       <li><a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>

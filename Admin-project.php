@@ -33,7 +33,7 @@ $result = $conn->query($query);
 <div class="container">
     <div class="sidebar">
         <ul>
-            <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> User</a></li>
+            <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a></li>
             <li><a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
             <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Project</a></li>
             <li><a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>

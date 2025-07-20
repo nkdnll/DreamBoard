@@ -24,7 +24,7 @@ require 'db.php'; // Connect to DB
        <div class="sidebar">
         <ul>
           <li class="user">
-            <a href="Admin.profile.php"><i class="fas fa-user"></i> User</a>
+            <a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a>
         </li>
           <li>
             <a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a>
