@@ -221,7 +221,7 @@ body {
 .add-work {
   padding: 10px 20px;
   background-color: #5c3a2d;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 8px;
   font-size: 16px;

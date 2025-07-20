@@ -169,6 +169,7 @@ body {
   padding: 15px;
   border-radius: 10px;
   box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -196,7 +197,7 @@ body {
   bottom: 20px;
   right: 20px;
   background-color: #704437;
-  color: #f3e7d7;
+  color: #ffffff;
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;

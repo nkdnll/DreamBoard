@@ -138,7 +138,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: auto;
-  background-color: #f0e8d5;
+  background-color: #f1f1f1;
   padding: 10px 20px 20px 20px; /* top right bottom left */
   box-sizing: border-box;
   height: calc(100vh - 10vh); /* remaining height after fixed header */
@@ -152,6 +152,7 @@ body {
     color: rgb(0, 0, 0);
     margin: 20px;
     margin-top: 130px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   .profile-box h2 {

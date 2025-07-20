@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <form action="Admin-Createproj.php?proj_id=<?php echo $proj_id; ?>" method="POST" class="create-class" enctype="multipart/form-data" >
 
         
-<label for="project_name">Create project</label>
+<label for="project_name">Create Class Work</label>
         <div class="create">
 
             

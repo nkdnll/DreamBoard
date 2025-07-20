@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         id="project_name"
         name="project_name"
         rows="5"
-        placeholder="Project Name"
+        placeholder="Class Name"
         required
       ></textarea>
 
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         id="team_name"
         name="team_name"
         rows="5"
-        placeholder="Team Name"
+        placeholder="Subject"
         required
       ></textarea>
 
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         id="team_description"
         name="team_description"
         rows="5"
-        placeholder="Team Description"
+        placeholder="Class Description"
       ></textarea>
 
       <div class="buttons">
