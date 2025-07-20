@@ -4,7 +4,6 @@ require 'db.php';
 
 if (isset($_GET['proj_id']) && !empty($_GET['proj_id'])) {
     $proj_id = intval($_GET['proj_id']);
-
     $sql = "
         SELECT 
             p.team_name, 
@@ -123,7 +122,7 @@ if (isset($_GET['proj_id']) && !empty($_GET['proj_id'])) {
         </div>
 
         <div class="box">
-            <h2>TEAM PROJECTS</h2>
+            <h2>CLASS WORK</h2>
 
             <?php
             $hasAssignedWork = false;
