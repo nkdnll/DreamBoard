@@ -138,7 +138,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: auto;
-  background-color: #f0e8d5;
+  background-color: #f1f1f1;
   padding: 10px 20px 20px 20px; /* top right bottom left */
   box-sizing: border-box;
   height: calc(100vh - 10vh); /* remaining height after fixed header */
@@ -207,6 +207,7 @@ body {
 .btn h2 {
   margin: 0;
   font-size: 18px;
+  color: white;
 }
 
 .btn a {
@@ -260,7 +261,9 @@ body {
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
-    margin-left: 500px;
+    margin-left: 0px;
+    float: right;
+    margin-right: 0px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -271,4 +274,4 @@ body {
 
 .delete-btn:active {
     transform: scale(0.98);
-}
+} 

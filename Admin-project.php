@@ -44,7 +44,7 @@ $result = $conn->query($query);
     </div>
 
     <div class="main-content">
-        <h1>Projects</h1>
+        <h1>Classes</h1>
         <div class="row">
             <?php while ($project = $result->fetch_assoc()): ?>
                 <div class="project">
@@ -54,8 +54,7 @@ $result = $conn->query($query);
         <hr>
         <h3 class="team-name"><?= htmlspecialchars($project['team_name']) ?></h3>
     </a>
-    <!-- Edit usernames button -->
-    <a href="update_user.php?proj_id=<?= urlencode($project['proj_id']) ?>" class="edit-btn">Add Users</a>
+    
 
     <!-- Delete project button -->
     <form method="POST" action="delete_project.php" style="display:inline;">
@@ -69,8 +68,9 @@ $result = $conn->query($query);
 
         <div class="btn">
             <a href="Admin-create.php">
-                <h2>+Add Project</h2>
+                <h2>+Add Classes</h2>
             </a>
+            
         </div>
     </div>
 </div>
