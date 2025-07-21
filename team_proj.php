@@ -5,16 +5,17 @@ require 'db.php';
 if (isset($_GET['proj_id']) && !empty($_GET['proj_id'])) {
     $proj_id = intval($_GET['proj_id']);
     $sql = "
-        SELECT 
-            p.team_name, 
-            p.project_name AS project_project_name, 
-            a.project_name AS assigned_project_name,
-            a.ass_id,
-            a.due_date
-        FROM projects p
-        LEFT JOIN assigned a ON p.proj_id = a.proj_id
-        WHERE p.proj_id = ?
-    ";
+    SELECT 
+        p.team_name, 
+        p.project_name AS project_project_name, 
+        p.join_code,
+        a.project_name AS assigned_project_name,
+        a.ass_id,
+        a.due_date
+    FROM projects p
+    LEFT JOIN assigned a ON p.proj_id = a.proj_id
+    WHERE p.proj_id = ?
+";
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -119,6 +120,7 @@ if (isset($_GET['proj_id']) && !empty($_GET['proj_id'])) {
     <div class="main-content">
         <div class="team_name">
             <h1><?= htmlspecialchars($projects[0]['team_name']) ?></h1>
+            <p class="join-code">Join Code: <strong><?= htmlspecialchars($projects[0]['join_code']) ?></strong></p>
         </div>
 
         <div class="box">

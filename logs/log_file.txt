@@ -22,3 +22,10 @@
 =======
 [2025-07-20 12:57:27] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 >>>>>>> 5b5c31cb83c5bbbdd0dab2c37963e15c37972d32
+[2025-07-20 17:04:43] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 17:23:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 17:23:49] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 17:38:39] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-21 16:30:18] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-21 16:30:44] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-21 17:07:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.

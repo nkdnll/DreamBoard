@@ -249,3 +249,12 @@ body {
 .no-work{
   margin-left: 10px;
 }
+.join-code {
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px;
+}
+.join-code strong {
+    color: #0056b3;
+    letter-spacing: 1px;
+}

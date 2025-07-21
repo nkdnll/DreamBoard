@@ -154,6 +154,8 @@ body {
   color: rgb(5, 5, 5);
   display: flex;
   align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .greeting-inside {
@@ -399,8 +401,8 @@ body {
   height: auto; /* allow dynamic height */
 }
 .task-item:hover {
-  background-color:#f2f2f2;
-  color: white;
+  background: color #f1f1f1;;
+  color: rgb(83, 40, 40);
   transform: translateX(5px);
 }
 .task-item p {

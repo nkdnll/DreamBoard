@@ -17,16 +17,22 @@ if ($conn->connect_error) {
 $assignedUsernames = [];
 
 if ($proj_id) {
-    $stmt = $conn->prepare("SELECT usernames FROM projects WHERE proj_id = ?");
-    $stmt->bind_param("i", $proj_id);
-    $stmt->execute();
-    $stmt->bind_result($usernamesStr);
+    $stmt = $conn->prepare("
+    SELECT CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.MIDDLENAME), ' ', TRIM(u.LASTNAME)) AS full_name
+    FROM project_members pm
+    JOIN userinfo u ON pm.userinfo_id = u.userinfo_ID
+    WHERE pm.proj_id = ?
+");
+$stmt->bind_param("i", $proj_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$assignedUsernames = [];
 
-    if ($stmt->fetch()) {
-        $assignedUsernames = array_filter(array_map('trim', explode(',', $usernamesStr)));
-    }
+while ($row = $result->fetch_assoc()) {
+    $assignedUsernames[] = $row['full_name'];
+}
+$stmt->close();
 
-    $stmt->close();
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -172,6 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8" />
     <title>Create Project - DreamBoard</title>
     <link rel="stylesheet" href="Admin-Createproj.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />         
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -190,8 +197,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <div class="sidebar">
         <ul>
           <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a></li>
+          <li>
+            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+        </li>
           <li><a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-          <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Project</a></li>
+          <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i>Classes</a></li>
           <li><a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
           <li><a href="Admin-forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
           <li><a href="Admin-about.php"><i class="fas fa-users"></i> About Us</a></li>

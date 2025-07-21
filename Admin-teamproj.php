@@ -89,6 +89,7 @@ if ($ass_id) {
     <meta charset="UTF-8">
     <title>Admin Project View</title>
     <link rel="stylesheet" href="Admin-teamproj.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <style>
@@ -108,8 +109,11 @@ if ($ass_id) {
     <div class="sidebar">
         <ul>
             <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a></li>
+            <li>
+            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+        </li>
             <li><a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Project</a></li>
+            <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Classes</a></li>
             <li><a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             <li><a href="Admin-forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
             <li><a href="Admin-about.php"><i class="fas fa-users"></i> About Us</a></li>
