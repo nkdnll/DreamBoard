@@ -56,8 +56,11 @@ $result = $stmt->get_result();
     <div class="sidebar">
         <ul>
             <li class="user"><a href="profile.php"><i class="fas fa-user"></i> User</a></li>
+            <li>
+            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+        </li>
             <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="Projects.php"><i class="fas fa-folder-open"></i> Project</a></li>
+            <li><a href="Projects.php"><i class="fas fa-folder-open"></i>Class Works</a></li>
             <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
             <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
             <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>

@@ -206,7 +206,7 @@ body {
 .card-content {
     width: 98%;              /* Width of the box */
     height: 60px;              /* Height of the box */
-    background-color: #f0e8d5; /* Background color */
+    background-color: #d1d1d1; /* Background color */
     border-radius: 10px;       /* Rounded corners */
     padding: 10px;             /* Inner spacing */
     margin: 10px;              /* Outer spacing */

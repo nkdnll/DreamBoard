@@ -54,6 +54,7 @@ $stmt->close();
 <head>
   <meta charset="UTF-8">
   <title>DreamBoard Calendar</title>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
 /*header*/
@@ -285,8 +286,11 @@ body {
   <div class="sidebar">
     <ul>
       <li><a href="profile.php"><i class="fas fa-user"></i> User</a></li>
+      <li>
+            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+        </li>
       <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-      <li><a href="Projects.php"><i class="fas fa-folder-open"></i> Projects</a></li>
+      <li><a href="Projects.php"><i class="fas fa-folder-open"></i>Class Works</a></li>
       <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
       <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
       <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>
