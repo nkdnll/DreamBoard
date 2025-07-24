@@ -238,8 +238,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               <div class="attach-bar">
                 <h4>Attach</h4>
                 <div class="attach-options">
-                  <div class="option" id="driveBtn" title="Attach from Google Drive"><img src="https://img.icons8.com/ios-filled/50/google-drive.png" alt="Drive" /></div>
-                  <div class="option" id="youtubeBtn" title="Attach YouTube Video"><img src="https://img.icons8.com/ios-filled/50/youtube-play.png" alt="YouTube" /></div>
+                  <div class="option" id="driveBtn" title="Attach from Google Drive"><img src="google.png" alt="Drive" /></div>
+                  <div class="option" id="youtubeBtn" title="Attach YouTube Video"><img src="youtube.png" alt="YouTube" /></div>
                   <div class="option" id="createBtn" title="Create Document"><img src="https://img.icons8.com/ios-filled/50/plus-math.png" alt="Create" /></div>
                   <div class="option" id="uploadBtn" title="Upload Files"><img src="https://img.icons8.com/ios-filled/50/upload.png" alt="Upload" /></div>
                   <div class="option" id="linkBtn" title="Attach Link"><img src="https://img.icons8.com/ios-filled/50/link.png" alt="Link" /></div>

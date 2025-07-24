@@ -152,6 +152,7 @@ body {
   display: flex;
   flex-direction: column;
   height:auto;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 .form-group {
@@ -160,9 +161,11 @@ body {
 .create-class label {
   font-size: 36px;
   font-weight: bold;
-  color: #75483D;
-  margin-bottom: 5px;
+  color: #000000;
+  margin-bottom: 0px;
   display: block;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 .create-class input,
@@ -179,14 +182,15 @@ body {
 }
 
 .create-class textarea {
-  background-color: #BEB5A9;
+    background-color: #e4e4e4; /* Background color */
+
   color: black;
   resize: vertical;
   min-height: 120px;
 }
 
 .create-class textarea::placeholder {
-  color: #4e3b34;
+  color: #000000;
   opacity: 1;
   font-weight: bolder;
   font-size: large;
@@ -206,24 +210,24 @@ body {
   height: 200px;
   width: 100%;
   overflow-y: auto;
-  background-color: #BEB5A9;
+    background-color: #e4e4e4; /* Background color */
   font-size: larger;
   font-family: "Domine", serif;
 }
 
 #toolbar-container {
+    background-color: #e4e4e4; /* Background color */
   border-top: 1px solid #ccc;
-  background-color: #BEB5A9;
   padding: 5px;
   width: 100%;
 }
 
 .name {
-  background-color: #4e3b34;
+  background-color: #9f2c02;
 }
 
 .attach-bar {
-  background-color: #BEB5A9;
+    background-color: #e4e4e4; /* Background color */
   padding: 10px 16px;
   border-radius: 5px;
   font-family: "Domine", serif;
@@ -236,7 +240,7 @@ body {
 .attach-bar h4 {
   margin: 0 0 10px 0;
   font-size: 20px;
-  color: #3b2b22;
+  color: #000000;
 }
 
 .attach-options {
@@ -270,7 +274,6 @@ body {
 .option img {
   width: 30px;
   height: 30px;
-  filter: brightness(0.2);
 }
 
 .option span {
@@ -284,12 +287,12 @@ body {
 .right-panel {
   width: 340px;
   height: 330px;
-  background-color: #BEB5A9;
+    background-color: #e4e4e4; /* Background color */
   padding: 15px;
   border-radius: 5px;
   font-weight: bold;
   font-size: large;
-  color: #3b2b22;
+  color: #000000;
   font-family: "Domine", serif;
   flex-shrink: 0;
   margin-top: 10px;
@@ -304,7 +307,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ddd;
+  background-color: #BEB5A9;
   padding: 12px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -379,7 +382,7 @@ body {
 }
 
 .points-box, .due-box {
-  background-color: #ddd;
+  background-color: #BEB5A9;
   padding: 8px;
   border-radius: 5px;
   margin-bottom: 15px;
@@ -411,8 +414,8 @@ select {
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   font-size: 14px;
-  color: #333;
-  background-color: #ddd;
+  color: #000000;
+  background-color: #BEB5A9;
   cursor: pointer;
   font-family: "Domine", serif;
 }
@@ -422,7 +425,7 @@ select {
 }
 
 .no-date {
-  color: #999;
+  color: #000000;
 }
 
 .points-box input {
@@ -430,6 +433,8 @@ select {
   font-size: 14px;
   height: 100%;
   margin-top: 0;
+  background-color:#BEB5A9 ;
+  color: #000000;
 }
 
 .buttons {
@@ -443,7 +448,7 @@ select {
 .buttons button {
   border: none;
   background-color: #5d4037;
-  color: white;
+  color: rgb(255, 255, 255);
   cursor: pointer;
   font-family: "Domine", serif;
   font-size: 20px;
@@ -474,7 +479,7 @@ select {
 .create{
    display: flex;
   gap: 20px;
-  padding: 20px;
+  padding: 10px;
   height: auto;
 }
 
@@ -490,7 +495,7 @@ select {
         padding: 10px;
         max-height: 120px;
         overflow-y: auto;
-        background: #f9f9f9;
+        background: #e4e4e4;
         border-radius: 4px;
       }
       .attachment-item {

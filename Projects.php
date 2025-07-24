@@ -10,7 +10,7 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-$adminID = $_SESSION['admininfoID'];
+$studentID = $_SESSION['userinfo_ID']; // ✅ get logged-in student
 
 $sql = "
     SELECT 
@@ -22,14 +22,17 @@ $sql = "
     FROM assigned a
     JOIN projects p ON a.proj_id = p.proj_id
     JOIN admininfo ai ON p.admininfoID = ai.admininfoID
-    LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id
-    WHERE ai.admininfoID = ?
+    JOIN project_members pm ON pm.proj_id = p.proj_id
+    LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id AND s.userinfo_ID = pm.userinfo_id
+    WHERE pm.userinfo_id = ?
     GROUP BY a.ass_id, a.project_name, p.project_name, ai.INSTRUCTOR
     HAVING status IS NULL OR status != 'Completed'
 ";
 
 $stmt = $connection->prepare($sql);
-$stmt->bind_param("i", $adminID);
+$stmt->bind_param("i", $studentID); // not adminID anymore
+
+
 $stmt->execute();
 $result = $stmt->get_result();
 ?>

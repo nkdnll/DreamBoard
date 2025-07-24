@@ -12,9 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'], $_POS
     $txt = trim($_POST['comment_text']);
     $aid = (int)$_POST['ass_id'];
     $rid = (int)$_POST['recipient_id'];
+    
+if (isset($_SESSION['admininfoID'])) {
+    $author = $_SESSION['admininfoID'];
+    $type = 'admin';
+} else {
     $author = $_SESSION['userinfo_ID'];
     $type = 'student';
-
+}
     if ($txt !== '' && $aid) {
         $stmt = $connection->prepare("INSERT INTO comments (ass_id, recipient_id, userinfo_id, user_type, comment_text, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
         $stmt->bind_param("iiiss", $aid, $rid, $author, $type, $txt);
@@ -27,8 +32,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'], $_POS
 
 if ($ass_id) {
     // Load students
-    $stmt = $connection->prepare("SELECT s.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname, s.status, s.grade FROM assignment_students s JOIN userinfo u ON s.userinfo_ID=u.userinfo_ID WHERE s.assigned_id=?");
-    $stmt->bind_param("i", $ass_id);
+    $stmt = $connection->prepare("
+    SELECT u.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname,
+           s.status, s.grade
+    FROM assignment_students s
+    JOIN userinfo u ON s.userinfo_ID = u.userinfo_ID
+    WHERE s.assigned_id = ?
+
+    UNION
+
+    SELECT u.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname,
+           NULL AS status, NULL AS grade
+    FROM project_members pm
+    JOIN assigned a ON a.proj_id = pm.proj_id
+    JOIN userinfo u ON u.userinfo_ID = pm.userinfo_id
+    WHERE a.ass_id = ?
+");
+$stmt->bind_param("ii", $ass_id, $ass_id); // ✅ Correct: matches 2 placeholders
+
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
@@ -64,24 +85,35 @@ if ($ass_id) {
     $stmt->close();
 }
 $totalCount = 0;
+$completedCount = 0;
 
 if ($ass_id) {
-    // Count total students
-    $stmt = $connection->prepare("SELECT COUNT(*) FROM assignment_students WHERE assigned_id = ?");
+    // Count total students from project_members
+    $stmt = $connection->prepare("
+        SELECT COUNT(DISTINCT pm.userinfo_id)
+        FROM project_members pm
+        JOIN assigned a ON a.proj_id = pm.proj_id
+        WHERE a.ass_id = ?
+    ");
     $stmt->bind_param("i", $ass_id);
     $stmt->execute();
     $stmt->bind_result($totalCount);
     $stmt->fetch();
     $stmt->close();
 
-    // Count students with status = 'Completed'
-    $stmt = $connection->prepare("SELECT COUNT(*) FROM assignment_students WHERE assigned_id = ? AND status = 'Completed'");
+    // Count students with a 'Completed' status in student_submissions
+    $stmt = $connection->prepare("
+        SELECT COUNT(DISTINCT ss.userinfo_id)
+        FROM student_submissions ss
+        WHERE ss.assigned_id = ?
+    ");
     $stmt->bind_param("i", $ass_id);
     $stmt->execute();
     $stmt->bind_result($completedCount);
     $stmt->fetch();
     $stmt->close();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

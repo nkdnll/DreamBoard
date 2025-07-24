@@ -130,10 +130,11 @@ body {
 
 /*END OF SIDE BAR*/
 
+
 .main-content {
   flex: 1;
   padding: 20px;
-  background-color: #F7F2F2;
+  background-color: #F2F2F2;
   overflow-y: auto;
 }
 

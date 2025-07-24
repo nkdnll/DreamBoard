@@ -104,10 +104,11 @@ $stmt = $connection->prepare("
     FROM comments c
     LEFT JOIN userinfo u ON c.user_type = 'student' AND c.userinfo_id = u.userinfo_ID
     LEFT JOIN admininfo a ON c.user_type = 'admin' AND c.userinfo_id = a.admininfoID
-    WHERE c.ass_id = ?
+    WHERE c.ass_id = ? AND (c.recipient_id = ? OR c.userinfo_id = ?)
     ORDER BY c.created_at ASC
 ");
-$stmt->bind_param("i", $ass_id);
+$stmt->bind_param("iii", $ass_id, $userinfo_id, $userinfo_id);
+
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {

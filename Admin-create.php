@@ -2,6 +2,14 @@
 session_start();
 require 'db.php'; // Connect to DB
 include 'log1.php';
+function generateJoinCode($length = 8) {
+    $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $code = '';
+    for ($i = 0; $i < $length; $i++) {
+        $code .= $chars[random_int(0, strlen($chars) - 1)];
+    }
+    return $code;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $projectName = $_POST['project_name'];
@@ -46,8 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     die("Error: Admin not logged in.");
 }
 
-        $stmt = $conn->prepare("INSERT INTO projects (project_name, team_name, team_description, usernames, admininfoID) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssi", $projectName, $teamName, $teamDescription, $usernames, $adminId);
+$joinCode = generateJoinCode();
+
+$stmt = $conn->prepare("INSERT INTO projects (project_name, team_name, team_description, usernames, join_code, admininfoID) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sssssi", $projectName, $teamName, $teamDescription, $usernames, $joinCode, $adminId);
+
 
         if ($stmt->execute()) {
     // Log the creation

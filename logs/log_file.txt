@@ -35,3 +35,19 @@
 [2025-07-24 18:06:25] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-07-24 18:06:47] [user:rai@gmail.com] [LOGIN] User successfully logged in.
 [2025-07-24 18:10:38] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:11:23] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'TESTING 1' for team 'ITEC24'
+[2025-07-24 20:16:52] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'testing 1' for team 'itec20'
+[2025-07-24 20:18:47] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:27:33] [user:raffy@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:28:29] [user:Belle@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:30:32] [user:raffy@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:31:43] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:31:50] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:32:13] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:33:34] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:33:40] [user:Belle@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:33:51] [user:raffy@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:34:21] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:53:40] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:55:31] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:56:04] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'testing 2' (Project ID: 22) to students: kizzy pink cortez, rai bleh babiano, raffy jay ajero.

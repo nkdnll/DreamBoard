@@ -39,50 +39,45 @@ if (isset($_GET['proj_id']) && !empty($_GET['proj_id'])) {
 
     // Count submitted/pending statuses for each assignment
     $submissionCounts = [];
-    $ass_ids = array_filter(array_column($projects, 'ass_id'));
+$ass_ids = array_filter(array_column($projects, 'ass_id'));
 
-    if (!empty($ass_ids)) {
-        $inClause = implode(',', array_fill(0, count($ass_ids), '?'));
-        $count_sql = "
-            SELECT 
-                assigned_id,
-                status,
-                COUNT(*) AS count 
-            FROM assignment_students 
-            WHERE assigned_id IN ($inClause)
-            GROUP BY assigned_id, status
-        ";
+if (!empty($ass_ids)) {
+    foreach ($ass_ids as $ass_id) {
+        // Get the proj_id for this assignment
+        $projIdStmt = $conn->prepare("SELECT proj_id FROM assigned WHERE ass_id = ?");
+        $projIdStmt->bind_param("i", $ass_id);
+        $projIdStmt->execute();
+        $projIdStmt->bind_result($proj_id_for_ass);
+        $projIdStmt->fetch();
+        $projIdStmt->close();
 
-        $count_stmt = $conn->prepare($count_sql);
-        if ($count_stmt) {
-            $count_stmt->bind_param(str_repeat('i', count($ass_ids)), ...$ass_ids);
-            $count_stmt->execute();
-            $count_result = $count_stmt->get_result();
+        // Count total students in the project
+        $totalStmt = $conn->prepare("SELECT COUNT(*) FROM project_members WHERE proj_id = ?");
+        $totalStmt->bind_param("i", $proj_id_for_ass);
+        $totalStmt->execute();
+        $totalStmt->bind_result($total);
+        $totalStmt->fetch();
+        $totalStmt->close();
 
-            while ($row = $count_result->fetch_assoc()) {
-                $aid = $row['assigned_id'];
-                $status = strtolower($row['status']);
-                $count = $row['count'];
+        // Count those who submitted for this assignment
+        $submittedStmt = $conn->prepare("SELECT COUNT(DISTINCT userinfo_id) FROM student_submissions WHERE assigned_id = ?");
+        $submittedStmt->bind_param("i", $ass_id);
+        $submittedStmt->execute();
+        $submittedStmt->bind_result($submitted);
+        $submittedStmt->fetch();
+        $submittedStmt->close();
 
-                if (!isset($submissionCounts[$aid])) {
-                    $submissionCounts[$aid] = ['submitted' => 0, 'pending' => 0];
-                }
+        $submissionCounts[$ass_id] = [
+            'submitted' => $submitted,
+            'pending' => max(0, $total - $submitted)
+        ];
+    }
+}
 
-                // Accept both 'completed' and 'submitted' as completed
-                if (in_array($status, ['submitted', 'completed'])) {
-                    $submissionCounts[$aid]['submitted'] += $count;
-                } else {
-                    $submissionCounts[$aid]['pending'] += $count;
-                }
-            }
-
-            $count_stmt->close();
-        }
     }
 
-} else {
-    die("No project specified.");
-}
+ else {
+    die("No project specified.");}
 ?>
 
 <!DOCTYPE html>
