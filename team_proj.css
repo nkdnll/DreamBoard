@@ -138,12 +138,22 @@ body {
   overflow-y: auto;
 }
 
-
-.team_name{
+.team_name {
+    display: flex;
+    justify-content: space-between; /* pushes items to far left and far right */
+    align-items: center; /* vertically align items */
     font-size: 20px;
     margin-left: 10px;
-
+    margin-right: 10px; /* optional: to give space from the right edge */
 }
+
+.join-code {
+    font-size: 25px !important; /* Reduced size so it's not too large */
+    margin-left: auto; /* optional: ensures it's pushed to the right */
+    margin-right: 20px;
+    margin-top: 30px !important;
+}
+
 .box {
   display: flex;
   flex-direction: column;

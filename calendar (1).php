@@ -1,11 +1,14 @@
 <?php
-include 'log1.php';
+// ✅ Set timezone to your local region (Philippines)
+date_default_timezone_set('Asia/Manila');
+
+//include 'log1.php';
 session_start();
 
-$studentId = $_SESSION['userinfo_ID'] ?? null;
-if (!$studentId) {
-    die("Access denied. Please log in.");
-}
+//$studentId = $_SESSION['userinfo_ID'] ?? null;
+//if (!$studentId) {
+//    die("Access denied. Please log in.");
+//}
 
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
 if ($connection->connect_error) {
@@ -48,7 +51,23 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 ?>
+<?php
+$todayMonth = date('n');
+$todayYear = date('Y');
+$todayDay = date('j');
+$todayFull = date('Y-m-d');
 
+if ($month == $todayMonth && $year == $todayYear) {
+    // Show today's date and day
+    $headerDate = date('F j, Y');
+    $headerDay  = date('l');
+    $showDay = true;
+} else {
+    // Show only the viewed month and year
+    $headerDate = date('F Y', mktime(0, 0, 0, $month, 1, $year));
+    $showDay = false;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,23 +125,24 @@ body {
 }
 
 /*sidebar*/
-.container {
-  display: flex;
+
+  .container {
+   display: flex;
   height: 100vh;
-  padding-top: 10vh; /* space for fixed header */
+  padding-top: 10vh; /* corrected from 5vh — your header is 10% */
   box-sizing: border-box;
   overflow: hidden;
-}
-.sidebar {
-  width: 210px;
+  }
+  .sidebar {
+    width: 210px;
   background-color: #75483D;
   color: #f0e8d5;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
-
-}
+  }
+  
   .sidebar ul {
     padding: 0;
     padding-top: 40px;
@@ -174,11 +194,12 @@ body {
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 30px;
   }
   
   .logout i {
     margin-right: 8px;
-  } 
+  }
   
   .logout:hover {
     color: #4e3b34;
@@ -203,29 +224,77 @@ body {
   height: calc(100vh - 10vh); /* remaining height after fixed header */
   flex: 1;
   position: relative;
+  margin-top: 3vh;
 }
-
+.calendar-outer-container{
+  margin-bottom:30px;
+}
   .calendar-container {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
-    max-width: 95%;
+    max-width:95%;
   }
-
-  .calendar-header {
-    font-size: 60px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 20px;
   }
+  .calendar-header {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.5rem 2rem;
+    color: #222;
+    letter-spacing: 1px;
+  }
+  .calendar-header .nav {
+    background: none;
+    color: #6e473b;
+    border: 1.5px solid #e0d4c8;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    margin: 0 1rem;
+  }
+  .calendar-header .nav:hover {
+    background: #6e473b;
+    color: #fff;
+    border-color: #6e473b;
+    box-shadow: 0 2px 8px rgba(110,71,59,0.08);
+  }
+  .header-date-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .header-date {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #222;
+    letter-spacing: 1px;
+  }
+  .header-day {
+    font-size: 1.1rem;
+    color: #2ecc40; /* Modern green */
+    margin-top: 0.2em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
 
   .day, .date {
     background-color: #fff;
@@ -271,6 +340,27 @@ body {
   box-shadow: 0 0 8px rgba(192, 57, 43, 0.3);
 }
 
+.header-date-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-date {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+.header-day {
+  font-size: 1.1rem;
+  color: #2ecc40; /* Modern green */
+  margin-top: 0.2em;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
   </style>
 </head>
 <body>
@@ -299,10 +389,15 @@ body {
   </div>
 
   <div class="main-content">
-    <div class="calendar-container">
+    <div class="calendar-outer-container">
       <div class="calendar-header">
         <a class="nav" href="?month=<?php echo $month - 1; ?>&year=<?php echo $year; ?>">&lt; Prev</a>
-        <?php echo "$monthName $year"; ?>
+        <div class="header-date-group">
+          <span class="header-date"><?php echo $headerDate; ?></span>
+          <?php if ($showDay): ?>
+            <span class="header-day"><?php echo $headerDay; ?></span>
+          <?php endif; ?>
+        </div>
         <a class="nav" href="?month=<?php echo $month + 1; ?>&year=<?php echo $year; ?>">Next &gt;</a>
       </div>
       <div class="calendar">
