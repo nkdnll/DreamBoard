@@ -6,10 +6,10 @@ date_default_timezone_set('Asia/Manila');
 session_start();
 
 $currentPage = basename($_SERVER['PHP_SELF']);
-//$studentId = $_SESSION['userinfo_ID'] ?? null;
-//if (!$studentId) {
-//    die("Access denied. Please log in.");
-//}
+$studentId = $_SESSION['userinfo_ID'] ?? null;
+if (!$studentId) {
+    die("Access denied. Please log in.");
+}
 
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
 if ($connection->connect_error) {
