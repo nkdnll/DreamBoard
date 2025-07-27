@@ -3,6 +3,15 @@ session_start();
 require_once 'log1.php';
 require 'db.php';
 
+$currentPage = basename($_SERVER['PHP_SELF']);
+$classesPages = [
+  'Admin-project.php',
+  'team_proj.php',
+  'Admin-teamproj.php',
+  'Admin-create.php',
+  'Admin-Createproj.php'
+];
+
 if (!isset($_SESSION['Email'])) {
     // Redirect to login or show error
     $_SESSION['admininfoID'] = $row['admininfoID'];
@@ -33,19 +42,49 @@ $result = $conn->query($query);
 
 <div class="container">
     <div class="sidebar">
-        <ul>
-            <li class="user"><a href="Admin.profile.php"><i class="fas fa-user"></i> Admin</a></li>
-            <li>
-            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
-        </li>
-            <li><a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Classes</a></li>
-            <li><a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-            <li><a href="Admin-forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-            <li><a href="Admin-about.php"><i class="fas fa-users"></i> About Us</a></li>
-        </ul>
-        <a href="Admin-login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
+  <ul>
+    <li class="user">
+      <a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>">
+        <i class="fas fa-user"></i> Admin
+      </a>
+    </li>
+    <li>
+      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+        <i class='bx bxs-bell'></i> Notification
+      </a>
+    </li>
+    <li>
+      <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="Admin-project.php" class="<?= in_array($currentPage, $classesPages) ? 'active' : '' ?>">
+        <i class="fas fa-folder-open"></i> Classes
+      </a>
+    </li>
+    <li>
+      <a href="Admin-calendar.php" class="<?= ($currentPage == 'Admin-calendar.php') ? 'active' : '' ?>">
+        <i class="fas fa-calendar-alt"></i> Calendar
+      </a>
+    </li>
+    <li>
+      <a href="Admin-forms.php" class="<?= ($currentPage == 'Admin-forms.php') ? 'active' : '' ?>">
+        <i class="fas fa-clipboard-list"></i> Forms
+      </a>
+    </li>
+    <li>
+      <a href="Admin-about.php" class="<?= ($currentPage == 'Admin-about.php') ? 'active' : '' ?>">
+        <i class="fas fa-users"></i> About Us
+      </a>
+    </li>
+  </ul>
+  <a href="Admin-login.php" class="logout <?= ($currentPage == 'Admin-login.php') ? 'active' : '' ?>">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </a>
+</div>
+
+
 
     <div class="main-content">
         <h1>Classes</h1>

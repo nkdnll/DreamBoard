@@ -5,6 +5,7 @@ date_default_timezone_set('Asia/Manila');
 //include 'log1.php';
 session_start();
 
+$currentPage = basename($_SERVER['PHP_SELF']);
 //$studentId = $_SESSION['userinfo_ID'] ?? null;
 //if (!$studentId) {
 //    die("Access denied. Please log in.");
@@ -374,19 +375,44 @@ body {
 
 <div class="container">
   <div class="sidebar">
-    <ul>
-      <li><a href="profile.php"><i class="fas fa-user"></i> User</a></li>
-      <li>
-            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+      <ul>
+        <!-- ✅ Updated: Add PHP to check current page for 'active' class -->
+        <li class="user">
+          <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
+            <i class="fas fa-user"></i> User
+          </a>
         </li>
-      <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-      <li><a href="Projects.php"><i class="fas fa-folder-open"></i>Class Works</a></li>
-      <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-      <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-      <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>
-    </ul>
-    <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </div>
+        <li>
+          <a href="#" class=""><i class='bx bxs-bell'></i> Notification</a>
+        </li>
+        <li>
+          <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
+            <i class="fas fa-th-large"></i> Dashboard
+          </a>
+        </li>
+        <li>
+        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
+            <i class="fas fa-folder-open"></i> Class Works
+        </a>
+    </li>
+        <li>
+          <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
+            <i class="fas fa-calendar-alt"></i> Calendar
+          </a>
+        </li>
+        <li>
+          <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
+            <i class="fas fa-clipboard-list"></i> Forms
+          </a>
+        </li>
+        <li>
+          <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
+            <i class="fas fa-users"></i> About Us
+          </a>
+        </li>
+      </ul>
+      <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
 
   <div class="main-content">
     <div class="calendar-outer-container">
