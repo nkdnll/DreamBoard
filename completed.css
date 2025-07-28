@@ -206,7 +206,7 @@ body {
 .card-content {
     width: 98%;              /* Width of the box */
     height: 60px;              /* Height of the box */
-    background-color: #f0e8d5; /* Background color */
+    background-color: #d1d1d1; /* Background color */
     border-radius: 10px;       /* Rounded corners */
     padding: 10px;             /* Inner spacing */
     margin: 10px;              /* Outer spacing */
@@ -404,4 +404,47 @@ body {
 .status-dropdown:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0,123,255,0.2);
+}
+.main-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.join-class {
+  margin: 0;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  max-width: 410px;
+  height: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.join-class input {
+  padding: 8px;
+  height: 20px;
+  margin-right: 10px;
+  flex-grow: 1;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.join-class button {
+  height: 38px;
+  padding: 0 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.join-msg p {
+  margin: 0;
+  font-size: 14px;
 }

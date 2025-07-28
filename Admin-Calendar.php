@@ -1,6 +1,19 @@
 <?php
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
+
+// ✅ Set timezone to your local region (Philippines)
+date_default_timezone_set('Asia/Manila');
+
 include 'log1.php';
+
+$currentPage = basename($_SERVER['PHP_SELF']);
+$classesPages = [
+  'Admin-project.php',
+  'team_proj.php',
+  'Admin-teamproj.php',
+  'Admin-create.php',
+  'Admin-Createproj.php'
+];
 
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
@@ -8,6 +21,21 @@ if ($connection->connect_error) {
 
 $month = isset($_GET['month']) ? (int)$_GET['month'] : date('n');
 $year = isset($_GET['year']) ? (int)$_GET['year'] : date('Y');
+
+// Use the same logic as calendar-1.php for the header
+$todayMonth = date('n');
+$todayYear = date('Y');
+$todayDay = date('j');
+$todayFull = date('Y-m-d');
+
+if ($month == $todayMonth && $year == $todayYear) {
+    $headerDate = date('F j, Y');
+    $headerDay  = date('l');
+    $showDay = true;
+} else {
+    $headerDate = date('F Y', mktime(0, 0, 0, $month, 1, $year));
+    $showDay = false;
+}
 
 if ($month < 1) {
     $month = 12;
@@ -42,6 +70,7 @@ $due_stmt->close();
 <head>
   <meta charset="UTF-8">
   <title>DreamBoard Calendar</title>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
 /*header*/
@@ -93,23 +122,24 @@ body {
 }
 
 /*sidebar*/
-.container {
-  display: flex;
+
+  .container {
+   display: flex;
   height: 100vh;
-  padding-top: 10vh; /* space for fixed header */
+  padding-top: 10vh; /* corrected from 5vh — your header is 10% */
   box-sizing: border-box;
   overflow: hidden;
-}
-.sidebar {
-  width: 210px;
+  }
+  .sidebar {
+    width: 210px;
   background-color: #75483D;
   color: #f0e8d5;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
-
-}
+  }
+  
   .sidebar ul {
     padding: 0;
     padding-top: 40px;
@@ -161,11 +191,12 @@ body {
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 30px;
   }
   
   .logout i {
     margin-right: 8px;
-  } 
+  }
   
   .logout:hover {
     color: #4e3b34;
@@ -190,29 +221,77 @@ body {
   height: calc(100vh - 10vh); /* remaining height after fixed header */
   flex: 1;
   position: relative;
+  margin-top: 3vh;
 }
-
+.calendar-outer-container{
+  margin-bottom:30px;
+}
   .calendar-container {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
     max-width: 95%;
   }
-
-  .calendar-header {
-    font-size: 60px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 20px;
   }
+  .calendar-header {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.5rem 2rem;
+    color: #222;
+    letter-spacing: 1px;
+  }
+  .calendar-header .nav {
+    background: none;
+    color: #6e473b;
+    border: 1.5px solid #e0d4c8;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    margin: 0 1rem;
+  }
+  .calendar-header .nav:hover {
+    background: #6e473b;
+    color: #fff;
+    border-color: #6e473b;
+    box-shadow: 0 2px 8px rgba(110,71,59,0.08);
+  }
+  .header-date-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .header-date {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #222;
+    letter-spacing: 1px;
+  }
+  .header-day {
+    font-size: 1.1rem;
+    color: #2ecc40; /* Modern green */
+    margin-top: 0.2em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
 
   .day, .date {
     background-color: #fff;
@@ -258,6 +337,27 @@ body {
   box-shadow: 0 0 8px rgba(192, 57, 43, 0.3);
 }
 
+.header-date-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-date {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+.header-day {
+  font-size: 1.1rem;
+  color: #2ecc40; /* Modern green */
+  margin-top: 0.2em;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
   </style>
 </head>
 <body>
@@ -270,26 +370,63 @@ body {
 </header>
 
 <div class="container">
-  <div class="sidebar">
-    <ul>
-      <li><a href="Admin.profile.php"><i class="fas fa-user"></i> User</a></li>
-      <li><a href="Admin-Dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-      <li><a href="Admin-project.php"><i class="fas fa-folder-open"></i> Project</a></li>
-      <li><a href="Admin-calendar.php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-      <li><a href="Admin-forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-      <li><a href="Admin-about.php"><i class="fas fa-users"></i> About Us</a></li>
-    </ul>
-    <a href="Admin-login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </div>
+<div class="sidebar">
+  <ul>
+    <li class="user">
+      <a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>">
+        <i class="fas fa-user"></i> Admin
+      </a>
+    </li>
+    <li>
+      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+        <i class='bx bxs-bell'></i> Notification
+      </a>
+    </li>
+    <li>
+      <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="Admin-project.php" class="<?= in_array($currentPage, $classesPages) ? 'active' : '' ?>">
+        <i class="fas fa-folder-open"></i> Classes
+      </a>
+    </li>
+    <li>
+      <a href="Admin-calendar.php" class="<?= ($currentPage == 'Admin-calendar.php') ? 'active' : '' ?>">
+        <i class="fas fa-calendar-alt"></i> Calendar
+      </a>
+    </li>
+    <li>
+      <a href="Admin-forms.php" class="<?= ($currentPage == 'Admin-forms.php') ? 'active' : '' ?>">
+        <i class="fas fa-clipboard-list"></i> Forms
+      </a>
+    </li>
+    <li>
+      <a href="Admin-about.php" class="<?= ($currentPage == 'Admin-about.php') ? 'active' : '' ?>">
+        <i class="fas fa-users"></i> About Us
+      </a>
+    </li>
+  </ul>
+  <a href="Admin-login.php" class="logout <?= ($currentPage == 'Admin-login.php') ? 'active' : '' ?>">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </a>
+</div>
+
+
 
   <div class="main-content">
-    <div class="calendar-container">
+    <div class="calendar-outer-container">
       <div class="calendar-header">
         <a class="nav" href="?month=<?php echo $month - 1; ?>&year=<?php echo $year; ?>">&lt; Prev</a>
-        <?php echo "$monthName $year"; ?>
+        <div class="header-date-group">
+          <span class="header-date"><?php echo $headerDate; ?></span>
+          <?php if ($showDay): ?>
+            <span class="header-day"><?php echo $headerDay; ?></span>
+          <?php endif; ?>
+        </div>
         <a class="nav" href="?month=<?php echo $month + 1; ?>&year=<?php echo $year; ?>">Next &gt;</a>
       </div>
-
       <div class="calendar">
         <?php
         $weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -319,8 +456,10 @@ for ($d = 1; $d <= $daysInMonth; $d++) {
     echo "</div>";
 }
         ?>
+        
+
       </div>
-    </div>
+    </div> <!-- end .calendar-outer-container -->
   </div>
 </div>
 

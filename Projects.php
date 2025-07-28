@@ -4,13 +4,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$currentPage = basename($_SERVER['PHP_SELF']);
+
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
 
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-$adminID = $_SESSION['admininfoID'];
+$studentID = $_SESSION['userinfo_ID']; // ✅ get logged-in student
 
 $sql = "
     SELECT 
@@ -22,14 +24,17 @@ $sql = "
     FROM assigned a
     JOIN projects p ON a.proj_id = p.proj_id
     JOIN admininfo ai ON p.admininfoID = ai.admininfoID
-    LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id
-    WHERE ai.admininfoID = ?
+    JOIN project_members pm ON pm.proj_id = p.proj_id
+    LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id AND s.userinfo_ID = pm.userinfo_id
+    WHERE pm.userinfo_id = ?
     GROUP BY a.ass_id, a.project_name, p.project_name, ai.INSTRUCTOR
     HAVING status IS NULL OR status != 'Completed'
 ";
-
+$current_tab = $_GET['tab'] ?? 'assigned'; // This variable is used to determine the active tab, but status is from DB
 $stmt = $connection->prepare($sql);
-$stmt->bind_param("i", $adminID);
+$stmt->bind_param("i", $studentID); // not adminID anymore
+
+
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -54,20 +59,75 @@ $result = $stmt->get_result();
 
 <div class="container">
     <div class="sidebar">
-        <ul>
-            <li class="user"><a href="profile.php"><i class="fas fa-user"></i> User</a></li>
-            <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="Projects.php"><i class="fas fa-folder-open"></i> Project</a></li>
-            <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-            <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-            <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>
-        </ul>
-        <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
+  <ul>
+    <li class="user">
+      <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
+        <i class="fas fa-user"></i> User
+      </a>
+    </li>
+    <li>
+      <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+    </li>
+    <li>
+      <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+    </li>
+    <li>
+        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
+            <i class="fas fa-folder-open"></i> Class Works
+        </a>
+    </li>
+    <li>
+      <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
+        <i class="fas fa-calendar-alt"></i> Calendar
+      </a>
+    </li>
+    <li>
+      <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
+        <i class="fas fa-clipboard-list"></i> Forms
+      </a>
+    </li>
+    <li>
+      <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
+        <i class="fas fa-users"></i> About Us
+      </a>
+    </li>
+  </ul>
+  <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
 
     <div class="main-content">
-        <h1>Projects</h1>
+    <div class="main-head">
+      <h1>Projects</h1>
+        <?php if (isset($_GET['joined'])): ?>
+    <div class="join-msg">
+        <?php
+        switch ($_GET['joined']) {
+            case '1':
+                echo "<p style='color:green;'>You’ve joined the project successfully!</p>";
+                break;
+            case 'exists':
+                echo "<p style='color:orange;'>You already joined this project.</p>";
+                break;
+            case 'invalid':
+                echo "<p style='color:red;'>Invalid join code. Please try again.</p>";
+                break;
+        }
+        ?>
+    </div>
+<?php endif; ?>
 
+         <!-- 🔐 Join Project via Code -->
+    <div class="join-class">
+        <h3>Join a Project </h3>
+        <form method="POST" action="join_project.php">
+            <input type="text" name="join_code" placeholder="Enter Join Code" required />
+            <button type="submit">Join</button>
+        </form>
+    </div>
+
+</div>
         <div class="content1">
             <div class="assigned">
                 <h2>Assigned</h2>
@@ -93,17 +153,14 @@ $result = $stmt->get_result();
 
     <!-- Form stays outside the <a> -->
     <div class="status-box">
-      <form method="POST" action="update-status.php">
-        <input type="hidden" name="ass_id" value="<?= (int)$row['ass_id'] ?>">
-        <select name="status" onchange="this.form.submit()" class="status-dropdown">
-          <option value=""><?= htmlspecialchars($row['status'] ?? 'Not Set') ?></option>
-          <option value="In Progress" <?= ($row['status'] == 'In Progress') ? 'selected' : '' ?>>In Progress</option>
-          <option value="Completed" <?= ($row['status'] == 'Completed') ? 'selected' : '' ?>>Completed</option>
-        </select>
-      </form>
+    <span class="assignment-status">
+    <?php
+    // Display the status from the database, or 'In Progress' if null
+        echo htmlspecialchars($row['status'] ?? 'In Progress');
+    ?>
+</span>
     </div>
-
-  </div>
+</div>
 </div>
 
                     <?php endwhile; ?>

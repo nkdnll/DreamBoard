@@ -130,19 +130,30 @@ body {
 
 /*END OF SIDE BAR*/
 
+
 .main-content {
   flex: 1;
   padding: 20px;
-  background-color: #F7F2F2;
+  background-color: #F2F2F2;
   overflow-y: auto;
 }
 
-
-.team_name{
+.team_name {
+    display: flex;
+    justify-content: space-between; /* pushes items to far left and far right */
+    align-items: center; /* vertically align items */
     font-size: 20px;
     margin-left: 10px;
-
+    margin-right: 10px; /* optional: to give space from the right edge */
 }
+
+.join-code {
+    font-size: 25px !important; /* Reduced size so it's not too large */
+    margin-left: auto; /* optional: ensures it's pushed to the right */
+    margin-right: 20px;
+    margin-top: 30px !important;
+}
+
 .box {
   display: flex;
   flex-direction: column;
@@ -166,7 +177,7 @@ body {
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 8px;
-  background-color: #D9D9D9;
+  background-color: #e4e4e4;
   color: #000000;
   margin: 15PX;
 }
@@ -221,7 +232,7 @@ body {
 .add-work {
   padding: 10px 20px;
   background-color: #5c3a2d;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -243,9 +254,18 @@ body {
 }
 .add-work a{
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 .no-work{
   margin-left: 10px;
+}
+.join-code {
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px;
+}
+.join-code strong {
+    color: #0056b3;
+    letter-spacing: 1px;
 }

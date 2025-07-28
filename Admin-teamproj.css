@@ -407,6 +407,6 @@ body {
 .hidden { display: none; }
 .student-item { cursor: pointer; }          /* make the list feel clickable */
 .student-item.active { 
-  background:#f2f2f2;
+  background:#E1D4C2;
    height: 50px; /* or however much higher you want */
 }

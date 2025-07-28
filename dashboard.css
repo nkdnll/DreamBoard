@@ -57,7 +57,7 @@ body {
   .sidebar {
     width: 210px;
   background-color: #75483D;
-  color: #f0e8d5;
+  color: #000000;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -145,7 +145,7 @@ body {
   position: relative;
   }
 .greeting {
-  width: 1320px;
+  width: 1300px;
   height: 120px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -154,6 +154,8 @@ body {
   color: rgb(5, 5, 5);
   display: flex;
   align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .greeting-inside {
@@ -181,16 +183,15 @@ body {
   line-height: 1.2;
 }
 
-.greeting-inside img {
+.greeting img {
   width: 240px;
   height: 240px;
   margin-left: auto; /* Push image to the far right */
   border-radius: 50%;
   object-fit: cover;
     margin-right: 20px;
-    border: 5px solid #000000;
+        border: 5px solid #000000;
 }
-
 
 
 .row2{
@@ -205,24 +206,30 @@ body {
   grid-template-rows: repeat(2, 1fr);    /* 2 equal rows */
   gap: 0;                                 /* No space between boxes */
   width: 800px;
-  height: 400px;
+  height: 390px;
   background-color: #ffffff;
   border-radius: 10px;
   margin: 20px;
   color: rgb(0, 0, 0);
   overflow: hidden;                      /* Hide any overflow */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
 .box4 .box{
   display: flex;
   border:5px solid #F7F2F2;                          /* Remove visible borders */
-  border-radius: 0;                      /* No rounding between boxes */
+  border-radius: 10px;                      /* No rounding between boxes */
   padding: 20px;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
 }
 .box{
-display: flex;
+  display: flex;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  color: #000000;
+  display: flex;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .box i{
     margin-top: 45px;
@@ -236,22 +243,26 @@ display: flex;
 .box, .progress {
     padding: 15px;
     border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 .box .title {
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 .box .details {
   font-size: 16px;
   margin-top: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 .box .due {
   font-size: 14px;
   color: #888;
   margin-top: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 .progress{
   width: 690px;    /* Width of the box */
@@ -264,6 +275,11 @@ display: flex;
     margin-top: 26px;
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: #000000;
+    height: 390px;
+
 }
 
 
@@ -286,7 +302,7 @@ display: flex;
 .done,.pending{
   width: 250px;    /* Width of the box */
     height: 65px;
-    background-color: #BEB5A9; /* Background color */
+    background-color: #e4e4e4; /* Background color */
     margin: 15px;
     border-radius: 10px;  
 }
@@ -295,7 +311,6 @@ display: flex;
   text-align: center;
   padding: 20px;
 }
-
 .progress-right {
     flex: 1;
     display: flex;
@@ -352,6 +367,10 @@ display: flex;
     padding: 25px;        /* Inner spacing */
     margin: 20px;         /* Outer spacing */
     color: rgb(5, 5, 5);         /* Text color */ 
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    height: 390px;
 }
 .task h3{
   padding: 20px;
@@ -361,34 +380,35 @@ display: flex;
 
 }
 .task-list {
-    display: flex;
     flex-direction: column;
     gap: 13px;
     padding-left: 5px;
     margin: 20PX;
   }
-.task-list a{
+
+.task-item {
+  display: block; /* make the entire box clickable */
+  background-color: #e4e4e4;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border-left: 5px solid #e4e4e4;
+  margin-bottom: 12px;
+  font-size: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  color: black;
   text-decoration: none;
-  color: #000000;
+  height: auto; /* allow dynamic height */
 }
-  .task-item {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    background-color: #BEB5A9 ;
-    padding: 10px 15px;
-    border-radius: 5px;
-    border-left: 4px solid #A78D78;
-    font-size: 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-    cursor: pointer;
-    height: 25px;
-  }
-  .task-item:hover {
-    background-color: #f2f2f2;
-    transform: translateX(3px);
-  }
+.task-item:hover {
+  background: color #f1f1f1;;
+  color: rgb(83, 40, 40);
+  transform: translateX(5px);
+}
+.task-item p {
+  margin: 4px 0;
+  font-size: 14px;
+}
   .task-item span {
     flex-grow: 1;
     margin-left: 180px;

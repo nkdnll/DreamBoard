@@ -16,3 +16,51 @@
  SMTP code: 450
 [2025-07-28 13:42:19] [user:ryanjosephlerio@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: Message body empty
 [2025-07-28 13:55:20] [user:ryanjosephlerio@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-20 09:13:25] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 09:14:28] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 09:16:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 11:08:33] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 11:10:55] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 14:47:38] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 14:48:07] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 12:57:27] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 17:04:43] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 17:23:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-20 17:23:49] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-20 17:38:39] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-21 16:30:18] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-21 16:30:44] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-21 17:07:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 17:34:56] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 17:35:32] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 17:37:24] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 18:06:25] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 18:06:47] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 18:10:38] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:11:23] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'TESTING 1' for team 'ITEC24'
+[2025-07-24 20:16:52] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'testing 1' for team 'itec20'
+[2025-07-24 20:18:47] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:27:33] [user:raffy@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:28:29] [user:Belle@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:30:32] [user:raffy@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:31:43] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:31:50] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:32:13] [user:rai@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:33:34] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:33:40] [user:Belle@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:33:51] [user:raffy@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:34:21] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:53:40] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-24 20:55:31] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-24 20:56:04] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'testing 2' (Project ID: 22) to students: kizzy pink cortez, rai bleh babiano, raffy jay ajero.
+[2025-07-25 17:26:12] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-25 17:40:07] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-25 18:04:13] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-27 16:09:56] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-27 16:10:18] [user:kizzypink@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-27 16:15:29] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-27 16:18:59] [student:kizzy pink cortez] [Submitted File] Submitted 'PROPOSITION PAPER (2).docx' for assignment ID 46
+[2025-07-27 16:19:52] [student:kizzy pink cortez] [Submitted File] Submitted 'Intro-to-Git-and-Github.pdf' for assignment ID 46
+[2025-07-27 16:27:51] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'sdfghjm' (Project ID: 22) to students: kizzy pink cortez, rai bleh babiano, raffy jay ajero.
+[2025-07-27 17:12:35] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-27 17:19:57] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
