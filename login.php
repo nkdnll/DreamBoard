@@ -127,10 +127,10 @@
                         $mail->Host = 'smtp.gmail.com'; // ✅ Gmail SMTP
                         $mail->Port = 587;              // ✅ TLS port
                         $mail->SMTPAuth = true;
-                        $mail->Username = 'ryanjosephlerio@gmail.com'; // ✅ Gmail address mo
-                        $mail->Password = 'kqdtjsblpyimctul'; // ✅ App password, not Gmail password!
+                        $mail->Username = 'dreamboard07@gmail.com'; 
+                        $mail->Password = 'dnzmontlkggfwomk'; 
                         $mail->SMTPSecure = 'tls';
-                        $mail->From = 'ryanjosephlerio@gmail.com';
+                        $mail->From = 'dreamboard07@gmail.com';
                         $mail->FromName = 'Dreamboard';
                         $mail->addAddress($Email);
                         $mail->WordWrap = 50;

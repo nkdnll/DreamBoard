@@ -64,3 +64,5 @@
 [2025-07-27 16:27:51] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'sdfghjm' (Project ID: 22) to students: kizzy pink cortez, rai bleh babiano, raffy jay ajero.
 [2025-07-27 17:12:35] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-07-27 17:19:57] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-28 16:28:10] [user:ryanjosephlerio@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-28 16:42:19] [user:anikaxbenetua@gmail.com] [Registration] New user registered and OTP sent for verification.
