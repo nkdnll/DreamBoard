@@ -2,8 +2,6 @@
 session_start();
 include 'log1.php';
 
-$currentPage = basename($_SERVER['PHP_SELF']);
-
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
 if ($connection->connect_error) die("Connection failed: " . $connection->connect_error);
 
@@ -13,7 +11,7 @@ if (!$ass_id) die("No project selected.");
 if (!isset($_SESSION['userinfo_ID'])) die("Access denied. Please log in.");
 $userinfo_id = $_SESSION['userinfo_ID'];
 
-// Fetch project info including admin ID
+// Get project info
 $sql = "SELECT a.project_name, a.instructions, a.points, a.due_date, 
                p.project_name AS parent_project_name, ai.INSTRUCTOR, ai.admininfoID
         FROM assigned a
@@ -27,47 +25,64 @@ $project = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 $adminID = $project['admininfoID'] ?? null;
-if (!$adminID) die("Admin ID not found.");
-
-// ✅ Handle file upload 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['myFile']) && $_FILES['myFile']['error'] === UPLOAD_ERR_OK) {
-    $uploadDir = 'uploads/';
-    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true); // Ensure upload dir exists
-
-    $originalName = basename($_FILES['myFile']['name']);
-    $safeName = time() . "_" . preg_replace('/[^A-Za-z0-9_\.-]/', '_', $originalName);
-    $targetPath = $uploadDir . $safeName;
-
-    if (move_uploaded_file($_FILES['myFile']['tmp_name'], $targetPath)) {
-        // Insert into student_submissions
-        $stmt = $connection->prepare("INSERT INTO student_submissions (assigned_id, userinfo_id, file_name, file_path, uploaded_at) VALUES (?, ?, ?, ?, NOW())");
-        $stmt->bind_param("iiss", $ass_id, $userinfo_id, $originalName, $targetPath);
-        $stmt->execute();
-        $stmt->close();
-
-            // Fetch student username
-    $userResult = $connection->query("SELECT FIRSTNAME, MIDDLENAME, LASTNAME FROM userinfo WHERE userinfo_ID = $userinfo_id");
-    $userData = $userResult->fetch_assoc();
-    $fullName = trim($userData['FIRSTNAME'] . ' ' . $userData['MIDDLENAME'] . ' ' . $userData['LASTNAME']);
-
-    // Log the transaction
-    logTransaction(
-        'student',
-        $fullName,
-        'Submitted File',
-        "Submitted '$originalName' for assignment ID $ass_id"
-    );
 
 
+// Handle file upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['myFile'])) {
+    if ($_FILES['myFile']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = 'uploads/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true); // make sure the folder exists
 
-        header("Location: content.php?ass_id=$ass_id");
-        exit;
-    } else {
-        echo "<script>alert('File upload failed.');</script>";
+        $originalName = basename($_FILES['myFile']['name']);
+        $uniqueName = time() . '_' . preg_replace('/[^a-zA-Z0-9.\-_]/', '_', $originalName);
+        $filePath = $uploadDir . $uniqueName;
+
+        if (move_uploaded_file($_FILES['myFile']['tmp_name'], $filePath)) {
+            $stmt = $connection->prepare("INSERT INTO student_submissions (assigned_id, userinfo_id, file_name, file_path, uploaded_at) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->bind_param("iiss", $ass_id, $userinfo_id, $originalName, $filePath);
+            $stmt->execute();
+            $stmt->close();
+        }
     }
+    // Refresh the page to reflect uploaded file
+    header("Location: content.php?ass_id=$ass_id");
+    exit;
 }
 
-// Handle new comment submission
+
+// Turn in
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['turn_in'])) {
+    // Get the old status before updating
+$oldStatusStmt = $connection->prepare("SELECT status FROM assignment_students WHERE assigned_id = ? AND userinfo_ID = ?");
+$oldStatusStmt->bind_param("ii", $ass_id, $userinfo_id);
+$oldStatusStmt->execute();
+$oldResult = $oldStatusStmt->get_result()->fetch_assoc();
+$oldStatus = $oldResult['status'] ?? 'Not Started';
+$oldStatusStmt->close();
+
+// Update the new status
+$newStatus = 'Completed';
+$updateStmt = $connection->prepare("UPDATE assignment_students SET status = ? WHERE assigned_id = ? AND userinfo_ID = ?");
+$updateStmt->bind_param("sii", $newStatus, $ass_id, $userinfo_id);
+$updateStmt->execute();
+$updateStmt->close();
+
+// Insert into status_logs
+$logStmt = $connection->prepare("INSERT INTO status_logs (assigned_id, userinfo_id, old_status, new_status, changed_at) VALUES (?, ?, ?, ?, NOW())");
+$logStmt->bind_param("iiss", $ass_id, $userinfo_id, $oldStatus, $newStatus);
+$logStmt->execute();
+$logStmt->close();
+
+
+    $user = $connection->query("SELECT FIRSTNAME, MIDDLENAME, LASTNAME FROM userinfo WHERE userinfo_ID = $userinfo_id")->fetch_assoc();
+    $fullName = trim($user['FIRSTNAME'] . ' ' . $user['MIDDLENAME'] . ' ' . $user['LASTNAME']);
+    logTransaction('student', $fullName, 'Turned In Task', "Marked assignment ID $ass_id as submitted");
+
+    header("Location: content.php?ass_id=$ass_id");
+    exit;
+}
+
+// Comment
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'])) {
     $commentText = trim($_POST['comment_text']);
     if ($commentText !== '') {
@@ -80,25 +95,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'])) {
     }
 }
 
-// Fetch attachments
-$attachments = [];
-$stmt = $connection->prepare("SELECT file_name, file_path FROM attachments WHERE assigned_id = ?");
-$stmt->bind_param("i", $ass_id);
-$stmt->execute();
-$result = $stmt->get_result();
-while ($row = $result->fetch_assoc()) $attachments[] = $row;
-$stmt->close();
+// Fetch data
+function fetchData($connection, $query, $types = "", $params = []) {
+    $stmt = $connection->prepare($query);
+    if ($types) $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
 
-// Fetch student submissions
-$student_files = [];
-$stmt = $connection->prepare("SELECT file_name, file_path FROM student_submissions WHERE assigned_id = ? AND userinfo_id = ?");
-$stmt->bind_param("ii", $ass_id, $userinfo_id);
-$stmt->execute();
-$result = $stmt->get_result();
-while ($row = $result->fetch_assoc()) $student_files[] = $row;
-$stmt->close();
+$attachments = fetchData($connection, "SELECT file_name, file_path FROM attachments WHERE assigned_id = ?", "i", [$ass_id]);
+$student_files = fetchData($connection, "SELECT file_name, file_path FROM student_submissions WHERE assigned_id = ? AND userinfo_id = ?", "ii", [$ass_id, $userinfo_id]);
 
-// Fetch comments
+$studentTask = ['status' => null, 'grade' => null];
+$taskResult = fetchData($connection, "SELECT status, grade FROM assignment_students WHERE assigned_id = ? AND userinfo_ID = ?", "ii", [$ass_id, $userinfo_id]);
+if ($taskResult) $studentTask = $taskResult[0];
+
 $comments = [];
 $stmt = $connection->prepare("
     SELECT c.comment_text, c.user_type, c.created_at,
@@ -107,42 +118,23 @@ $stmt = $connection->prepare("
     FROM comments c
     LEFT JOIN userinfo u ON c.user_type = 'student' AND c.userinfo_id = u.userinfo_ID
     LEFT JOIN admininfo a ON c.user_type = 'admin' AND c.userinfo_id = a.admininfoID
-    WHERE c.ass_id = ? AND (c.recipient_id = ? OR c.userinfo_id = ?)
+    WHERE c.ass_id = ? AND (c.userinfo_id = ? OR c.recipient_id = ?)
     ORDER BY c.created_at ASC
 ");
 $stmt->bind_param("iii", $ass_id, $userinfo_id, $userinfo_id);
-
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
-    if ($row['user_type'] === 'student') {
-        $fullName = trim(($row['FIRSTNAME'] ?? '') . ' ' . ($row['MIDDLENAME'] ?? '') . ' ' . ($row['LASTNAME'] ?? '')) ?: 'Student';
-    } else {
-        $fullName = trim($row['INSTRUCTOR'] ?? '') ?: 'Admin';
-    }
-    $comments[] = [
-        'comment_text' => $row['comment_text'],
-        'user_type' => $row['user_type'],
-        'created_at' => $row['created_at'],
-        'username' => $fullName
-    ];
+    $username = $row['user_type'] === 'student'
+        ? trim(($row['FIRSTNAME'] ?? '') . ' ' . ($row['MIDDLENAME'] ?? '') . ' ' . ($row['LASTNAME'] ?? '')) ?: 'Student'
+        : ($row['INSTRUCTOR'] ?? 'Admin');
+    $comments[] = ['comment_text' => $row['comment_text'], 'user_type' => $row['user_type'], 'created_at' => $row['created_at'], 'username' => $username];
 }
-$stmt->close();
 
-// Fetch task status and grade
-$studentTask = ['status' => null, 'grade' => null];
-$stmt = $connection->prepare("SELECT status, grade FROM assignment_students WHERE assigned_id = ? AND userinfo_ID = ?");
-$stmt->bind_param("ii", $ass_id, $userinfo_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($row = $result->fetch_assoc()) {
-    $studentTask['status'] = $row['status'];
-    $studentTask['grade'] = $row['grade'];
-}
-$stmt->close();
+$statusCheck = fetchData($connection, "SELECT status FROM assignment_students WHERE assigned_id = ? AND userinfo_ID = ?", "ii", [$ass_id, $userinfo_id]);
+
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,60 +153,32 @@ $stmt->close();
     .comment-form { margin-top: 10px; display: flex; gap: 10px; }
     .comment-form input { flex: 1; padding: 8px; }
     .comment-form button { padding: 8px 12px; }
+    .input-file.disabled { pointer-events: none; opacity: 0.6; background: #ccc; }
   </style>
 </head>
 <body>
 <header>
   <div class="navbar">
-    <img src="logo.png" alt="Logo">
-    <p>DreamBoard</p>
+    <img src="logo.png" alt="Logo"><p>DreamBoard</p>
   </div>
 </header>
 <div class="container">
   <div class="sidebar">
-  <ul>
-    <li class="user">
-      <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
-        <i class="fas fa-user"></i> User
-      </a>
-    </li>
-    <li>
-      <a href="#"><i class='bx bxs-bell'></i> Notification</a>
-    </li>
-    <li>
-      <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
-        <i class="fas fa-th-large"></i> Dashboard
-      </a>
-    </li>
-   <li>
-        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
-            <i class="fas fa-folder-open"></i> Class Works
-        </a>
-    </li>
-    <li>
-      <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
-        <i class="fas fa-calendar-alt"></i> Calendar
-      </a>
-    </li>
-    <li>
-      <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
-        <i class="fas fa-clipboard-list"></i> Forms
-      </a>
-    </li>
-    <li>
-      <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
-        <i class="fas fa-users"></i> About Us
-      </a>
-    </li>
-  </ul>
-  <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-</div>
+    <ul>
+      <li><a href="profile.php"><i class="fas fa-user"></i> User</a></li>
+      <li><a href="#"><i class='bx bxs-bell'></i> Notification</a></li>
+      <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
+      <li><a href="Projects.php"><i class="fas fa-folder-open"></i> Class Works</a></li>
+      <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+      <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
+      <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>
+    </ul>
+    <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
 
   <div class="main-content">
     <?php if ($project): ?>
-      <div class="title">
-        <h1><?= htmlspecialchars($project['project_name']) ?></h1>
-      </div>
+      <div class="title"><h1><?= htmlspecialchars($project['project_name']) ?></h1></div>
       <div class="details">
         <h2>Instructor: <?= htmlspecialchars($project['INSTRUCTOR']) ?></h2>
         <p>Posted under: <?= htmlspecialchars($project['parent_project_name']) ?></p>
@@ -222,52 +186,60 @@ $stmt->close();
         <p>Instructions:</p><?= $project['instructions'] ?>
       </div>
 
-      <?php if ($attachments): ?>
-        <div class="file">
-          <h3>Project Attachments</h3>
-          <?php foreach ($attachments as $att): ?>
-            <p><a href="<?= htmlspecialchars($att['file_path']) ?>" target="_blank">📄 <?= htmlspecialchars($att['file_name']) ?></a></p>
-          <?php endforeach; ?>
-        </div>
-      <?php else: ?>
-        <p>No attachments found.</p>
-      <?php endif; ?>
+      <div class="file">
+        <h3>Project Attachments</h3>
+        <?php if ($attachments): foreach ($attachments as $att): ?>
+          <p><a href="<?= htmlspecialchars($att['file_path']) ?>" target="_blank">📄 <?= htmlspecialchars($att['file_name']) ?></a></p>
+        <?php endforeach; else: ?>
+          <p>No attachments found.</p>
+        <?php endif; ?>
+      </div>
 
       <hr>
       <div class="upload">
         <div class="task-score">
           <h2 class="task">Task</h2>
-          <h2 class="score">
-            <?= is_numeric($studentTask['grade']) ? htmlspecialchars($studentTask['grade']) : 'Not graded' ?>/<?= htmlspecialchars($project['points']) ?>
-          </h2>
+          <h2 class="score"><?= is_numeric($studentTask['grade']) ? $studentTask['grade'] : 'Not graded' ?>/<?= $project['points'] ?></h2>
         </div>
-        <form action="content.php?ass_id=<?= $ass_id ?>" method="POST" enctype="multipart/form-data">
-          <div class="input-file" onclick="document.getElementById('myFile').click()">
-            <span id="file-name">+ ADD WORK</span>
-            <input type="file" name="myFile" id="myFile" style="display: none;" onchange="showFileName()">
-          </div>
-          <button class="submit" type="submit">Upload</button>
-        </form>
 
-        <?php if ($student_files): ?>
-          <div class="student-submissions">
-            <h3>Your Submissions</h3>
+        <?php if (!empty($student_files)): ?>
+          <div class="file">
+            <h3>Your Uploaded Work</h3>
             <?php foreach ($student_files as $file): ?>
-              <p><a href="<?= htmlspecialchars($file['file_path']) ?>" target="_blank">📎 <?= htmlspecialchars($file['file_name']) ?></a></p>
+              <p><a href="<?= htmlspecialchars($file['file_path']) ?>" target="_blank">📄 <?= htmlspecialchars($file['file_name']) ?></a></p>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
+
+        <?php if ($studentTask['status'] === 'Completed'): ?>
+  <div class="input-file disabled"><span>+ ADD WORK (Disabled)</span></div>
+  <button class="submit" type="button" disabled>Turned In</button>
+<?php else: ?>
+  <form id="uploadForm" action="content.php?ass_id=<?= $ass_id ?>" method="POST" enctype="multipart/form-data">
+    <div class="input-file" onclick="document.getElementById('myFile').click()">
+      <span id="file-name">+ ADD WORK</span>
+      <input type="file" name="myFile" id="myFile" style="display:none;" onchange="handleFileSelect()">
+    </div>
+  </form>
+
+  <?php if (!empty($student_files)): ?>
+    <form action="content.php?ass_id=<?= $ass_id ?>" method="POST">
+      <input type="hidden" name="turn_in" value="1">
+      <button class="submit" type="submit">Turn In</button>
+    </form>
+  <?php endif; ?>
+<?php endif; ?>
+
       </div>
 
       <hr>
       <div class="comment-section">
         <h3>Comments</h3>
         <div class="comment-box">
-          <?php foreach ($comments as $com): ?>
-            <div class="comment-item <?= $com['user_type'] === 'admin' ? 'admin' : 'student' ?>">
-              <strong><?= htmlspecialchars($com['username']) ?>:</strong>
-              <?= htmlspecialchars($com['comment_text']) ?>
-              <div class="timestamp"><?= $com['created_at'] ?></div>
+          <?php foreach ($comments as $c): ?>
+            <div class="comment-item <?= $c['user_type'] ?>">
+              <strong><?= htmlspecialchars($c['username']) ?>:</strong> <?= htmlspecialchars($c['comment_text']) ?>
+              <div class="timestamp"><?= $c['created_at'] ?></div>
             </div>
           <?php endforeach; ?>
         </div>
@@ -281,11 +253,22 @@ $stmt->close();
     <?php endif; ?>
   </div>
 </div>
+
 <script>
-function showFileName() {
+function handleFileSelect() {
+  // Prevent uploading if the file box is disabled
   const input = document.getElementById("myFile");
   const label = document.getElementById("file-name");
-  label.textContent = input.files.length > 0 ? input.files[0].name : "+ ADD WORK";
+  const isDisabled = document.querySelector(".input-file").classList.contains("disabled");
+
+  if (isDisabled) return; // ⛔ stop if already submitted
+
+  if (input.files.length > 0) {
+    label.textContent = input.files[0].name;
+    document.getElementById("uploadForm").submit();
+  } else {
+    label.textContent = "+ ADD WORK";
+  }
 }
 </script>
 </body>

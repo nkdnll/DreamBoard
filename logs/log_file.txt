@@ -66,3 +66,109 @@
 [2025-07-27 17:19:57] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-07-28 16:28:10] [user:ryanjosephlerio@gmail.com] [Registration] New user registered and OTP sent for verification.
 [2025-07-28 16:42:19] [user:anikaxbenetua@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-28 17:08:26] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-28 17:17:09] [user:anikaxbenetua@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-28 17:18:09] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:18:20] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:25:31] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:29:14] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:30:06] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:34:35] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:35:14] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:35:20] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:54:07] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 17:54:54] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 18:02:12] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 18:02:20] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 18:02:28] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 18:02:39] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 18:03:05] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 18:23:34] [user:anikaxbenetua@gmail.com] [Email Verification Failed] Invalid OTP entered for anikaxbenetua@gmail.com.
+[2025-07-28 19:01:14] [user:anikaxbenetua@gmail.com] [Email Verified] Account activated.
+[2025-07-28 19:06:33] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:06:55] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:09:36] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:11:10] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:37:46] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 19:42:47] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:44:43] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:46:22] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:48:43] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 19:49:07] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 20:06:13] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 20:13:23] [student:Anika  Benetua] [Submitted File] Submitted 'PROPOSITION PAPER (1).docx' for assignment ID 46
+[2025-07-28 20:16:34] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 20:17:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-28 20:20:05] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-28 20:20:41] [user:nikkibatuti@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-28 20:21:21] [user:nikkibatuti@gmail.com] [Email Verified] Account activated
+[2025-07-28 20:27:27] [user:kizzycortez78@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-28 20:29:38] [user:kizzycortez78@gmail.com] [Email Verified] Account activated
+[2025-07-28 20:41:37] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 20:41:40] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 20:43:13] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 20:45:50] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 20:45:54] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 20:58:36] [user:nikkibatuti@gmail.com] [LOGIN] User logged in (needs profile).
+[2025-07-28 20:59:21] [user:nikkibatuti@gmail.com] [LOGIN] User logged in (needs profile).
+[2025-07-28 20:59:35] [user:nikkibatuti@gmail.com] [LOGIN] User logged in (needs profile).
+[2025-07-28 20:59:58] [user:nikkibatuti@gmail.com] [LOGIN] User logged in (needs profile).
+[2025-07-28 21:09:17] [user:] [LOGIN] User successfully logged in.
+[2025-07-28 21:30:47] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 21:30:57] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 21:31:16] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 21:32:21] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 21:33:07] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-28 21:53:12] [student:Anika  Benetua] [Submitted File] Submitted 'PROPOSITION PAPER (2).docx' for assignment ID 46
+[2025-07-28 21:53:25] [student:Anika  Benetua] [Submitted File] Submitted '6854f65c806b7-68457c8f761f5-AUDIO-ACT-SCRIPT.docx' for assignment ID 46
+[2025-07-28 21:54:48] [student:Anika  Benetua] [Submitted File] Submitted 'PROPOSITION PAPER (1).docx' for assignment ID 46
+[2025-07-28 21:55:42] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:06:57] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:07:25] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 46 for student ID 17 with score 100.
+[2025-07-28 22:07:40] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:08:02] [student:Anika  Benetua] [Submitted File] Submitted '68457c8f761f5-AUDIO-ACT-SCRIPT.docx' for assignment ID 46
+[2025-07-28 22:08:04] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:22:50] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:26:44] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:29:27] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:29:29] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:29:30] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:34:57] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:38:17] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:40:06] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:48:44] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 22:49:22] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'waerdgtfhj' (Project ID: 22) to students: Anika  Benetua.
+[2025-07-28 22:50:05] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-28 22:50:27] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-28 22:57:14] [student:nikki  benetua] [Uploaded File] Uploaded PROPOSITION PAPER (2).docx for assignment ID 46
+[2025-07-28 23:00:13] [student:nikki  benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-28 23:00:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-29 17:00:34] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-29 17:01:43] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:01:45] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:01:47] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:01:48] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:01:57] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:01:58] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:02:04] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:02:05] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:02:06] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:02:06] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:03:10] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-29 17:03:55] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:04:00] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:04:31] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:04:37] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 17:09:03] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 18:03:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-29 18:09:32] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-07-29 18:25:34] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'ertgyhjk' for team 'ghj'
+[2025-07-29 18:53:57] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'qffgnhmj' (Project ID: 23) to students: Anika Benetua.
+[2025-07-29 18:54:08] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-29 18:54:16] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 18:54:32] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-29 19:00:16] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'regrthyu' for team 'rtk'
+[2025-07-29 19:01:55] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'wdetfghjmk,' (Project ID: 24) to students: nikki benetua.
+[2025-07-29 19:02:04] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-29 19:11:11] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 51 as submitted
+[2025-07-29 19:12:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.

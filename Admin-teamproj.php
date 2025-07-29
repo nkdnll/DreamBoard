@@ -45,22 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'], $_POS
 // Load students
 if ($ass_id) {
     $stmt = $connection->prepare("
-        SELECT u.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname,
-               s.status, s.grade
-        FROM assignment_students s
-        JOIN userinfo u ON s.userinfo_ID = u.userinfo_ID
-        WHERE s.assigned_id = ?
+    SELECT u.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname,
+           s.status, s.grade
+    FROM project_members pm
+    JOIN userinfo u ON u.userinfo_ID = pm.userinfo_id
+    JOIN assigned a ON a.proj_id = pm.proj_id
+    LEFT JOIN assignment_students s ON s.userinfo_ID = pm.userinfo_id AND s.assigned_id = a.ass_id
+    WHERE a.ass_id = ?
+");
+$stmt->bind_param("i", $ass_id);
 
-        UNION
-
-        SELECT u.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname,
-               NULL AS status, NULL AS grade
-        FROM project_members pm
-        JOIN assigned a ON a.proj_id = pm.proj_id
-        JOIN userinfo u ON u.userinfo_ID = pm.userinfo_id
-        WHERE a.ass_id = ?
-    ");
-    $stmt->bind_param("ii", $ass_id, $ass_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {

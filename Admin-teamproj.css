@@ -159,10 +159,18 @@ body {
   width: auto;
   margin-left: 20px;
   display: flex;
+  align-items: center; /* ✅ Vertically align items */
+  justify-content: space-between; /* Optional: spread them out */
+  width: 100%;
+
 }
 .head span{
-  margin-left: 1160px;
-  margin-top: 25px;
+   margin-left: auto;     /* Push it to the right */
+  margin-top: 0;         /* ✅ Remove the vertical push */
+  font-size: 30px;
+  font-weight: normal;
+  color: #666;
+  margin-right: 50px;
 }
 /* Left Container */
 .container1 {

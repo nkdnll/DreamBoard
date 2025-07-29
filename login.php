@@ -47,14 +47,22 @@
 
               if ($password === $row['password']) { // Assuming password is not hashed for now based on original code
                   if ($row['status'] === 'active') {
-                      $_SESSION['Email'] = $row['EMAIL'];
-                      $_SESSION['userinfo_ID'] = $row['userinfo_ID'];
-                      $fullname = trim($row['firstname'] . ' ' . ($row['middlename'] ?? '') . ' ' . ($row['lastname'] ?? '')); // Handle potential null middlename/lastname
-                      $_SESSION['username'] = $fullname;
-                      $_SESSION['profile_pic'] = $row['PROFILE_PIC'];
-                      logTransaction('user', $email, 'LOGIN', 'User successfully logged in.');
-                      header('Location: dashboard.php');
+                  $_SESSION['Email'] = $row['EMAIL'];
+                  $_SESSION['userinfo_ID'] = $row['userinfo_ID'];
+                  $_SESSION['UserID'] = $row['UserID'];
+
+                  if (empty($row['userinfo_ID'])) {
+                      // No userinfo profile yet, redirect to userinfo.php to complete it
+                      echo "<script>alert('Please complete your profile information.'); window.location.href='userinfo.php';</script>";
                       exit();
+                  }
+
+                  $fullname = trim($row['firstname'] . ' ' . ($row['middlename'] ?? '') . ' ' . ($row['lastname'] ?? ''));
+                  $_SESSION['username'] = $fullname;
+                  $_SESSION['profile_pic'] = $row['PROFILE_PIC'];
+                  logTransaction('user', $Email, 'LOGIN', 'User successfully logged in.');
+                  header('Location: dashboard.php');
+                  exit();
                   } elseif ($row['status'] === 'pending') {
                       echo "<script>alert('Your account is not verified. Please check your email for the OTP.'); window.location.href='email_verify.php?email=" . urlencode($Email) . "';</script>";
                       exit();

@@ -1,12 +1,6 @@
 <?php
 session_start();
 include 'log1.php';
-$proj_id = isset($_GET['proj_id']) ? (int)$_GET['proj_id'] : null;
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projectmanagement";
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -17,168 +11,149 @@ $classesPages = [
   'Admin-Createproj.php'
 ];
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$proj_id = isset($_GET['proj_id']) ? (int)$_GET['proj_id'] : null;
 
+// DB setup
+$conn = new mysqli("localhost", "root", "", "projectmanagement");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 $assignedUsernames = [];
 
 if ($proj_id) {
-    $stmt = $conn->prepare("
-    SELECT CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.MIDDLENAME), ' ', TRIM(u.LASTNAME)) AS full_name
-    FROM project_members pm
-    JOIN userinfo u ON pm.userinfo_id = u.userinfo_ID
-    WHERE pm.proj_id = ?
-");
-$stmt->bind_param("i", $proj_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$assignedUsernames = [];
-
-while ($row = $result->fetch_assoc()) {
-    $assignedUsernames[] = $row['full_name'];
-}
-$stmt->close();
-
+    $memberStmt = $conn->prepare("
+        SELECT CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.LASTNAME)) AS full_name
+        FROM project_members pm
+        JOIN userinfo u ON pm.userinfo_id = u.userinfo_ID
+        WHERE pm.proj_id = ?
+    ");
+    $memberStmt->bind_param("i", $proj_id);
+    $memberStmt->execute();
+    $result = $memberStmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $assignedUsernames[] = $row['full_name'];
+    }
+    $memberStmt->close();
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
     $project_name = $conn->real_escape_string(trim($_POST['project_name'] ?? ''));
     $instructions = $conn->real_escape_string(trim($_POST['instructions'] ?? ''));
-    $assigned_students = $conn->real_escape_string(trim($_POST['assigned_students'] ?? ''));
+    $assigned_students_input = trim($_POST['assigned_students'] ?? '');
     $points = isset($_POST['points']) ? (int)$_POST['points'] : 0;
     $due_date = !empty($_POST['due_date']) ? $conn->real_escape_string($_POST['due_date']) : null;
 
+    // Insert into assigned table
     $stmt = $conn->prepare("INSERT INTO assigned (proj_id, project_name, instructions, assigned_students, points, due_date) VALUES (?, ?, ?, ?, ?, ?)");
-
-    if (!$stmt) {
-        die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-    }
-
-    $stmt->bind_param("isssds", $proj_id, $project_name, $instructions, $assigned_students, $points, $due_date);
+    $stmt->bind_param("isssds", $proj_id, $project_name, $instructions, $assigned_students_input, $points, $due_date);
 
     if ($stmt->execute()) {
         $assigned_id = $stmt->insert_id;
 
-        if (!empty($assigned_students)) {
-    $studentList = array_map('trim', explode(',', $assigned_students));
+        // Get project members
+        $projectMembers = [];
+        $memberStmt = $conn->prepare("
+            SELECT u.userinfo_ID, CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.LASTNAME)) AS full_name
+            FROM project_members pm
+            JOIN userinfo u ON pm.userinfo_id = u.userinfo_ID
+            WHERE pm.proj_id = ?
+        ");
+        $memberStmt->bind_param("i", $proj_id);
+        $memberStmt->execute();
+        $result = $memberStmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $projectMembers[$row['full_name']] = $row['userinfo_ID'];
+        }
+        $memberStmt->close();
 
-    // 1. Prepare query to get userinfo_ID from userinfo table
-    $idLookupStmt = $conn->prepare("
-        SELECT userinfo_ID 
-        FROM userinfo 
-        WHERE CONCAT(TRIM(FIRSTNAME), ' ', TRIM(MIDDLENAME), ' ', TRIM(LASTNAME)) = ?
-           OR CONCAT(TRIM(FIRSTNAME), ' ', TRIM(LASTNAME)) = ?
-    ");
+        // Parse selected student names
+        $selectedStudents = array_filter(array_map('trim', explode(',', $assigned_students_input)));
+        $assignToAll = (count($selectedStudents) === count($projectMembers));
 
-    // 2. Prepare query to insert into assignment_students
-    $insertStudentStmt = $conn->prepare("
-        INSERT INTO assignment_students (assigned_id, username, userinfo_ID, status)
-        VALUES (?, ?, ?, 'Not Started')
-    ");
-
-    // 3. Loop through each selected student name
-   foreach ($studentList as $studentUsername) {
-    // 1. Look up userinfo_ID
-    $idLookupStmt->bind_param("ss", $studentUsername, $studentUsername);
-    $idLookupStmt->execute();
-    $idLookupStmt->bind_result($uiID);
-    $idLookupStmt->fetch();
-    $idLookupStmt->free_result();  // fix: clear result buffer
-    $idLookupStmt->reset();        // fix: reset statement for next bind
-
-    // 2. Insert student into assignment_students
-    $insertStudentStmt->bind_param("isi", $assigned_id, $studentUsername, $uiID);
-    $insertStudentStmt->execute();
-}
-
-
-    // 4. Close both statements
-    $idLookupStmt->close();
-    $insertStudentStmt->close();
-}
-
-
-        // Insert uploaded files (same as before)
-        if (!empty($_FILES['attachments']) && !empty($_FILES['attachments']['name'][0])) {
-            $fileCount = count($_FILES['attachments']['name']);
-
-            $attach_stmt = $conn->prepare("INSERT INTO attachments (assigned_id, file_name, file_path, file_type, is_url) VALUES (?, ?, ?, ?, 0)");
-            if (!$attach_stmt) {
-                die("Prepare failed for attachments: (" . $conn->errno . ") " . $conn->error);
+        // Build the final list of students to assign
+        $studentsToAssign = [];
+        if ($assignToAll) {
+            foreach ($projectMembers as $name => $id) {
+                $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
             }
+        } else {
+            foreach ($selectedStudents as $name) {
+                if (isset($projectMembers[$name])) {
+                    $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
+                }
+            }
+        }
+
+        // Insert into assignment_students
+        $insertStmt = $conn->prepare("
+            INSERT INTO assignment_students (assigned_id, username, userinfo_ID, status)
+            VALUES (?, ?, ?, 'Not Started')
+        ");
+        foreach ($studentsToAssign as $student) {
+            $insertStmt->bind_param("isi", $assigned_id, $student['username'], $student['userinfo_ID']);
+            $insertStmt->execute();
+        }
+        $insertStmt->close();
+
+        // Handle file uploads
+        if (!empty($_FILES['attachments']) && !empty($_FILES['attachments']['name'][0])) {
+            $attachStmt = $conn->prepare("INSERT INTO attachments (assigned_id, file_name, file_path, file_type, is_url) VALUES (?, ?, ?, ?, 0)");
+            $fileCount = count($_FILES['attachments']['name']);
+            $uploadDir = "uploads/";
+
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
             for ($i = 0; $i < $fileCount; $i++) {
                 $fileName = basename($_FILES['attachments']['name'][$i]);
-                $fileTmpPath = $_FILES['attachments']['tmp_name'][$i];
+                $tmpPath = $_FILES['attachments']['tmp_name'][$i];
                 $fileType = $_FILES['attachments']['type'][$i];
+                $targetPath = $uploadDir . uniqid() . "-" . $fileName;
 
-                $uploadDir = "uploads/";
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0755, true);
-                }
-                $targetFilePath = "uploads/" . uniqid() . "-" . $fileName; // ✅ make sure "uploads/" is included
-
-
-                if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                    $attach_stmt->bind_param("isss", $assigned_id, $fileName, $targetFilePath, $fileType);
-                    $attach_stmt->execute();
-                } else {
-                    echo "Error uploading file: " . htmlspecialchars($fileName) . "<br>";
+                if (move_uploaded_file($tmpPath, $targetPath)) {
+                    $attachStmt->bind_param("isss", $assigned_id, $fileName, $targetPath, $fileType);
+                    $attachStmt->execute();
                 }
             }
-
-            $attach_stmt->close();
+            $attachStmt->close();
         }
 
-        // Insert URL attachments sent as arrays in POST (e.g., attachment_urls[], attachment_types[])
+        // Handle URL attachments
         if (!empty($_POST['attachment_urls']) && !empty($_POST['attachment_types'])) {
-            $attachment_urls = $_POST['attachment_urls'];
-            $attachment_types = $_POST['attachment_types'];
+            $urls = $_POST['attachment_urls'];
+            $types = $_POST['attachment_types'];
+            $urlStmt = $conn->prepare("INSERT INTO attachments (assigned_id, file_name, file_path, file_type, is_url) VALUES (?, ?, ?, ?, 1)");
 
-            // Prepare insert statement for URLs, set file_path = url, file_name = null or url, is_url=1
-            $url_stmt = $conn->prepare("INSERT INTO attachments (assigned_id, file_name, file_path, file_type, is_url) VALUES (?, ?, ?, ?, 1)");
-            if (!$url_stmt) {
-                die("Prepare failed for URL attachments: (" . $conn->errno . ") " . $conn->error);
-            }
-
-            foreach ($attachment_urls as $index => $url) {
+            foreach ($urls as $i => $url) {
                 $url = trim($url);
-                $type = isset($attachment_types[$index]) ? trim($attachment_types[$index]) : 'url';
-
+                $type = isset($types[$i]) ? trim($types[$i]) : 'url';
                 if (!empty($url)) {
-                    // Here file_name can be null or the URL itself (or you can parse filename from URL if you want)
                     $fileName = null;
-
-                    $url_stmt->bind_param("isss", $assigned_id, $fileName, $url, $type);
-                    $url_stmt->execute();
+                    $urlStmt->bind_param("isss", $assigned_id, $fileName, $url, $type);
+                    $urlStmt->execute();
                 }
             }
-
-            $url_stmt->close();
+            $urlStmt->close();
         }
+
+        // Log assignment
         if (isset($_SESSION['Email'])) {
-          $adminEmail = $_SESSION['Email'];
-          $assignedToList = implode(', ', $studentList); // already built from input
-
-          $description = "Assigned task '{$project_name}' (Project ID: $proj_id) to students: $assignedToList.";
-          logTransaction('admin', $adminEmail, 'ASSIGN_TASK', $description);
-}
-
+            $adminEmail = $_SESSION['Email'];
+            $logList = implode(', ', array_column($studentsToAssign, 'username'));
+            $description = "Assigned task '{$project_name}' (Project ID: $proj_id) to students: $logList.";
+            logTransaction('admin', $adminEmail, 'ASSIGN_TASK', $description);
+        }
 
         header("Location: team_proj.php?proj_id=" . $proj_id);
         exit();
-
     } else {
         echo "Error inserting project: " . $stmt->error;
     }
 
     $stmt->close();
 }
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -249,6 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
       <div class="main-content">
+        
         <form action="Admin-Createproj.php?proj_id=<?php echo $proj_id; ?>" method="POST" class="create-class" enctype="multipart/form-data" >
 
         

@@ -15,20 +15,24 @@ if ($connection->connect_error) {
 $studentID = $_SESSION['userinfo_ID']; // ✅ get logged-in student
 
 $sql = "
-    SELECT 
-        a.ass_id,
-        a.project_name AS assigned_proj_name, 
-        p.project_name AS proj_name, 
-        ai.INSTRUCTOR,
-        MIN(s.status) AS status
-    FROM assigned a
-    JOIN projects p ON a.proj_id = p.proj_id
-    JOIN admininfo ai ON p.admininfoID = ai.admininfoID
-    JOIN project_members pm ON pm.proj_id = p.proj_id
-    LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id AND s.userinfo_ID = pm.userinfo_id
-    WHERE pm.userinfo_id = ?
-    GROUP BY a.ass_id, a.project_name, p.project_name, ai.INSTRUCTOR
-    HAVING status IS NULL OR status != 'Completed'
+   SELECT 
+    a.ass_id,
+    a.project_name AS assigned_proj_name, 
+    p.project_name AS proj_name, 
+    ai.INSTRUCTOR,
+    CASE 
+        WHEN MIN(s.status) IS NULL OR MIN(s.status) NOT IN ('Completed') THEN 'Pending'
+        ELSE 'Completed'
+    END AS status
+FROM assigned a
+JOIN projects p ON a.proj_id = p.proj_id
+JOIN admininfo ai ON p.admininfoID = ai.admininfoID
+JOIN project_members pm ON pm.proj_id = p.proj_id
+LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id AND s.userinfo_ID = pm.userinfo_id
+WHERE pm.userinfo_id = ?
+GROUP BY a.ass_id, a.project_name, p.project_name, ai.INSTRUCTOR
+HAVING status = 'Pending'
+
 ";
 $current_tab = $_GET['tab'] ?? 'assigned'; // This variable is used to determine the active tab, but status is from DB
 $stmt = $connection->prepare($sql);
@@ -154,11 +158,9 @@ $result = $stmt->get_result();
     <!-- Form stays outside the <a> -->
     <div class="status-box">
     <span class="assignment-status">
-    <?php
-    // Display the status from the database, or 'In Progress' if null
-        echo htmlspecialchars($row['status'] ?? 'In Progress');
-    ?>
+    <?= htmlspecialchars($row['status']) ?>
 </span>
+
     </div>
 </div>
 </div>

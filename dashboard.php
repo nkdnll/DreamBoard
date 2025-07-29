@@ -1,15 +1,27 @@
 <?php
-include 'log1.php';
 session_start();
+include 'log1.php';
+include 'config.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 
-$conn = mysqli_connect("localhost", "root", "", "projectmanagement");
-
+// Only redirect to login if not logged in at all
 if (!isset($_SESSION['userinfo_ID'])) {
     header("Location: login.php");
     exit();
 }
+
+// If logged in but missing userinfo_ID, go to userinfo form
+if (!isset($_SESSION['userinfo_ID'])) {
+    header("Location: userinfo.php");
+    exit();
+}
+
+
+$conn = mysqli_connect("localhost", "root", "", "projectmanagement");
+
+
+
 // Fetch user data from database using email (assumes session contains 'Email')
 $studentId = $_SESSION['userinfo_ID'];
 $userQuery = "SELECT FIRSTNAME, MIDDLENAME, LASTNAME, PROFILE_PIC FROM userinfo WHERE userinfo_ID = ?";

@@ -1,39 +1,69 @@
 <?php
-session_start(); // Start session before any output
+session_start();         // ✅ Must come early!
+ob_start();              // 🛠 Prevent premature output (so header() works)
+
+// Redirect if email not in session
+if (!isset($_SESSION['UserID'])) {
+    header("Location: login.php");
+    exit();
+}
 
 $conn = mysqli_connect("localhost", "root", "", "projectmanagement");
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if (isset($_POST['submit'])) {
-        $FIRSTNAME = $_POST['FIRSTNAME'];
-        $MIDDLENAME = $_POST['MIDDLENAME'];
-        $LASTNAME = $_POST['LASTNAME'];
-        $CITIZENSHIP = $_POST['CITIZENSHIP'];
-        $SUFFIX = $_POST['SUFFIX'];
-        $SEX = $_POST['SEX'];
-        $BIRTHDAY = $_POST['BIRTHDAY'];
-        $EMAIL = $_POST['EMAIL'];
-        $CURRENT_SCHOOL = $_POST['CURRENT_SCHOOL'];
+$userID = $_SESSION['UserID'];
 
-        $stmt = $conn->prepare("INSERT INTO userinfo (FIRSTNAME, MIDDLENAME, LASTNAME, CITIZENSHIP, SUFFIX, SEX, BIRTHDAY, EMAIL, CURRENT_SCHOOL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $FIRSTNAME, $MIDDLENAME, $LASTNAME, $CITIZENSHIP, $SUFFIX, $SEX, $BIRTHDAY, $EMAIL, $CURRENT_SCHOOL);
+// Get email from database
+$query = $conn->prepare("SELECT Email FROM userin WHERE UserID = ?");
+$query->bind_param("i", $userID);
+$query->execute();
+$query->bind_result($email);
+$query->fetch();
+$query->close();
+
+$message = "";
+
+// When form is submitted
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
+    $FIRSTNAME = trim($_POST['FIRSTNAME']);
+    $MIDDLENAME = trim($_POST['MIDDLENAME']);
+    $LASTNAME = trim($_POST['LASTNAME']);
+    $CITIZENSHIP = trim($_POST['CITIZENSHIP']);
+    $SUFFIX = trim($_POST['SUFFIX']);
+    $SEX = trim($_POST['SEX']);
+    $BIRTHDAY = trim($_POST['BIRTHDAY']);
+    $CURRENT_SCHOOL = trim($_POST['CURRENT_SCHOOL']);
+
+    // Prevent duplicate entry
+    $check = $conn->prepare("SELECT userinfo_ID FROM userinfo WHERE EMAIL = ?");
+    $check->bind_param("s", $email);
+    $check->execute();
+    $result = $check->get_result();
+
+    if ($result->num_rows > 0) {
+        $message = "You already have a profile.";
+    } else {
+        $stmt = $conn->prepare("INSERT INTO userinfo (FIRSTNAME, MIDDLENAME, LASTNAME, CITIZENSHIP, SUFFIX, SEX, BIRTHDAY, EMAIL, CURRENT_SCHOOL)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssss", $FIRSTNAME, $MIDDLENAME, $LASTNAME, $CITIZENSHIP, $SUFFIX, $SEX, $BIRTHDAY, $email, $CURRENT_SCHOOL);
 
         if ($stmt->execute()) {
-            $user_id = $conn->insert_id;  // FIXED: Get the inserted user's ID
-
-            $_SESSION['userinfo_ID'] = $user_id;  // FIXED: Store the ID
+            $_SESSION['userinfo_ID'] = $conn->insert_id;
             $_SESSION['fname'] = $FIRSTNAME;
             $_SESSION['lname'] = $LASTNAME;
-            $_SESSION['Email'] = $EMAIL;
 
             header("Location: profile.php");
             exit();
         } else {
-            echo "Error: " . $stmt->error;
+            $message = "Error: " . $stmt->error;
         }
 
         $stmt->close();
     }
+
+    $check->close();
 }
 ?>
 
@@ -267,7 +297,8 @@ label {
           </div>
           
           <div class="form-group">
-            <input type="email" name="EMAIL" required/>
+            <input type="hidden" name="EMAIL" value="<?= htmlspecialchars($email) ?>">
+            <p style="font-size: 18px; font-weight: bold;"><?= htmlspecialchars($email) ?></p>
             <label>EMAIL:</label>
           </div>
 

@@ -11,6 +11,8 @@ $classesPages = [
   'Admin-create.php',
   'Admin-Createproj.php'
 ];
+
+// Function to generate unique join code
 function generateJoinCode($length = 8) {
     $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     $code = '';
@@ -20,68 +22,32 @@ function generateJoinCode($length = 8) {
     return $code;
 }
 
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $projectName = $_POST['project_name'];
-    $teamName = $_POST['team_name'];
-    $teamDescription = $_POST['team_description'];
-    $usernamesInput = $_POST['usernames'];
-
-    // Normalize input: comma- or newline-separated
-    $enteredUsernames = preg_split('/[\s]*[\r\n,]+[\s]*/', trim($usernamesInput));
-    $enteredUsernames = array_filter($enteredUsernames); // remove blanks
-    $enteredUsernames = array_map('strtolower', $enteredUsernames); // make lowercase for comparison
-
-    // Fetch all users and build "usernames"
-    $usersQuery = "SELECT FIRSTNAME, MIDDLENAME, LASTNAME FROM userinfo";
-    $result = $conn->query($usersQuery);
-
-    $validUsernames = [];
-    while ($row = $result->fetch_assoc()) {
-        $fullname = strtolower(trim($row['FIRSTNAME'] . ' ' . $row['MIDDLENAME'] . ' ' . $row['LASTNAME']));
-        $fullname = preg_replace('/\s+/', ' ', $fullname); // Normalize spaces
-        $validUsernames[] = $fullname;
+    if (!isset($_SESSION['admininfoID'])) {
+        die("Error: Admin not logged in.");
     }
 
-    // Compare entered usernames to valid full names
-    $missingUsernames = [];
-    foreach ($enteredUsernames as $entered) {
-        if (!in_array($entered, $validUsernames)) {
-            $missingUsernames[] = $entered;
+    $projectName = trim($_POST['project_name']);
+    $teamName = trim($_POST['team_name']);
+    $teamDescription = trim($_POST['team_description']);
+    $adminId = $_SESSION['admininfoID'];
+    $joinCode = generateJoinCode();
+
+    // Insert into DB
+    $stmt = $conn->prepare("INSERT INTO projects (project_name, team_name, team_description, join_code, admininfoID) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssi", $projectName, $teamName, $teamDescription, $joinCode, $adminId);
+
+    if ($stmt->execute()) {
+        // Log creation
+        if (isset($_SESSION['Email'])) {
+            $logDescription = "Created project '$projectName' for team '$teamName'";
+            logTransaction('admin', $_SESSION['Email'], 'CREATE_PROJECT', $logDescription);
         }
-    }
-
-    if (!empty($missingUsernames)) {
-        echo "<p style='color:red;'>These users were not found: " . implode(', ', $missingUsernames) . "</p>";
+        header("Location: Admin-project.php");
+        exit();
     } else {
-        // Store usernames as-is
-        $usernames = implode(',', $enteredUsernames);
-
-         $adminId = $_SESSION['admininfoID'];
-
-         if (!isset($_SESSION['admininfoID'])) {
-    // redirect to login or show error
-    die("Error: Admin not logged in.");
-}
-
-$joinCode = generateJoinCode();
-
-$stmt = $conn->prepare("INSERT INTO projects (project_name, team_name, team_description, usernames, join_code, admininfoID) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssi", $projectName, $teamName, $teamDescription, $usernames, $joinCode, $adminId);
-
-
-        if ($stmt->execute()) {
-    // Log the creation
-    if (isset($_SESSION['Email'])) {
-        $logDescription = "Created project '$projectName' for team '$teamName'";
-        logTransaction('admin', $_SESSION['Email'], 'CREATE_PROJECT', $logDescription);
-    }
-
-    header("Location: Admin-project.php");
-    exit();
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-
+        echo "Error: " . $stmt->error;
     }
 }
 ?>
