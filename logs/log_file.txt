@@ -172,3 +172,31 @@
 [2025-07-29 19:02:04] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
 [2025-07-29 19:11:11] [student:Anika  Benetua] [Turned In Task] Marked assignment ID 51 as submitted
 [2025-07-29 19:12:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 04:32:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 04:32:29] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'regrthyu' (ID: 24)
+[2025-07-30 04:32:33] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'ertgyhjk' (ID: 23)
+[2025-07-30 04:40:35] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 04:44:50] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-30 07:11:24] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 07:28:44] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 07:29:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 07:32:34] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 07:32:48] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 07:34:49] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-30 07:50:26] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'BSIT-1A' for team 'ITEC50A'
+[2025-07-30 07:50:31] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'BSIT-1A' (ID: 25)
+[2025-07-30 07:52:17] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'PERFORMANCE TASK' (Project ID: 22) to students: Anika Benetua, nikki benetua.
+[2025-07-30 08:00:57] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'Written Work' (Project ID: 22) to students: Anika Benetua, nikki benetua.
+[2025-07-30 08:27:15] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-31 05:17:21] [user:legendary.rellosa@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-07-31 05:18:09] [user:legendary.rellosa@gmail.com] [Email Verified] Account activated
+[2025-07-31 05:57:09] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-31 05:57:43] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'STATS' for team 'math'
+[2025-07-31 06:55:09] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-31 06:57:27] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'STATS' (ID: 26)
+[2025-07-31 06:57:46] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'mmath' for team 'stat'
+[2025-07-31 07:04:05] [user:legendary.rellosa@gmail.com] [LOGIN] User successfully logged in.
+[2025-07-31 07:08:07] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-07-31 07:09:53] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hello' (Project ID: 27) to students: Eyyan Rellosa.
+[2025-07-31 07:10:24] [student:Eyyan Ian Rellosa] [Turned In Task] Marked assignment ID 54 as submitted
+[2025-07-31 07:10:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 19 with score 50.
