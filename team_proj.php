@@ -166,46 +166,42 @@ if (!empty($ass_ids)) {
 
             <?php
             $hasAssignedWork = false;
-            foreach ($projects as $project) {
-                if (!empty($project['due_date'])) {
-                    $hasAssignedWork = true;
-                    break;
-                }
-            }
+            $hasAssignedWork = !empty($projects);
+
             ?>
 
+
             <?php if ($hasAssignedWork): ?>
-                <?php foreach ($projects as $project): ?>
-                    <?php if (!empty($project['due_date'])): ?>
-                        <div class="inside">
-                            <div class="inside-left">
-                                <div class="title"><?= htmlspecialchars($project['assigned_project_name']) ?></div>
-                                <div class="details"><?= htmlspecialchars($project['project_project_name']) ?></div>
-                                <div class="due">
-                                    <?= date("m/d/Y", strtotime($project['due_date'])) ?>
-                                </div>
-                            </div>
-                            <div class="inside-right">
-                                <div class="done">
-                                    <a href="Admin-teamproj.php?ass_id=<?= $project['ass_id'] ?>&status=handed_in">
-                                        <h4>Completed</h4>
-                                        <div class="count">
-                                            <?= $submissionCounts[$project['ass_id']]['submitted'] ?? 0 ?>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="pending">
-                                    <a href="Admin-teamproj.php?ass_id=<?= $project['ass_id'] ?>&status=pending">
-                                        <h4>Pending</h4>
-                                        <div class="count">
-                                            <?= $submissionCounts[$project['ass_id']]['pending'] ?? 0 ?>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+              <?php foreach ($projects as $project): ?>
+    <div class="inside">
+        <div class="inside-left">
+            <div class="title"><?= htmlspecialchars($project['assigned_project_name']) ?></div>
+            <div class="details"><?= htmlspecialchars($project['project_project_name']) ?></div>
+            <div class="due">
+                <?= !empty($project['due_date']) ? date("m/d/Y", strtotime($project['due_date'])) : 'No due date' ?>
+            </div>
+        </div>
+        <div class="inside-right">
+            <div class="done">
+                <a href="Admin-teamproj.php?ass_id=<?= $project['ass_id'] ?>&status=handed_in">
+                    <h4>Completed</h4>
+                    <div class="count">
+                        <?= $submissionCounts[$project['ass_id']]['submitted'] ?? 0 ?>
+                    </div>
+                </a>
+            </div>
+            <div class="pending">
+                <a href="Admin-teamproj.php?ass_id=<?= $project['ass_id'] ?>&status=pending">
+                    <h4>Pending</h4>
+                    <div class="count">
+                        <?= $submissionCounts[$project['ass_id']]['pending'] ?? 0 ?>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
             <?php else: ?>
                 <p class="no-work">No work has been assigned to this project yet.</p>
             <?php endif; ?>

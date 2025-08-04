@@ -28,8 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'], $_POS
         $author = $_SESSION['admininfoID'];
         $type = 'admin';
     } else {
-        $author = $_SESSION['userinfo_ID'];
-        $type = 'student';
+        // This part seems incorrect for an Admin panel.
+        // If this is an admin panel, only admin should be commenting.
+        // Consider if userinfo_ID should be used here, or if it's a copy-paste error.
+        $author = $_SESSION['userinfo_ID']; 
+        $type = 'student'; 
     }
 
     if ($txt !== '' && $aid) {
@@ -42,24 +45,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'], $_POS
     }
 }
 
-// Load students
+// Load students who were assigned this specific task
 if ($ass_id) {
     $stmt = $connection->prepare("
-    SELECT u.userinfo_ID, CONCAT(u.FIRSTNAME, ' ', u.MIDDLENAME, ' ', u.LASTNAME) fullname,
-           s.status, s.grade
-    FROM project_members pm
-    JOIN userinfo u ON u.userinfo_ID = pm.userinfo_id
-    JOIN assigned a ON a.proj_id = pm.proj_id
-    LEFT JOIN assignment_students s ON s.userinfo_ID = pm.userinfo_id AND s.assigned_id = a.ass_id
-    WHERE a.ass_id = ?
-");
-$stmt->bind_param("i", $ass_id);
+        SELECT asg.userinfo_ID, u.FIRSTNAME, u.MIDDLENAME, u.LASTNAME,
+               asg.status, asg.grade
+        FROM assignment_students asg
+        JOIN userinfo u ON asg.userinfo_ID = u.userinfo_ID
+        WHERE asg.assigned_id = ?
+    ");
 
+    $stmt->bind_param("i", $ass_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
+        // Concatenate name parts carefully, avoiding extra spaces for missing middle name
+        $fullName = trim($row['FIRSTNAME'] . ' ' . (empty($row['MIDDLENAME']) ? '' : $row['MIDDLENAME'] . ' ') . $row['LASTNAME']);
         $students[$row['userinfo_ID']] = [
-            'fullname' => $row['fullname'],
+            'fullname' => $fullName,
             'status' => $row['status'],
             'grade' => $row['grade'],
             'submissions' => [],
@@ -67,7 +70,8 @@ $stmt->bind_param("i", $ass_id);
     }
     $stmt->close();
 
-    // Load submissions
+    // Load submissions for ONLY the students who were assigned this task
+    // (This part of the code already works correctly with the `$students` array filtered above)
     $stmt = $connection->prepare("SELECT userinfo_id, file_name, file_path, uploaded_at FROM student_submissions WHERE assigned_id=?");
     $stmt->bind_param("i", $ass_id);
     $stmt->execute();
@@ -75,7 +79,9 @@ $stmt->bind_param("i", $ass_id);
     while ($file = $result->fetch_assoc()) {
         $uid = $file['userinfo_id'];
         $file['file_size'] = file_exists($file['file_path']) ? filesize($file['file_path']) : 0;
-        if (isset($students[$uid])) $students[$uid]['submissions'][] = $file;
+        if (isset($students[$uid])) { // Ensure the submission is for an assigned student
+            $students[$uid]['submissions'][] = $file;
+        }
     }
     $stmt->close();
 }
@@ -92,31 +98,15 @@ if ($ass_id) {
 }
 
 // Count total & completed
-$totalCount = $completedCount = 0;
-if ($ass_id) {
-    $stmt = $connection->prepare("
-        SELECT COUNT(DISTINCT pm.userinfo_id)
-        FROM project_members pm
-        JOIN assigned a ON a.proj_id = pm.proj_id
-        WHERE a.ass_id = ?
-    ");
-    $stmt->bind_param("i", $ass_id);
-    $stmt->execute();
-    $stmt->bind_result($totalCount);
-    $stmt->fetch();
-    $stmt->close();
-
-    $stmt = $connection->prepare("
-        SELECT COUNT(DISTINCT ss.userinfo_id)
-        FROM student_submissions ss
-        WHERE ss.assigned_id = ?
-    ");
-    $stmt->bind_param("i", $ass_id);
-    $stmt->execute();
-    $stmt->bind_result($completedCount);
-    $stmt->fetch();
-    $stmt->close();
+// This count should now reflect only the *assigned* students for this specific assignment.
+$totalCount = count($students); // Total assigned students for this specific assignment
+$completedCount = 0;
+foreach ($students as $student) {
+    if (!empty($student['submissions'])) { // Assuming 'completed' means having at least one submission
+        $completedCount++;
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -157,8 +147,7 @@ if ($ass_id) {
 
         <div class="wrapper">
             <div class="container1">
-                <h1>TEAM PROJECTS</h1><hr>
-                <div class="title"><h2 class="NAME">NAME</h2><h2 class="STATUS">STATUS</h2></div><hr>
+                <h1>ASSIGNED STUDENTS</h1><hr> <div class="title"><h2 class="NAME">NAME</h2><h2 class="STATUS">STATUS</h2></div><hr>
                 <?php foreach ($students as $uid => $s): ?>
                     <?php $isSelected = ($selectedUID === $uid); ?>
                     <div class="content student-item <?= $isSelected ? 'active' : '' ?>" data-uid="<?= $uid ?>">
@@ -170,6 +159,7 @@ if ($ass_id) {
 
             <?php foreach ($students as $uid => $s): ?>
                 <?php
+                    // Comments should be specific to the recipient (selectedUID) or the author (uid)
                     $stmt = $connection->prepare("
                         SELECT c.comment_text, c.user_type, c.created_at, c.userinfo_id, 
                             u.FIRSTNAME sf, u.MIDDLENAME sm, u.LASTNAME sl, 
@@ -177,10 +167,10 @@ if ($ass_id) {
                         FROM comments c 
                         LEFT JOIN userinfo u ON c.user_type='student' AND c.userinfo_id=u.userinfo_ID 
                         LEFT JOIN admininfo a ON c.user_type='admin' AND c.userinfo_id=a.admininfoID 
-                        WHERE c.ass_id=? AND (c.recipient_id=? OR c.userinfo_id=?)
+                        WHERE c.ass_id=? AND (c.recipient_id=? OR (c.userinfo_id=? AND c.user_type='admin'))
                         ORDER BY c.created_at ASC
                     ");
-                    $stmt->bind_param("iii", $ass_id, $uid, $uid);
+                    $stmt->bind_param("iii", $ass_id, $uid, $_SESSION['admininfoID']); // Pass current admin ID for comments made by this admin to this student
                     $stmt->execute();
                     $comments = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     $stmt->close();
@@ -209,7 +199,9 @@ if ($ass_id) {
                     <div class="comment-box">
                         <div class="comment-header"><i class="fas fa-comments"></i> Conversation</div>
                         <?php if ($comments): foreach ($comments as $c): 
-                            $uname = ($c['user_type'] === 'student') ? trim(($c['sf'] ?? '') . ' ' . ($c['sm'] ? $c['sm'] . ' ' : '') . ($c['sl'] ?? '')) ?: 'Student' : (trim($c['an'] ?? '') ?: ($_SESSION['admin_name'] ?? 'Admin'));
+                            $uname = ($c['user_type'] === 'student') 
+                                ? trim(($c['sf'] ?? '') . ' ' . ($c['sm'] ? $c['sm'] . ' ' : '') . ($c['sl'] ?? '')) ?: 'Student' 
+                                : (trim($c['an'] ?? '') ?: ($_SESSION['admin_name'] ?? 'Admin'));
                         ?>
                             <div class="comment-item <?= htmlspecialchars($c['user_type']) ?>">
                                 <div class="comment-username"><?= htmlspecialchars($uname) ?></div>

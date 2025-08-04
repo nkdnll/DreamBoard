@@ -200,3 +200,71 @@
 [2025-07-31 07:09:53] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hello' (Project ID: 27) to students: Eyyan Rellosa.
 [2025-07-31 07:10:24] [student:Eyyan Ian Rellosa] [Turned In Task] Marked assignment ID 54 as submitted
 [2025-07-31 07:10:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 19 with score 50.
+[2025-08-03 05:45:45] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 05:46:14] [user:genesissunga399@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed Detail: a­ßM:l§qe
+gï”	’ŞšÊ>ø8–Ùà¨,²2âçWÒ‘g¾Ñu›\©u)°CR–‹
+v¢;J¶fÖÓt³À1É æ\{Ü4ÏØœá.ÃŸ¶(òÆP¾ş Evìw½Pß Çõ3µ²E²Fšî¼ŸçıÊPåâ	»íìø‚=¾Ï‰„*$ÖPIµJãJú‹Î[m@®±ÂQH¯ê
+[2025-08-03 05:49:30] [user:iamunknown952@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed Detail: `NÀ  Í¦zÍi²P\³x$å­èa<h¸Jê†oÙBæ"£O=¥Ç“,`8}<ù—}¤zbä978åy‚›5LïøÕÌ;zè„xÍâÒ0"İ¸èB£Ø’ÄAù—5ºO E	‘!7?íÉ
+3`¡AAbÏ"Ô°s ZñŞ<èGyBøß`¼Æ½QRÇĞÌ¨Ä@şØ6
+«2d8¸ƒ£ÂpL+d+±×¼—&
+[2025-08-03 05:50:35] [user:iamunknown952@gmail.com] [Email Verified] Account activated
+[2025-08-03 05:50:48] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-03 05:51:58] [user:genesissunga399@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed Detail: _åTeØ&×<BÌ™bãıë |[u#ÇBF_ª…êJÔè`Ñ¸E|TwÑCYºOY¯ëU!»^º&Şœ2Œ8ªÀ¤÷=À"¿Èe®† Ì+íÒ%µµ®'hc= E€ÈÏ³9¨ÃªÎ‘~“[F:ü©^2Ï•H½KK·£ø§şÑÉˆ¼òñ2 [¤tZ3™}o˜
+ûÊè¡(ô€İÖ
+[2025-08-03 05:52:40] [user:genesissunga399@gmail.com] [Email Verified] Account activated
+[2025-08-03 05:55:14] [user:iamunknown952@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
+[2025-08-03 05:55:55] [user:iamunknown952@gmail.com] [Email Verified] Account activated
+[2025-08-03 05:59:53] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 06:00:05] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-03 06:01:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 06:01:12] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'hhhh' (ID: 25)
+[2025-08-03 06:01:46] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'Integration' for team 'Test'
+[2025-08-03 06:02:56] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-03 07:54:40] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-03 07:56:46] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 09:25:25] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 09:45:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 09:57:36] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-03 10:14:14] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'Sagutann nyo' (Project ID: 26) to students: .
+[2025-08-03 10:17:35] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'gggg' (Project ID: 26) to students: .
+[2025-08-03 10:19:51] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'fffff' (Project ID: 26) to students: .
+[2025-08-03 10:21:29] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hhhh' (Project ID: 26) to students: .
+[2025-08-03 10:24:03] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hhh' (Project ID: 26) to students: Genesis Sunga, Mr Unknown.
+[2025-08-03 10:30:11] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-03 10:30:47] [student:Genesis M Sunga] [Turned In Task] Marked assignment ID 72 as submitted
+[2025-08-03 10:31:06] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-03 10:32:46] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 05:42:32] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-04 06:25:18] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'Genesis' (Project ID: 26) to students: Genesis Sunga, Mr Unknown.
+[2025-08-04 06:26:19] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 07:04:43] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 07:05:26] [student:Genesis M Sunga] [Turned In Task] Marked assignment ID 76 as submitted
+[2025-08-04 07:05:46] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-04 07:06:06] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 76 for student ID 18 with score 100.
+[2025-08-04 08:08:55] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'Please view' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 08:10:50] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'genesis' (Project ID: 26) to students: Genesis Sunga, Mr Unknown.
+[2025-08-04 08:11:29] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 08:43:44] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-04 09:01:02] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'gggg' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 09:01:42] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'ggg' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 09:09:04] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'ggg' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 09:20:17] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hhhh' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 09:22:48] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'aaa' (Project ID: 26) to students: Mr Unknown.
+[2025-08-04 09:45:30] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hello' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 09:56:09] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'gggg' (Project ID: 26) to students: Genesis Sunga.
+[2025-08-04 09:56:31] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'Genesis' for team 'gggg'
+[2025-08-04 09:57:37] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 09:59:14] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 10:05:44] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 10:06:09] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 10:06:55] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-04 10:07:17] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'ege' (Project ID: 27) to students: Genesis Sunga.
+[2025-08-04 10:07:40] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 10:09:39] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 10:10:04] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 10:31:03] [user:dongustavo638@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
+error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
