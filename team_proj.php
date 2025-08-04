@@ -60,13 +60,13 @@ if (!empty($ass_ids)) {
         $projIdStmt->fetch();
         $projIdStmt->close();
 
-        // Count total students in the project
-        $totalStmt = $conn->prepare("SELECT COUNT(*) FROM project_members WHERE proj_id = ?");
-        $totalStmt->bind_param("i", $proj_id_for_ass);
-        $totalStmt->execute();
-        $totalStmt->bind_result($total);
-        $totalStmt->fetch();
-        $totalStmt->close();
+        // Count total students assigned to this specific assignment
+          $totalStmt = $conn->prepare("SELECT COUNT(*) FROM assignment_students WHERE assigned_id = ?");
+          $totalStmt->bind_param("i", $ass_id);
+          $totalStmt->execute();
+          $totalStmt->bind_result($total);
+          $totalStmt->fetch();
+          $totalStmt->close();
 
         // Count those who submitted for this assignment
         $submittedStmt = $conn->prepare("SELECT COUNT(DISTINCT userinfo_id) FROM student_submissions WHERE assigned_id = ?");

@@ -268,3 +268,7 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-04 10:10:04] [user:iamunknown952@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-04 10:31:03] [user:dongustavo638@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Connection failed. stream_socket_enable_crypto(): SSL operation failed with code 1. OpenSSL Error messages:
 error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
+[2025-08-04 15:46:02] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-04 15:46:06] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-04 15:46:52] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-04 17:19:29] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'sdgrfjhkl;' (Project ID: 22) to students: Anika Benetua.

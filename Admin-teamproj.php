@@ -147,7 +147,15 @@ foreach ($students as $student) {
 
         <div class="wrapper">
             <div class="container1">
-                <h1>ASSIGNED STUDENTS</h1><hr> <div class="title"><h2 class="NAME">NAME</h2><h2 class="STATUS">STATUS</h2></div><hr>
+                <div class="assigned-header">
+                        <h1>ASSIGNED STUDENTS</h1>
+                        <a href="generate_assignment_pdf.php?ass_id=<?= $ass_id ?>" target="_blank">
+                                    <button class="print-btn">📄 Download PDF</button>
+                                </a>
+
+                    </div>
+                    <hr>
+
                 <?php foreach ($students as $uid => $s): ?>
                     <?php $isSelected = ($selectedUID === $uid); ?>
                     <div class="content student-item <?= $isSelected ? 'active' : '' ?>" data-uid="<?= $uid ?>">
