@@ -272,3 +272,6 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-04 15:46:06] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-04 15:46:52] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-04 17:19:29] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'sdgrfjhkl;' (Project ID: 22) to students: Anika Benetua.
+[2025-08-05 06:14:59] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-05 06:15:42] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-05 06:26:27] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'due date' (Project ID: 27) to students: Mr Unknown, Genesis Sunga.

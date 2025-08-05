@@ -58,7 +58,12 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
     $instructions = $conn->real_escape_string(trim($_POST['instructions'] ?? ''));
     $assigned_students_input = trim($_POST['assigned_students'] ?? '');
     $points = isset($_POST['points']) ? (int)$_POST['points'] : 0;
-    $due_date = !empty($_POST['due_date']) ? $conn->real_escape_string($_POST['due_date']) : null;
+    $due_date = $_POST['due_date'] ?? null;
+    $today = date('Y-m-d');
+
+    if ($due_date > $today) {
+    die("Due date cannot be in the future.");
+    }
 
     // Insert into assigned table
     $stmt = $conn->prepare("INSERT INTO assigned (proj_id, project_name, instructions, assigned_students, points, due_date) VALUES (?, ?, ?, ?, ?, ?)");
@@ -317,7 +322,7 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
 
       <p><strong>Due</strong></p>
       <div class="due-date-container">
-        <input type="date" id="due" name="due_date" class="date-picker" placeholder="No due date" />
+      <input type="date" id="due" name="due_date" class="date-picker" placeholder="No due date" />
       </div>
     </div>
 
@@ -444,7 +449,10 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
   return true;
 };
 
-
+window.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    document.getElementById('due').setAttribute('min', today);
+  });
 
 
   attachFilesInput.addEventListener('change', (event) => {
