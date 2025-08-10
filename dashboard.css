@@ -467,10 +467,17 @@ body {
 }
 
 .icons span {
+  cursor: pointer;
   height: 30px;
   width: 30px;
   line-height: 30px;
   font-size: 1.4rem;
+}
+.icons span:hover {
+  cursor: pointer;
+  color: #007bff; /* example hover color */
+  transform: scale(1.1); /* little zoom effect */
+  transition: all 0.2s ease;
 }
 
 .current-date {
