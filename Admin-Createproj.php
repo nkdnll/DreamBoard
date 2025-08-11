@@ -37,11 +37,33 @@ if ($proj_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $selectedStudentsFromInput = array_filter(array_map('trim', explode(',', $assigned_students_input)));
+
+$studentsToAssign = [];
+// Check if "ALL" was effectively selected (i.e., if all project members are in the input)
+if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) === count($projectMembers)) {
+    // If all available project members were selected, assign to all
+    foreach ($projectMembers as $name => $id) {
+        $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
+    }
+} else {
+    // Otherwise, assign only to the explicitly selected ones (that are also project members)
+    foreach ($selectedStudentsFromInput as $name) {
+        if (isset($projectMembers[$name])) {
+            $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
+        }
+    }
+}
     $project_name = $conn->real_escape_string(trim($_POST['project_name'] ?? ''));
     $instructions = $conn->real_escape_string(trim($_POST['instructions'] ?? ''));
     $assigned_students_input = trim($_POST['assigned_students'] ?? '');
     $points = isset($_POST['points']) ? (int)$_POST['points'] : 0;
-    $due_date = !empty($_POST['due_date']) ? $conn->real_escape_string($_POST['due_date']) : null;
+    $due_date = $_POST['due_date'] ?? null;
+    $today = date('Y-m-d');
+
+    if ($due_date > $today) {
+    die("Due date cannot be in the future.");
+    }
 
     // Insert into assigned table
     $stmt = $conn->prepare("INSERT INTO assigned (proj_id, project_name, instructions, assigned_students, points, due_date) VALUES (?, ?, ?, ?, ?, ?)");
@@ -67,23 +89,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $memberStmt->close();
 
         // Parse selected student names
-        $selectedStudents = array_filter(array_map('trim', explode(',', $assigned_students_input)));
-        $assignToAll = (count($selectedStudents) === count($projectMembers));
+       // In PHP, after getting $assigned_students_input
+$selectedStudentsFromInput = array_filter(array_map('trim', explode(',', $assigned_students_input)));
 
-        // Build the final list of students to assign
-        $studentsToAssign = [];
-        if ($assignToAll) {
-            foreach ($projectMembers as $name => $id) {
-                $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
-            }
-        } else {
-            foreach ($selectedStudents as $name) {
-                if (isset($projectMembers[$name])) {
-                    $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
-                }
-            }
+$studentsToAssign = [];
+// Check if "ALL" was effectively selected (i.e., if all project members are in the input)
+if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) === count($projectMembers)) {
+    // If all available project members were selected, assign to all
+    foreach ($projectMembers as $name => $id) {
+        $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
+    }
+} else {
+    // Otherwise, assign only to the explicitly selected ones (that are also project members)
+    foreach ($selectedStudentsFromInput as $name) {
+        if (isset($projectMembers[$name])) {
+            $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
         }
-
+    }
+}
         // Insert into assignment_students
         $insertStmt = $conn->prepare("
             INSERT INTO assignment_students (assigned_id, username, userinfo_ID, status)
@@ -255,10 +278,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="attach-options">
                   <div class="option" id="driveBtn" title="Attach from Google Drive"><img src="google.png" alt="Drive" /></div>
                   <div class="option" id="youtubeBtn" title="Attach YouTube Video"><img src="youtube.png" alt="YouTube" /></div>
-                  <div class="option" id="createBtn" title="Create Document"><img src="https://img.icons8.com/ios-filled/50/plus-math.png" alt="Create" /></div>
+                  
                   <div class="option" id="uploadBtn" title="Upload Files"><img src="https://img.icons8.com/ios-filled/50/upload.png" alt="Upload" /></div>
                   <div class="option" id="linkBtn" title="Attach Link"><img src="https://img.icons8.com/ios-filled/50/link.png" alt="Link" /></div>
                 </div>
+                
+
                 <!-- Hidden file input for uploads -->
                 <input type="file" id="fileUploadInput" name="attachments[]" multiple style="display:none;" />
                 <!-- Area to show attached files -->
@@ -271,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="right-panel">
                   <div class="label">Assign to</div>
                   <div class="assign-dropdown">
-                    <div class="select-btn" id="studentSelect">
+                    <div class="select-btn" id="studentSelect" require>
                       <span class="btn-text">SELECT STUDENTS</span>
                       <span class="arrow-dwn"><i class="fas fa-chevron-down"></i></span>
                     </div>
@@ -297,7 +322,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
       <p><strong>Due</strong></p>
       <div class="due-date-container">
-        <input type="date" id="due" name="due_date" class="date-picker" placeholder="No due date" />
+      <input type="date" id="due" name="due_date" class="date-picker" placeholder="No due date" />
       </div>
     </div>
 
@@ -382,6 +407,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   // On form submit: update hidden inputs with Quill content and selected students
   const form = document.querySelector(".create-class");
+  
   form.onsubmit = function () {
     // Save Quill HTML content
     document.getElementById('hiddenInstructions').value = quill.root.innerHTML;
@@ -402,6 +428,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   document.getElementById('uploadBtn').addEventListener('click', () => {
     attachFilesInput.click();
   });
+  form.onsubmit = function () {
+  // Save Quill HTML content
+  document.getElementById('hiddenInstructions').value = quill.root.innerHTML;
+
+  // Collect selected student names (excluding the ALL row)
+  const selectedStudents = Array.from(document.querySelectorAll("#studentList .item"))
+    .filter(item => item.classList.contains("checked") && item.id !== "selectAll")
+    .map(item => item.querySelector(".item-text").textContent);
+
+  // Require at least one student to be selected
+  if (selectedStudents.length === 0) {
+    alert("Please assign the task to at least one student.");
+    return false; // Prevent form submission
+  }
+
+  // Join selected names into a string
+  document.getElementById('assignedStudents').value = selectedStudents.join(",");
+
+  return true;
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    document.getElementById('due').setAttribute('min', today);
+  });
+
 
   attachFilesInput.addEventListener('change', (event) => {
     const files = Array.from(event.target.files);
@@ -409,7 +461,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       // Add visual attachment item
       const div = document.createElement('div');
       div.className = 'attachment-item';
-      div.textContent = `📎 ${file.name}`;
+      div.innerHTML = `📎 ${file.name} <span class="remove-btn" title="Remove">✖</span>`;
       attachedFilesContainer.appendChild(div);
 
       // Optionally add file info to hidden inputs for form submit
@@ -435,16 +487,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   // Add link attachment
   document.getElementById('linkBtn').addEventListener('click', () => {
-    const url = prompt("Enter a link URL:");
-    if (url) {
-      const div = document.createElement('div');
-      div.className = 'attachment-item';
-      div.innerHTML = `<a href="${url}" target="_blank">🔗 ${url}</a>`;
-      attachedFilesContainer.appendChild(div);
-
-      addHiddenAttachment(url, 'link');
+  let url = prompt("Enter a link URL:");
+  if (url) {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      url = "https://" + url;
     }
-  });
+    const div = document.createElement('div');
+    div.className = 'attachment-item';
+    div.innerHTML = `<a href="${url}" target="_blank">🔗 ${url}</a> <span class="remove-btn" title="Remove">✖</span>`;
+    attachedFilesContainer.appendChild(div);
+
+    addHiddenAttachment(url, 'link');
+  }
+});
+
 
   // Add YouTube video attachment
   document.getElementById('youtubeBtn').addEventListener('click', () => {
@@ -472,10 +528,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
   });
 
-  // Create document button alert
-  document.getElementById('createBtn').addEventListener('click', () => {
-    alert('Create document feature is not implemented yet.');
-  });
+  
+attachedFilesContainer.addEventListener('click', function(e) {
+  if (e.target.classList.contains('remove-btn')) {
+    const attachmentItem = e.target.closest('.attachment-item');
+    if (attachmentItem) {
+      attachmentItem.remove();
+
+      // Optionally: also remove the corresponding hidden inputs
+      const link = attachmentItem.querySelector('a');
+      if (link) {
+        const url = link.getAttribute('href');
+        const hiddenInputs = document.querySelectorAll('#hiddenAttachmentInputs input');
+        hiddenInputs.forEach(input => {
+          if (input.value === url) {
+            input.remove();
+          }
+        });
+      }
+    }
+  }
+});
+
+
 </script>
 
 </body>

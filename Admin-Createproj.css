@@ -507,3 +507,14 @@ select {
         color: #0066cc;
       }
 
+      .remove-btn {
+        color: #a00;
+        font-weight: bold;
+        margin-left: 10px;
+        cursor: pointer;
+        float: right;
+      }
+      .remove-btn:hover {
+        color: #ff0000;
+      }
+      

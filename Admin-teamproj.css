@@ -418,3 +418,25 @@ body {
   background:#E1D4C2;
    height: 50px; /* or however much higher you want */
 }
+/*printable*/
+.assigned-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.print-btn {
+    background-color: #b99a84;
+    color: #000000;
+    border: none;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.print-btn:hover {
+    background-color: #555;
+}

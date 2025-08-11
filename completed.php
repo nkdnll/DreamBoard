@@ -5,21 +5,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$currentPage = basename($_SERVER['PHP_SELF']);
-
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
 
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-$adminID = $_SESSION['admininfoID'];
+// Get the student's user ID from the session
+$userinfoID = $_SESSION['userinfo_ID']; // Assuming this is where the student's ID is stored
 
 $sql = "
-    SELECT 
+    SELECT
         a.ass_id,
-        a.project_name AS assigned_proj_name, 
-        p.project_name AS proj_name, 
+        a.project_name AS assigned_proj_name,
+        p.project_name AS proj_name,
         ai.INSTRUCTOR,
         s.username,
         s.status
@@ -27,11 +26,13 @@ $sql = "
     JOIN projects p ON a.proj_id = p.proj_id
     JOIN admininfo ai ON p.admininfoID = ai.admininfoID
     JOIN assignment_students s ON s.assigned_id = a.ass_id
-    WHERE ai.admininfoID = ? AND s.status = 'Completed'
+    WHERE s.userinfo_ID = ? AND s.status = 'Completed'
 ";
 
+
 $stmt = $connection->prepare($sql);
-$stmt->bind_param("i", $adminID);
+// Bind the userinfoID to the query
+$stmt->bind_param("i", $userinfoID);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -59,43 +60,18 @@ $result = $stmt->get_result();
 
 <div class="container">
     <div class="sidebar">
-      <ul>
-        <!-- ✅ Updated: Add PHP to check current page for 'active' class -->
-        <li class="user">
-          <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
-            <i class="fas fa-user"></i> User
-          </a>
+        <ul>
+            <li class="user"><a href="profile.php"><i class="fas fa-user"></i>User</a></li>
+            <li>
+            <a href="#"><i class='bx bxs-bell'></i> Notification</a>
         </li>
-        <li>
-          <a href="#" class=""><i class='bx bxs-bell'></i> Notification</a>
-        </li>
-        <li>
-          <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
-            <i class="fas fa-th-large"></i> Dashboard
-          </a>
-        </li>
-        <li>
-        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
-            <i class="fas fa-folder-open"></i> Class Works
-        </a>
-    </li>
-        <li>
-          <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
-            <i class="fas fa-calendar-alt"></i> Calendar
-          </a>
-        </li>
-        <li>
-          <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
-            <i class="fas fa-clipboard-list"></i> Forms
-          </a>
-        </li>
-        <li>
-          <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
-            <i class="fas fa-users"></i> About Us
-          </a>
-        </li>
-      </ul>
-      <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="Projects.php"><i class="fas fa-folder-open"></i>Class Works</a></li>
+            <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
+            <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>
+        </ul>
+        <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
 

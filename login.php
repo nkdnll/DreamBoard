@@ -80,29 +80,36 @@
 
       // === Handle Registration ===
       elseif (isset($_POST['submit'])) {
-          $confirm_password = trim($_POST['Conpassword']);
-
-          if ($password !== $confirm_password) {
-              echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
-          } else {
-              // Modified check_query to also select the status
-              $check_query = "SELECT status FROM userin WHERE Email = ?";
-              $stmt = mysqli_prepare($conn, $check_query);
-              mysqli_stmt_bind_param($stmt, "s", $Email);
-              mysqli_stmt_execute($stmt);
-              $check_result = mysqli_stmt_get_result($stmt);
-
-              if (mysqli_num_rows($check_result) > 0) {
-                  $existing_user = mysqli_fetch_assoc($check_result);
-                  if ($existing_user['status'] === 'active') {
-                      echo "<script>alert('Email already registered and active. Please use a different one or log in.'); window.history.back();</script>";
-                  } elseif ($existing_user['status'] === 'pending') {
-                      echo "<script>alert('This email is already registered and pending verification. Please verify your account or use a different email.'); window.location.href='email_verify.php?email=" . urlencode($Email) . "';</script>";
-                      exit();
-                  } else {
-                      // Handle other statuses if necessary, or default to already registered
-                      echo "<script>alert('Email already registered with an unknown status. Please contact support.'); window.history.back();</script>";
-                  }
+        $confirm_password = trim($_POST['Conpassword']);
+    
+        // ✅ Password length check (min 8 chars)
+        if (strlen($password) < 8) {
+            echo "<script>alert('Password must be at least 8 characters long.'); window.history.back();</script>";
+            exit();
+        }
+    
+        if ($password !== $confirm_password) {
+            echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
+            exit();
+        }
+    
+        // Modified check_query to also select the status
+        $check_query = "SELECT status FROM userin WHERE Email = ?";
+        $stmt = mysqli_prepare($conn, $check_query);
+        mysqli_stmt_bind_param($stmt, "s", $Email);
+        mysqli_stmt_execute($stmt);
+        $check_result = mysqli_stmt_get_result($stmt);
+    
+        if (mysqli_num_rows($check_result) > 0) {
+            $existing_user = mysqli_fetch_assoc($check_result);
+            if ($existing_user['status'] === 'active') {
+                echo "<script>alert('Email already registered and active. Please use a different one or log in.'); window.history.back();</script>";
+            } elseif ($existing_user['status'] === 'pending') {
+                echo "<script>alert('This email is already registered and pending verification. Please verify your account or use a different email.'); window.location.href='email_verify.php?email=" . urlencode($Email) . "';</script>";
+                exit();
+            } else {
+                echo "<script>alert('Email already registered with an unknown status. Please contact support.'); window.history.back();</script>";
+            }
             } else {
                 // Generate OTP for new registration
                 $otp_str = str_shuffle("0123456789");
@@ -161,7 +168,7 @@
               }
             }
           }
-        }
+        
       
             
               ?>
