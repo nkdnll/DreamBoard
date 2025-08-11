@@ -200,3 +200,10 @@
 [2025-07-31 07:09:53] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'hello' (Project ID: 27) to students: Eyyan Rellosa.
 [2025-07-31 07:10:24] [student:Eyyan Ian Rellosa] [Turned In Task] Marked assignment ID 54 as submitted
 [2025-07-31 07:10:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 19 with score 50.
+[2025-08-04 05:54:44] [user:ryanjosephlerio@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known. 
+[2025-08-04 05:58:45] [user:ryanjosephlerio@gmail.com] [Registration Failed] New user registered but failed to send OTP. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known. 
+[2025-08-04 06:00:24] [user:ryanjosephlerio@gmail.com] [Email Verified] Account activated
+[2025-08-05 10:54:32] [user:ryanjosephlerio9@gmail.com] [Registration] New user registered and OTP sent for verification.
+[2025-08-05 10:55:02] [user:ryanjosephlerio9@gmail.com] [Email Verified] Account activated
+[2025-08-11 12:18:57] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-11 15:10:56] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.

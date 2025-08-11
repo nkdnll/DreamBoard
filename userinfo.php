@@ -286,10 +286,15 @@ label {
         <div class="box-line"></div>
         <div class="form-column">
 
-         <div class="form-group">
-            <input type="text" name="SEX" required/>
-            <label>SEX:</label>
-            </div >
+        <div class="form-group">
+  <select name="SEX" required style="height: 50px; background-color: #D9D9D9; border: none; border-radius: 8px; padding: 0 15px; font-size: 18px; width: 100%; max-width: 400px; text-align: center; color: black;">
+    <option value="" disabled selected hidden></option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Prefer not to say">Prefer not to say</option>
+  </select>
+  <label>SEX:</label>
+</div>
 
           <div class="form-group">
             <input type="date" name="BIRTHDAY" required/>

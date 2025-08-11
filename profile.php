@@ -104,6 +104,12 @@ if (!$user) {
         <div class="profile-row"><span class="profile-label">CITIZENSHIP:</span> <?php echo htmlspecialchars($user['CITIZENSHIP']); ?></div>
         <div class="profile-row"><span class="profile-label">EMAIL:</span> <?php echo htmlspecialchars($user['EMAIL']); ?></div>
         <div class="profile-row"><span class="profile-label">CURRENT SCHOOL:</span> <?php echo htmlspecialchars($user['CURRENT_SCHOOL']); ?></div>
+
+        <div class="edit-profile-container">
+  <a href="edit_profile.php" class="edit-profile-button">✏️ Edit Profile</a>
+</div>
+
+
       
         </div>
         
