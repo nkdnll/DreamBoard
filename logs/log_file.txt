@@ -494,3 +494,5 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-13 12:13:57] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 80.
 [2025-08-13 12:14:18] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 80.
 [2025-08-13 12:17:34] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 90.
+[2025-08-13 16:48:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 2.
+[2025-08-13 17:01:02] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 56.
