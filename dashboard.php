@@ -146,7 +146,7 @@ $progressPercentage = ($totalTasks > 0) ? round(($completedTasks / $totalTasks) 
       </a>
     </li>
     <li>
-      <a href="#"><i class='bx bxs-bell'></i> Notification</a>
+      <a href="user_notification.php"><i class='bx bxs-bell'></i> Notification</a>
     </li>
     <li>
       <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">

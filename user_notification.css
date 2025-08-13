@@ -1,0 +1,280 @@
+/*header*/
+header {
+    position: fixed;
+    height: 10%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #291C0E;
+    transition: 0.6s;
+    box-shadow: 0rem 0.5rem rgba(163, 136, 136, 0.1);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .navbar img {
+    width: 100px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 15px;
+    margin-left: 80px;
+  }
+
+  .navbar p {
+    font-size: 25px;
+    color: rgb(238, 238, 238);
+    font-weight: bold;
+    margin: 0;
+  }
+/*end of header*/
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background-color: #F7F2F2;
+  }
+
+/*sidebar*/
+
+  .container {
+    display: flex;
+  height: 100vh;
+  padding-top: 10vh; /* space for fixed header */
+  box-sizing: border-box;
+  overflow: hidden;
+
+  }
+  .sidebar {
+    width: 210px;
+  background-color: #75483D;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  }
+  
+  .sidebar ul {
+    padding: 0;
+    padding-top: 40px;
+    list-style: none;
+  }
+  .sidebar li {
+    margin: 20px 0;
+  }
+
+  .sidebar li a {
+    display: block;
+    align-items: center;
+    width: 100%;   
+    color: #e0d4c8;
+    text-decoration: none;
+    font-size: 21px;
+    padding: 10px 15px;
+    border-radius: 0 20px 20px 0;
+    transition: all 0.3s ease;
+    box-sizing: border-box;  
+  }
+  
+  .sidebar li a i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  .sidebar li a:hover,
+  .sidebar li a.active {
+    width: 250px;                 /* Extends the link width */
+  margin-left: -20px;           /* Moves it slightly left to look centered */
+  padding-left: 35px;           /* Indent text inward */
+  background-color: #b99a84;
+  color: #4e3b34;
+  font-weight: bold;
+  border-radius: 0 20px 20px 0;
+  }
+  
+  .logout {
+   margin-top: 40px;         /* Optional spacing from menu */
+   align-self: flex-end;
+  font-size: 18px;
+  color: #f0e8d5;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 0 20px 20px 0;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  }
+  
+  .logout i {
+    margin-right: 8px;
+  }
+  
+  .logout:hover {
+    color: #4e3b34;
+    font-weight: bold;
+    margin-left: -20px;
+    padding-left: 35px;
+    border-radius: 0 20px 20px 0;
+  }
+  
+
+/*END OF SIDE BAR*/
+/* notification.css */
+
+/* Main content area */
+/* notification.css */
+
+/* Main content area */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 10vh); /* Full height minus header */
+}
+
+/* Profile box containing notifications */
+.profile-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* Notification scrollable area */
+.notification-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    position: relative;
+    max-height: calc(100vh - 200px); /* Adjust based on your header height */
+}
+
+/* Vertical timeline line */
+.notification-scrollable::before {
+    content: "";
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    z-index: 1;
+    background: none;
+}
+
+/* Notification card styling */
+.notification-item {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    border-bottom: none !important;
+}
+
+/* Unread notification */
+.notification-item.unread {
+    background: #f0fff0;
+    border-left: 3px solid #4CAF50;
+}
+
+/* Notification icon */
+.notification-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #555;
+}
+
+/* Notification content */
+.notification-content {
+    flex: 1;
+}
+
+.notification-content a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.notification-content a:hover {
+    color: #4CAF50;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Date heading */
+.notification-date {
+    position: relative;
+    margin: 0 0 10px 0; 
+    padding-left: 15px;
+    font-weight: bold;
+    color: #555;
+    background: #f5f5f5;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* No notifications */
+.no-notifications {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+}
+
+.no-notifications i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+
+/* Scrollbar styling */
+.notification-scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notification-scrollable::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.notification-scrollable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Unread notification */
+.notification-item.unread {
+    background: #f0fff0;
+    border-left: 3px solid #4CAF50;
+}
+
+/* Read notification (explicit style) */
+.notification-item {
+    background: #fff;
+    border-left: none;
+}

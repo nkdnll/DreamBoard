@@ -203,7 +203,7 @@ $completionPercent = $totalStudents > 0 ? round(($completedStudentsCount / $tota
       </a>
     </li>
     <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+      <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
       </a>
     </li>

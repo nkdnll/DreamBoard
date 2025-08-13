@@ -482,3 +482,15 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
 [2025-08-10 06:23:05] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-10 06:42:21] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 06:48:42] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 07:37:19] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-13 07:37:41] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-13 07:38:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 10:34:23] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 10:34:33] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-13 10:34:59] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 12:13:09] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 90.
+[2025-08-13 12:13:41] [student:nikki  benetua] [Turned In Task] Marked assignment ID 53 as submitted
+[2025-08-13 12:13:57] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 80.
+[2025-08-13 12:14:18] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 80.
+[2025-08-13 12:17:34] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 90.
