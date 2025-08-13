@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'unread_count.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -57,43 +58,51 @@ $result = $stmt->get_result();
 
 <div class="container">
     <div class="sidebar">
-  <ul>
-    <li class="user">
-      <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
-        <i class="fas fa-user"></i> User
-      </a>
-    </li>
-    <li>
-      <a href="#"><i class='bx bxs-bell'></i> Notification</a>
-    </li>
-    <li>
-      <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
-        <i class="fas fa-th-large"></i> Dashboard
-      </a>
-    </li>
-    <li>
-        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
-            <i class="fas fa-folder-open"></i> Class Works
-        </a>
-    </li>
-    <li>
-      <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
-        <i class="fas fa-calendar-alt"></i> Calendar
-      </a>
-    </li>
-    <li>
-      <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
-        <i class="fas fa-clipboard-list"></i> Forms
-      </a>
-    </li>
-    <li>
-      <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
-        <i class="fas fa-users"></i> About Us
-      </a>
-    </li>
-  </ul>
-  <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-</div>
+      <ul>
+        <!-- ✅ Updated: Add PHP to check current page for 'active' class -->
+        <li class="user">
+          <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
+            <i class="fas fa-user"></i> User
+          </a>
+        </li>
+        <li>
+              <a href="user_notification.php" class="<?= ($currentPage == 'user_notification.php') ? 'active' : '' ?>">
+                <i class='bx bxs-bell'></i> Notification
+                <?php if ($unreadCount > 0): ?>
+                    <span id="sidebar-unread-count" class="notification-badge"><?= $unreadCount ?></span>
+                <?php endif; ?>
+              </a>
+         </li>
+        <li>
+          <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
+            <i class="fas fa-th-large"></i> Dashboard
+          </a>
+        </li>
+        <li>
+              <a href="Projects.php"
+                class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
+                <i class="fas fa-folder-open"></i> Class Works
+              </a>
+            </li>
+
+        <li>
+          <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
+            <i class="fas fa-calendar-alt"></i> Calendar
+          </a>
+        </li>
+        <li>
+          <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
+            <i class="fas fa-clipboard-list"></i> Forms
+          </a>
+        </li>
+        <li>
+          <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
+            <i class="fas fa-users"></i> About Us
+          </a>
+        </li>
+      </ul>
+      <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
 
     <div class="main-content">
     <div class="main-head">

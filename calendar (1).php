@@ -4,6 +4,7 @@ date_default_timezone_set('Asia/Manila');
 
 //include 'log1.php';
 session_start();
+include 'unread_count.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $studentId = $_SESSION['userinfo_ID'] ?? null;
@@ -383,18 +384,23 @@ body {
           </a>
         </li>
         <li>
-          <a href="#" class=""><i class='bx bxs-bell'></i> Notification</a>
-        </li>
+              <a href="user_notification.php" class="<?= ($currentPage == 'user_notification.php') ? 'active' : '' ?>">
+                <i class='bx bxs-bell'></i> Notification
+                <?php if ($unreadCount > 0): ?>
+                    <span id="sidebar-unread-count" class="notification-badge"><?= $unreadCount ?></span>
+                <?php endif; ?>
+              </a>
+         </li>
         <li>
           <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
             <i class="fas fa-th-large"></i> Dashboard
           </a>
         </li>
         <li>
-        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
+          <a href="Projects.php" class="<?= ($currentPage == 'Projects.php') ? 'active' : '' ?>">
             <i class="fas fa-folder-open"></i> Class Works
-        </a>
-    </li>
+          </a>
+        </li>
         <li>
           <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
             <i class="fas fa-calendar-alt"></i> Calendar

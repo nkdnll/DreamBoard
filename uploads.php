@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'unread_count.php';
 $conn = mysqli_connect("localhost", "root", "", "projectmanagement");
 
 if (!$conn) {
