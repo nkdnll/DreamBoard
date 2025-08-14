@@ -207,7 +207,7 @@ body {
 .edit-profile-button {
     background-color: #F7F2F2;
     color: #000000;
-    padding: 10px 20px;
+    padding: 10px 40px;
     font-size: 13px;
     border-radius: 8px;
     text-decoration: none;
@@ -215,7 +215,7 @@ body {
     transition: background-color 0.3s ease;
     margin-bottom: 20px;
     margin-top: -10px;
-    margin-left: 10px;
+    margin-right: 150px;
 }
 
 .edit-profile-container {

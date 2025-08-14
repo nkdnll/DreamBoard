@@ -120,177 +120,113 @@ $conn->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
-            box-sizing: border-box;
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
 
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            box-sizing: border-box;
-        }
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
 
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
+h2 {
+    color: #caa07e;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
 
-        .header img {
-            height: 50px;
-            margin-right: 10px;
-            border-radius: 8px;
-        }
+.message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
 
-        .header h1 {
-            font-size: 2em;
-            color: #4CAF50;
-            margin: 0;
-        }
+.message.success {
+    background: #e6ffe6;
+    color: #caa07e;
+    border: 1px solid #caa07e;
+}
 
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
+.message.error {
+    background: #ffe6e6;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
 
-        p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
+.message.info {
+    background: #e0f7fa;
+    color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
 
-        .input-field {
-            position: relative;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            background-color: #f0f2f5;
-            border-radius: 8px;
-            padding: 8px 15px;
-        }
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    text-align: left;
+}
 
-        .input-field i {
-            color: #777;
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
 
-        .input-field input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 10px 0;
-            font-size: 1em;
-            outline: none;
-            color: #333;
-            width: 100%;
-        }
+button {
+    width: 100%;
+    background-color: #caa07e;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 100%;
-            margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
-        }
+button:hover {
+    background-color: #caa07e;
+    transform: translateY(-2px);
+}
 
-        .btn:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-        }
+button:active {
+    transform: translateY(0);
+}
 
-        .btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
-        }
+form {
+    margin-bottom: 15px;
+}
 
-        .message {
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            text-align: left;
-            word-wrap: break-word; /* Ensure long messages break */
-        }
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px;
+        padding: 25px;
+    }
+}
 
-        .message.success {
-            background-color: #e6ffe6;
-            color: #28a745;
-            border: 1px solid #28a745;
-        }
-
-        .message.error {
-            background-color: #ffe6e6;
-            color: #dc3545;
-            border: 1px solid #dc3545;
-        }
-
-        .message.info {
-            background-color: #e0f7fa;
-            color: #17a2b8;
-            border: 1px solid #17a2b8;
-        }
-
-        .links {
-            margin-top: 20px;
-        }
-
-        .links a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .links a:hover {
-            color: #0056b3;
-            text-decoration: underline;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 25px;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 1em;
-            }
-        }
     </style>
 </head>
 <body>
