@@ -1,6 +1,8 @@
 <?php
 session_start();
 require 'db.php'; // Connect to DB
+include 'admin_sidebar.php';
+
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -23,6 +25,29 @@ $classesPages = [
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="Admin-about.css" />
       </head>
+       <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 <header>
     <div class="navbar">
@@ -39,11 +64,15 @@ $classesPages = [
         <i class="fas fa-user"></i> Admin
       </a>
     </li>
-    <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+   <li>
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+</li>
+ 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard

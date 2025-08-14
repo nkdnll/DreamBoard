@@ -1,5 +1,6 @@
 <?php
 require 'db.php'; // Connect to DB
+include 'admin_sidebar.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $projectName = $_POST['project_name'];
@@ -60,6 +61,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 </head>
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <header>
         <div class="navbar">
               <img src="logo.png" width="100px" height="50px">

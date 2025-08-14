@@ -222,9 +222,6 @@ body {
   text-align: right;
   margin-top: 15px;
 }
-
-
-
   .edit-icon {
     position: absolute;
     top: -50;
@@ -274,6 +271,7 @@ form button {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 25px;
+    font-style: italic;
 }
 
 /* Hover effect */

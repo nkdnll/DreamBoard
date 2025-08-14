@@ -496,3 +496,19 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-13 12:17:34] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 90.
 [2025-08-13 16:48:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 2.
 [2025-08-13 17:01:02] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 56.
+[2025-08-14 06:44:29] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-14 06:44:47] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-14 06:45:31] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-14 07:13:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 77.
+[2025-08-14 07:17:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 56.
+[2025-08-14 07:17:18] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 17 with score 54.
+[2025-08-14 07:17:27] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 77.
+[2025-08-14 07:22:41] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:24:40] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:24:47] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:25:39] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:28:34] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:28:39] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:28:47] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 77.
+[2025-08-14 07:31:47] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 08:26:44] [student:nikki  benetua] [Turned In Task] Marked assignment ID 52 as submitted

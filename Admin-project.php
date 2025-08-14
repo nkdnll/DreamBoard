@@ -2,6 +2,7 @@
 session_start();
 require_once 'log1.php';
 require 'db.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -32,6 +33,29 @@ $result = $conn->query($query);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Admin Projects</title>
 </head>
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 <header>
     <div class="navbar">
@@ -41,7 +65,7 @@ $result = $conn->query($query);
 </header>
 
 <div class="container">
-    <div class="sidebar">
+   <div class="sidebar">
   <ul>
     <li class="user">
       <a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>">
@@ -49,10 +73,13 @@ $result = $conn->query($query);
       </a>
     </li>
     <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
@@ -83,9 +110,6 @@ $result = $conn->query($query);
     <i class="fas fa-sign-out-alt"></i> Logout
   </a>
 </div>
-
-
-
     <div class="main-content">
         <h1>Classes</h1>
         <div class="row">

@@ -2,6 +2,7 @@
 session_start();
 $conn = mysqli_connect("localhost", "root", "", "projectmanagement");
 include 'log1.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -185,6 +186,29 @@ $completionPercent = $totalStudents > 0 ? round(($completedStudentsCount / $tota
   <link rel="stylesheet" href="Admin-Dashboard.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
 </head>
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 
 <header>
@@ -203,10 +227,13 @@ $completionPercent = $totalStudents > 0 ? round(($completedStudentsCount / $tota
       </a>
     </li>
     <li>
-      <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
@@ -237,9 +264,6 @@ $completionPercent = $totalStudents > 0 ? round(($completedStudentsCount / $tota
     <i class="fas fa-sign-out-alt"></i> Logout
   </a>
 </div>
-
-
-
 
 <div class="main-content">
   <div class="greeting">

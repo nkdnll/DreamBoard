@@ -155,6 +155,15 @@ $statusCheck = fetchData($connection, "SELECT status FROM assignment_students WH
     .comment-form input { flex: 1; padding: 8px; }
     .comment-form button { padding: 8px 12px; }
     .input-file.disabled { pointer-events: none; opacity: 0.6; background: #ccc; }
+
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
   </style>
 </head>
 <body>

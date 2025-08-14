@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'log1.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -116,6 +117,29 @@ $completedCount = count(array_filter($students, fn($s) => !empty($s['submissions
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 <header>
     <div class="navbar">
@@ -125,17 +149,50 @@ $completedCount = count(array_filter($students, fn($s) => !empty($s['submissions
 </header>
 <div class="container">
     <div class="sidebar">
-        <ul>
-            <li class="user"><a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>"><i class="fas fa-user"></i> Admin</a></li>
-            <li><a href="#"><i class='bx bxs-bell'></i> Notification</a></li>
-            <li><a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="Admin-project.php" class="<?= in_array($currentPage, $classesPages) ? 'active' : '' ?>"><i class="fas fa-folder-open"></i> Classes</a></li>
-            <li><a href="Admin-calendar.php" class="<?= ($currentPage == 'Admin-calendar.php') ? 'active' : '' ?>"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-            <li><a href="Admin-forms.php" class="<?= ($currentPage == 'Admin-forms.php') ? 'active' : '' ?>"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-            <li><a href="Admin-about.php" class="<?= ($currentPage == 'Admin-about.php') ? 'active' : '' ?>"><i class="fas fa-users"></i> About Us</a></li>
-        </ul>
-        <a href="Admin-login.php" class="logout <?= ($currentPage == 'Admin-login.php') ? 'active' : '' ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
+  <ul>
+    <li class="user">
+      <a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>">
+        <i class="fas fa-user"></i> Admin
+      </a>
+    </li>
+    <li>
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
+        <i class='bx bxs-bell'></i> Notification
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
+    <li>
+      <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="Admin-project.php" class="<?= in_array($currentPage, $classesPages) ? 'active' : '' ?>">
+        <i class="fas fa-folder-open"></i> Classes
+      </a>
+    </li>
+    <li>
+      <a href="Admin-calendar.php" class="<?= ($currentPage == 'Admin-calendar.php') ? 'active' : '' ?>">
+        <i class="fas fa-calendar-alt"></i> Calendar
+      </a>
+    </li>
+    <li>
+      <a href="Admin-forms.php" class="<?= ($currentPage == 'Admin-forms.php') ? 'active' : '' ?>">
+        <i class="fas fa-clipboard-list"></i> Forms
+      </a>
+    </li>
+    <li>
+      <a href="Admin-about.php" class="<?= ($currentPage == 'Admin-about.php') ? 'active' : '' ?>">
+        <i class="fas fa-users"></i> About Us
+      </a>
+    </li>
+  </ul>
+  <a href="Admin-login.php" class="logout <?= ($currentPage == 'Admin-login.php') ? 'active' : '' ?>">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </a>
+</div>
 
     <div class="main-content">
         <div class="head">

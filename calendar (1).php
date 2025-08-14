@@ -362,7 +362,14 @@ body {
   font-weight: 500;
   letter-spacing: 0.5px;
 }
-
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
   </style>
 </head>
 <body>

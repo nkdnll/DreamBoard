@@ -2,6 +2,7 @@
 session_start();
 require 'db.php'; // Connect to DB
 include 'log1.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -69,7 +70,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   />
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
-
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
   <header>
     <div class="navbar">
@@ -89,10 +112,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </a>
     </li>
     <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
@@ -123,8 +149,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <i class="fas fa-sign-out-alt"></i> Logout
   </a>
 </div>
-
-
 
     <form action="Admin-create.php" method="POST" class="project-form">
 
