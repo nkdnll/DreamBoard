@@ -516,3 +516,7 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-16 15:30:49] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-16 15:32:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-16 17:44:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:53:10] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:53:36] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-17 19:54:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:54:20] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'testing notification' for team 'test 2'

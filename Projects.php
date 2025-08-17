@@ -129,16 +129,16 @@ $result = $stmt->get_result();
 
     <div class="main-content">
     <div class="main-head">
-      <h1>Projects</h1>
+      <h1>Class Works</h1>
         <?php if (isset($_GET['joined'])): ?>
     <div class="join-msg">
         <?php
         switch ($_GET['joined']) {
             case '1':
-                echo "<p style='color:green;'>You’ve joined the project successfully!</p>";
+                echo "<p style='color:green;'>You’ve joined the Class successfully!</p>";
                 break;
             case 'exists':
-                echo "<p style='color:orange;'>You already joined this project.</p>";
+                echo "<p style='color:orange;'>You already joined this Class.</p>";
                 break;
             case 'invalid':
                 echo "<p style='color:red;'>Invalid join code. Please try again.</p>";
@@ -150,7 +150,7 @@ $result = $stmt->get_result();
 
          <!-- 🔐 Join Project via Code -->
     <div class="join-class">
-        <h3>Join a Project </h3>
+        <h3>Join a Class </h3>
         <form method="POST" action="join_project.php">
             <input type="text" name="join_code" placeholder="Enter Join Code" required />
             <button type="submit">Join</button>
