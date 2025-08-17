@@ -482,7 +482,7 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
 [2025-08-10 06:23:05] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-10 06:42:21] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
-<<<<<<< HEAD
+HEAD
 [2025-08-15 18:00:20] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-15 18:02:20] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-15 18:07:27] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
@@ -496,7 +496,6 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-17 12:21:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 12:25:41] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 14:24:02] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
-=======
 [2025-08-13 06:48:42] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-13 07:37:19] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-13 07:37:41] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
@@ -532,6 +531,18 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-16 15:32:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-16 17:44:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 <<<<<<< HEAD
+origin/main
+[2025-08-17 17:48:19] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:53:21] [student:Kizzy dsadsa Cortez] [Turned In Task] Marked assignment ID 54 as submitted
+[2025-08-17 19:54:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:45] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 20:13:54] [user:kizzycortez78@gmail.com] [LOGIN] User successfully logged in.
+=======
+<<<<<<< HEAD
 [2025-08-17 19:53:10] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 19:53:36] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-17 19:54:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
@@ -539,6 +550,7 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 =======
 >>>>>>> origin/main
 >>>>>>> fc9ac1edc0137f4b488bea930690f200fb2f6a78
+<<<<<<< HEAD
 [2025-08-17 20:37:01] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'sdfgbh' for team 'dfgh'
 [2025-08-17 20:41:52] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'sdfrg' (Project ID: 29) to students: zyy cortez.
 [2025-08-17 20:42:22] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'fghj' (Project ID: 29) to students: zyy cortez.
@@ -546,3 +558,9 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-17 20:50:09] [student:zyy Danielle cortez] [Turned In Task] Marked assignment ID 46 as submitted
 [2025-08-17 20:52:54] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'test 1' for team 'dfgbhnj'
 [2025-08-17 20:54:36] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'werty' (Project ID: 30) to students: zyy cortez.
+=======
+>>>>>>> ad38c69e033ec8ab88346667771ef8ce06e55d85
+[2025-08-17 20:29:14] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 20:31:04] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'HOI' for team 'sda'
+[2025-08-17 20:31:15] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'HOI' (ID: 29)
+>>>>>>> 965f3a5822cd4e0b42b818670855f1e91fc4e704

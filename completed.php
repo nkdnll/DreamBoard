@@ -52,6 +52,16 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <script src="script.js" defer></script>
 </head>
+<style>
+   .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        </style>
 <body>
 <header>
     <div class="navbar">

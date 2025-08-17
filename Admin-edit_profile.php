@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="profile-box">
-                <div class="form-row">
+                <div class="form-column">
                     <div class="form-group">
                         <select name="GENDER">
                             <option value="Male" <?= ($admin['GENDER']=="Male")?'selected':'' ?>>Male</option>
