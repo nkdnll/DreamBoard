@@ -3,6 +3,7 @@ session_start();
 $conn = mysqli_connect("localhost", "root", "", "projectmanagement");
 include 'log1.php';
 
+
 // Check DB connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
@@ -55,7 +56,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="Admin-login.css">
 </head>
-
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 
 <header>

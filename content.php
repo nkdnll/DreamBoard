@@ -1,7 +1,8 @@
 <?php
 session_start();
 include 'log1.php';
-
+include 'unread_count.php';
+$currentPage = basename($_SERVER['PHP_SELF']);
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
 if ($connection->connect_error) die("Connection failed: " . $connection->connect_error);
 
@@ -154,6 +155,15 @@ $statusCheck = fetchData($connection, "SELECT status FROM assignment_students WH
     .comment-form input { flex: 1; padding: 8px; }
     .comment-form button { padding: 8px 12px; }
     .input-file.disabled { pointer-events: none; opacity: 0.6; background: #ccc; }
+
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
   </style>
 </head>
 <body>
@@ -164,17 +174,51 @@ $statusCheck = fetchData($connection, "SELECT status FROM assignment_students WH
 </header>
 <div class="container">
   <div class="sidebar">
-    <ul>
-      <li><a href="profile.php"><i class="fas fa-user"></i> User</a></li>
-      <li><a href="#"><i class='bx bxs-bell'></i> Notification</a></li>
-      <li><a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a></li>
-      <li><a href="Projects.php"><i class="fas fa-folder-open"></i> Class Works</a></li>
-      <li><a href="calendar (1).php"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-      <li><a href="forms.php"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-      <li><a href="about.php"><i class="fas fa-users"></i> About Us</a></li>
-    </ul>
-    <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </div>
+      <ul>
+        <!-- ✅ Updated: Add PHP to check current page for 'active' class -->
+        <li class="user">
+          <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
+            <i class="fas fa-user"></i> User
+          </a>
+        </li>
+        <li>
+              <a href="user_notification.php" class="<?= ($currentPage == 'user_notification.php') ? 'active' : '' ?>">
+                <i class='bx bxs-bell'></i> Notification
+                <?php if ($unreadCount > 0): ?>
+                    <span id="sidebar-unread-count" class="notification-badge"><?= $unreadCount ?></span>
+                <?php endif; ?>
+              </a>
+         </li>
+        <li>
+          <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
+            <i class="fas fa-th-large"></i> Dashboard
+          </a>
+        </li>
+        <li>
+              <a href="Projects.php"
+                class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
+                <i class="fas fa-folder-open"></i> Class Works
+              </a>
+            </li>
+
+        <li>
+          <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
+            <i class="fas fa-calendar-alt"></i> Calendar
+          </a>
+        </li>
+        <li>
+          <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
+            <i class="fas fa-clipboard-list"></i> Forms
+          </a>
+        </li>
+        <li>
+          <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
+            <i class="fas fa-users"></i> About Us
+          </a>
+        </li>
+      </ul>
+      <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
 
   <div class="main-content">
     <?php if ($project): ?>

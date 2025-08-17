@@ -5,6 +5,8 @@ $connection = new mysqli("localhost", "root", "", "projectmanagement");
 date_default_timezone_set('Asia/Manila');
 
 include 'log1.php';
+include 'admin_sidebar.php';
+
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -357,7 +359,28 @@ body {
   font-weight: 500;
   letter-spacing: 0.5px;
 }
-
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
   </style>
 </head>
 <body>
@@ -378,10 +401,13 @@ body {
       </a>
     </li>
     <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
@@ -412,7 +438,6 @@ body {
     <i class="fas fa-sign-out-alt"></i> Logout
   </a>
 </div>
-
 
 
   <div class="main-content">

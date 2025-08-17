@@ -482,6 +482,7 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
 [2025-08-10 06:23:05] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-10 06:42:21] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+<<<<<<< HEAD
 [2025-08-15 18:00:20] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-15 18:02:20] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-15 18:07:27] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
@@ -495,3 +496,39 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-17 12:21:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 12:25:41] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 14:24:02] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+=======
+[2025-08-13 06:48:42] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 07:37:19] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-13 07:37:41] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-13 07:38:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 10:34:23] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 10:34:33] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-13 10:34:59] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-13 12:13:09] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 90.
+[2025-08-13 12:13:41] [student:nikki  benetua] [Turned In Task] Marked assignment ID 53 as submitted
+[2025-08-13 12:13:57] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 80.
+[2025-08-13 12:14:18] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 80.
+[2025-08-13 12:17:34] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 53 for student ID 18 with score 90.
+[2025-08-13 16:48:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 2.
+[2025-08-13 17:01:02] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 56.
+[2025-08-14 06:44:29] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-14 06:44:47] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-14 06:45:31] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-14 07:13:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 77.
+[2025-08-14 07:17:11] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 56.
+[2025-08-14 07:17:18] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 17 with score 54.
+[2025-08-14 07:17:27] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 77.
+[2025-08-14 07:22:41] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:24:40] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:24:47] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:25:39] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:28:34] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:28:39] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 07:28:47] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 77.
+[2025-08-14 07:31:47] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 52 for student ID 18 with score 44.
+[2025-08-14 08:26:44] [student:nikki  benetua] [Turned In Task] Marked assignment ID 52 as submitted
+[2025-08-16 15:03:12] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-16 15:30:49] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-16 15:32:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-16 17:44:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+>>>>>>> origin/main

@@ -2,6 +2,7 @@
 session_start();
 include 'log1.php';
 include 'config.php';
+include 'unread_count.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 
@@ -129,6 +130,29 @@ $progressPercentage = ($totalTasks > 0) ? round(($completedTasks / $totalTasks) 
   <link rel="stylesheet" href="dashboard.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
 </head>
+<style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 <header>
   <div class="navbar">
@@ -139,43 +163,51 @@ $progressPercentage = ($totalTasks > 0) ? round(($completedTasks / $totalTasks) 
 
 <div class="container">
   <div class="sidebar">
-  <ul>
-    <li class="user">
-      <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
-        <i class="fas fa-user"></i> User
-      </a>
-    </li>
-    <li>
-      <a href="#"><i class='bx bxs-bell'></i> Notification</a>
-    </li>
-    <li>
-      <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
-        <i class="fas fa-th-large"></i> Dashboard
-      </a>
-    </li>
-    <li>
-        <a href="Projects.php" class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
-            <i class="fas fa-folder-open"></i> Class Works
-        </a>
-    </li>
-    <li>
-      <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
-        <i class="fas fa-calendar-alt"></i> Calendar
-      </a>
-    </li>
-    <li>
-      <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
-        <i class="fas fa-clipboard-list"></i> Forms
-      </a>
-    </li>
-    <li>
-      <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
-        <i class="fas fa-users"></i> About Us
-      </a>
-    </li>
-  </ul>
-  <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-</div>
+      <ul>
+        <!-- ✅ Updated: Add PHP to check current page for 'active' class -->
+        <li class="user">
+          <a href="profile.php" class="<?= ($currentPage == 'profile.php') ? 'active' : '' ?>">
+            <i class="fas fa-user"></i> User
+          </a>
+        </li>
+        <li>
+              <a href="user_notification.php" class="<?= ($currentPage == 'user_notification.php') ? 'active' : '' ?>">
+                <i class='bx bxs-bell'></i> Notification
+                <?php if ($unreadCount > 0): ?>
+                    <span id="sidebar-unread-count" class="notification-badge"><?= $unreadCount ?></span>
+                <?php endif; ?>
+              </a>
+         </li>
+        <li>
+          <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
+            <i class="fas fa-th-large"></i> Dashboard
+          </a>
+        </li>
+        <li>
+              <a href="Projects.php"
+                class="<?= in_array($currentPage, ['Projects.php', 'content.php', 'completed.php']) ? 'active' : '' ?>">
+                <i class="fas fa-folder-open"></i> Class Works
+              </a>
+            </li>
+
+        <li>
+          <a href="calendar (1).php" class="<?= ($currentPage == 'calendar (1).php') ? 'active' : '' ?>">
+            <i class="fas fa-calendar-alt"></i> Calendar
+          </a>
+        </li>
+        <li>
+          <a href="forms.php" class="<?= ($currentPage == 'forms.php') ? 'active' : '' ?>">
+            <i class="fas fa-clipboard-list"></i> Forms
+          </a>
+        </li>
+        <li>
+          <a href="about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">
+            <i class="fas fa-users"></i> About Us
+          </a>
+        </li>
+      </ul>
+      <a href="login.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
  
 
 <div class="main-content">

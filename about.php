@@ -1,7 +1,8 @@
-<?php 
-// ✅ STEP 1: Add this PHP block at the very top
-$currentPage = basename($_SERVER['PHP_SELF']); 
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+include 'unread_count.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,29 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="aboutus.css" />
 </head>
+<style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
   <header>
     <div class="navbar">
@@ -32,8 +56,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li>
-          <a href="#" class=""><i class='bx bxs-bell'></i> Notification</a>
-        </li>
+              <a href="user_notification.php" class="<?= ($currentPage == 'user_notification.php') ? 'active' : '' ?>">
+                <i class='bx bxs-bell'></i> Notification
+                <?php if ($unreadCount > 0): ?>
+                    <span id="sidebar-unread-count" class="notification-badge"><?= $unreadCount ?></span>
+                <?php endif; ?>
+              </a>
+         </li>
         <li>
           <a href="dashboard.php" class="<?= ($currentPage == 'dashboard.php') ? 'active' : '' ?>">
             <i class="fas fa-th-large"></i> Dashboard

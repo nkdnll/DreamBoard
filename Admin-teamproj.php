@@ -1,19 +1,23 @@
 <?php
 session_start();
 include 'log1.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
-  'Admin-project.php',
-  'team_proj.php',
-  'Admin-teamproj.php',
-  'Admin-create.php',
-  'Admin-Createproj.php'
+    'Admin-project.php',
+    'team_proj.php',
+    'Admin-teamproj.php',
+    'Admin-create.php',
+    'Admin-Createproj.php'
 ];
 
 $connection = new mysqli("localhost", "root", "", "projectmanagement");
-if ($connection->connect_error) die("Connection failed: " . $connection->connect_error);
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+}
 
+// Get parameters
 $ass_id = isset($_GET['ass_id']) ? (int)$_GET['ass_id'] : null;
 $selectedUID = isset($_GET['selected']) ? (int)$_GET['selected'] : null;
 $students = [];
@@ -23,29 +27,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'], $_POS
     $txt = trim($_POST['comment_text']);
     $aid = (int)$_POST['ass_id'];
     $rid = (int)$_POST['recipient_id'];
-    
+
     if (isset($_SESSION['admininfoID'])) {
         $author = $_SESSION['admininfoID'];
         $type = 'admin';
     } else {
-        // This part seems incorrect for an Admin panel.
-        // If this is an admin panel, only admin should be commenting.
-        // Consider if userinfo_ID should be used here, or if it's a copy-paste error.
-        $author = $_SESSION['userinfo_ID']; 
-        $type = 'student'; 
+        // Normally only admins post here, but fallback just in case
+        $author = $_SESSION['userinfo_ID'] ?? 0;
+        $type = 'student';
     }
 
     if ($txt !== '' && $aid) {
-        $stmt = $connection->prepare("INSERT INTO comments (ass_id, recipient_id, userinfo_id, user_type, comment_text, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt = $connection->prepare("
+            INSERT INTO comments (ass_id, recipient_id, userinfo_id, user_type, comment_text, created_at)
+            VALUES (?, ?, ?, ?, ?, NOW())
+        ");
         $stmt->bind_param("iiiss", $aid, $rid, $author, $type, $txt);
         $stmt->execute();
         $stmt->close();
+
         header("Location: " . $_SERVER['PHP_SELF'] . "?ass_id=$aid&selected=$rid");
         exit();
     }
 }
 
-// Load students who were assigned this specific task
+// Load assigned students
 if ($ass_id) {
     $stmt = $connection->prepare("
         SELECT asg.userinfo_ID, u.FIRSTNAME, u.MIDDLENAME, u.LASTNAME,
@@ -54,12 +60,10 @@ if ($ass_id) {
         JOIN userinfo u ON asg.userinfo_ID = u.userinfo_ID
         WHERE asg.assigned_id = ?
     ");
-
     $stmt->bind_param("i", $ass_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
-        // Concatenate name parts carefully, avoiding extra spaces for missing middle name
         $fullName = trim($row['FIRSTNAME'] . ' ' . (empty($row['MIDDLENAME']) ? '' : $row['MIDDLENAME'] . ' ') . $row['LASTNAME']);
         $students[$row['userinfo_ID']] = [
             'fullname' => $fullName,
@@ -70,16 +74,19 @@ if ($ass_id) {
     }
     $stmt->close();
 
-    // Load submissions for ONLY the students who were assigned this task
-    // (This part of the code already works correctly with the `$students` array filtered above)
-    $stmt = $connection->prepare("SELECT userinfo_id, file_name, file_path, uploaded_at FROM student_submissions WHERE assigned_id=?");
+    // Load submissions
+    $stmt = $connection->prepare("
+        SELECT userinfo_id, file_name, file_path, uploaded_at
+        FROM student_submissions
+        WHERE assigned_id=?
+    ");
     $stmt->bind_param("i", $ass_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($file = $result->fetch_assoc()) {
         $uid = $file['userinfo_id'];
         $file['file_size'] = file_exists($file['file_path']) ? filesize($file['file_path']) : 0;
-        if (isset($students[$uid])) { // Ensure the submission is for an assigned student
+        if (isset($students[$uid])) {
             $students[$uid]['submissions'][] = $file;
         }
     }
@@ -97,18 +104,10 @@ if ($ass_id) {
     $stmt->close();
 }
 
-// Count total & completed
-// This count should now reflect only the *assigned* students for this specific assignment.
-$totalCount = count($students); // Total assigned students for this specific assignment
-$completedCount = 0;
-foreach ($students as $student) {
-    if (!empty($student['submissions'])) { // Assuming 'completed' means having at least one submission
-        $completedCount++;
-    }
-}
-
+// Counts
+$totalCount = count($students);
+$completedCount = count(array_filter($students, fn($s) => !empty($s['submissions'])));
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,6 +117,29 @@ foreach ($students as $student) {
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 <header>
     <div class="navbar">
@@ -127,71 +149,111 @@ foreach ($students as $student) {
 </header>
 <div class="container">
     <div class="sidebar">
-        <ul>
-            <li class="user"><a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>"><i class="fas fa-user"></i> Admin</a></li>
-            <li><a href="#"><i class='bx bxs-bell'></i> Notification</a></li>
-            <li><a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>"><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li><a href="Admin-project.php" class="<?= in_array($currentPage, $classesPages) ? 'active' : '' ?>"><i class="fas fa-folder-open"></i> Classes</a></li>
-            <li><a href="Admin-calendar.php" class="<?= ($currentPage == 'Admin-calendar.php') ? 'active' : '' ?>"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-            <li><a href="Admin-forms.php" class="<?= ($currentPage == 'Admin-forms.php') ? 'active' : '' ?>"><i class="fas fa-clipboard-list"></i> Forms</a></li>
-            <li><a href="Admin-about.php" class="<?= ($currentPage == 'Admin-about.php') ? 'active' : '' ?>"><i class="fas fa-users"></i> About Us</a></li>
-        </ul>
-        <a href="Admin-login.php" class="logout <?= ($currentPage == 'Admin-login.php') ? 'active' : '' ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
+  <ul>
+    <li class="user">
+      <a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>">
+        <i class="fas fa-user"></i> Admin
+      </a>
+    </li>
+    <li>
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
+        <i class='bx bxs-bell'></i> Notification
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
+    <li>
+      <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="Admin-project.php" class="<?= in_array($currentPage, $classesPages) ? 'active' : '' ?>">
+        <i class="fas fa-folder-open"></i> Classes
+      </a>
+    </li>
+    <li>
+      <a href="Admin-calendar.php" class="<?= ($currentPage == 'Admin-calendar.php') ? 'active' : '' ?>">
+        <i class="fas fa-calendar-alt"></i> Calendar
+      </a>
+    </li>
+    <li>
+      <a href="Admin-forms.php" class="<?= ($currentPage == 'Admin-forms.php') ? 'active' : '' ?>">
+        <i class="fas fa-clipboard-list"></i> Forms
+      </a>
+    </li>
+    <li>
+      <a href="Admin-about.php" class="<?= ($currentPage == 'Admin-about.php') ? 'active' : '' ?>">
+        <i class="fas fa-users"></i> About Us
+      </a>
+    </li>
+  </ul>
+  <a href="Admin-login.php" class="logout <?= ($currentPage == 'Admin-login.php') ? 'active' : '' ?>">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </a>
+</div>
 
     <div class="main-content">
         <div class="head">
             <h1><?= htmlspecialchars($project_name) ?></h1>
-            <span style="font-size: 30px; font-weight: normal; color: #666;"><?= $completedCount ?> | <?= $totalCount ?></span>
+            <span style="font-size: 30px; color: #666;"><?= $completedCount ?> | <?= $totalCount ?></span>
         </div>
 
         <div class="wrapper">
+            <!-- Student list -->
             <div class="container1">
                 <div class="assigned-header">
-                        <h1>ASSIGNED STUDENTS</h1>
-                        <a href="generate_assignment_pdf.php?ass_id=<?= $ass_id ?>" target="_blank">
-                                    <button class="print-btn">📄 Download PDF</button>
-                                </a>
-
-                    </div>
-                    <hr>
-
+                    <h1>ASSIGNED STUDENTS</h1>
+                    <a href="generate_assignment_pdf.php?ass_id=<?= $ass_id ?>" target="_blank">
+                        <button class="print-btn">📄 Download PDF</button>
+                    </a>
+                </div>
+                <hr>
                 <?php foreach ($students as $uid => $s): ?>
                     <?php $isSelected = ($selectedUID === $uid); ?>
                     <div class="content student-item <?= $isSelected ? 'active' : '' ?>" data-uid="<?= $uid ?>">
                         <p class="account"><?= htmlspecialchars($s['fullname']) ?></p>
                         <p class="status"><?= htmlspecialchars($s['status']) ?></p>
-                    </div><hr>
+                    </div>
+                    <hr>
                 <?php endforeach; ?>
             </div>
 
+            <!-- Conversation & Submissions -->
             <?php foreach ($students as $uid => $s): ?>
                 <?php
-                    // Comments should be specific to the recipient (selectedUID) or the author (uid)
-                    $stmt = $connection->prepare("
-                        SELECT c.comment_text, c.user_type, c.created_at, c.userinfo_id, 
-                            u.FIRSTNAME sf, u.MIDDLENAME sm, u.LASTNAME sl, 
-                            a.INSTRUCTOR an 
-                        FROM comments c 
-                        LEFT JOIN userinfo u ON c.user_type='student' AND c.userinfo_id=u.userinfo_ID 
-                        LEFT JOIN admininfo a ON c.user_type='admin' AND c.userinfo_id=a.admininfoID 
-                        WHERE c.ass_id=? AND (c.recipient_id=? OR (c.userinfo_id=? AND c.user_type='admin'))
-                        ORDER BY c.created_at ASC
-                    ");
-                    $stmt->bind_param("iii", $ass_id, $uid, $_SESSION['admininfoID']); // Pass current admin ID for comments made by this admin to this student
-                    $stmt->execute();
-                    $comments = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-                    $stmt->close();
+                $stmt = $connection->prepare("
+                    SELECT c.comment_text, c.user_type, c.created_at, c.userinfo_id,
+                           u.FIRSTNAME sf, u.MIDDLENAME sm, u.LASTNAME sl,
+                           a.INSTRUCTOR an
+                    FROM comments c
+                    LEFT JOIN userinfo u ON c.user_type='student' AND c.userinfo_id=u.userinfo_ID
+                    LEFT JOIN admininfo a ON c.user_type='admin' AND c.userinfo_id=a.admininfoID
+                    WHERE c.ass_id = ?
+                      AND (
+                        (c.userinfo_id = ? AND c.recipient_id = ?) -- student to admin
+                        OR
+                        (c.userinfo_id = ? AND c.recipient_id = ?) -- admin to student
+                      )
+                    ORDER BY c.created_at ASC
+                ");
+                $stmt->bind_param("iiiii", $ass_id, $uid, $_SESSION['admininfoID'], $_SESSION['admininfoID'], $uid);
+                $stmt->execute();
+                $comments = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
                 ?>
                 <div class="container3 student-panel <?= ($selectedUID === $uid) ? '' : 'hidden' ?>" id="student-<?= $uid ?>">
                     <div class="student-submissions">
                         <h3><?= htmlspecialchars($s['fullname']) ?></h3>
-                        <?php if ($s['submissions']): foreach ($s['submissions'] as $f): ?>
-                            <p style="margin-left:20px">
-                                📎 <a href="<?= htmlspecialchars($f['file_path']) ?>" target="_blank"> <?= htmlspecialchars($f['file_name']) ?></a><br>
-                                <small style="margin-left:25px">Size: <?= round($f['file_size']/1024, 2) ?> KB | Uploaded: <?= htmlspecialchars($f['uploaded_at']) ?></small>
-                            </p>
-                        <?php endforeach; else: ?>
+                        <?php if ($s['submissions']): ?>
+                            <?php foreach ($s['submissions'] as $f): ?>
+                                <p style="margin-left:20px">
+                                    📎 <a href="<?= htmlspecialchars($f['file_path']) ?>" target="_blank"><?= htmlspecialchars($f['file_name']) ?></a><br>
+                                    <small style="margin-left:25px">Size: <?= round($f['file_size']/1024, 2) ?> KB | Uploaded: <?= htmlspecialchars($f['uploaded_at']) ?></small>
+                                </p>
+                            <?php endforeach; ?>
+                        <?php else: ?>
                             <p style="margin-left:20px">No submissions</p>
                         <?php endif; ?>
 
@@ -206,17 +268,19 @@ foreach ($students as $student) {
 
                     <div class="comment-box">
                         <div class="comment-header"><i class="fas fa-comments"></i> Conversation</div>
-                        <?php if ($comments): foreach ($comments as $c): 
-                            $uname = ($c['user_type'] === 'student') 
-                                ? trim(($c['sf'] ?? '') . ' ' . ($c['sm'] ? $c['sm'] . ' ' : '') . ($c['sl'] ?? '')) ?: 'Student' 
-                                : (trim($c['an'] ?? '') ?: ($_SESSION['admin_name'] ?? 'Admin'));
-                        ?>
-                            <div class="comment-item <?= htmlspecialchars($c['user_type']) ?>">
-                                <div class="comment-username"><?= htmlspecialchars($uname) ?></div>
-                                <div class="comment-text"><?= nl2br(htmlspecialchars($c['comment_text'])) ?></div>
-                                <div class="comment-time"><?= date('M d, Y h:i A', strtotime($c['created_at'])) ?></div>
-                            </div>
-                        <?php endforeach; else: ?>
+                        <?php if ($comments): ?>
+                            <?php foreach ($comments as $c): 
+                                $uname = ($c['user_type'] === 'student') 
+                                    ? trim(($c['sf'] ?? '') . ' ' . ($c['sm'] ? $c['sm'] . ' ' : '') . ($c['sl'] ?? '')) ?: 'Student'
+                                    : (trim($c['an'] ?? '') ?: ($_SESSION['admin_name'] ?? 'Admin'));
+                            ?>
+                                <div class="comment-item <?= htmlspecialchars($c['user_type']) ?>">
+                                    <div class="comment-username"><?= htmlspecialchars($uname) ?></div>
+                                    <div class="comment-text"><?= nl2br(htmlspecialchars($c['comment_text'])) ?></div>
+                                    <div class="comment-time"><?= date('M d, Y h:i A', strtotime($c['created_at'])) ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
                             <p>No comments yet.</p>
                         <?php endif; ?>
 

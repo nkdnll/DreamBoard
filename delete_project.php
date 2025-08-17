@@ -2,6 +2,7 @@
 session_start();
 require 'db.php';
 include 'log1.php';
+include 'unread_count.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proj_id'])) {
     $proj_id = intval($_POST['proj_id']);

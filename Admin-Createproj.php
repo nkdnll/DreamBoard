@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'log1.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -191,7 +192,29 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
-
+ <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <header>
     <div class="navbar">
         <img src="logo.png" width="100px" height="50px" alt="Logo" />
@@ -201,7 +224,7 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
 
 <body>
   <div class="container">
-      <div class="sidebar">
+     <div class="sidebar">
   <ul>
     <li class="user">
       <a href="Admin.profile.php" class="<?= ($currentPage == 'Admin.profile.php') ? 'active' : '' ?>">
@@ -209,10 +232,13 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
       </a>
     </li>
     <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
@@ -243,8 +269,6 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
     <i class="fas fa-sign-out-alt"></i> Logout
   </a>
 </div>
-
-
 
       <div class="main-content">
         

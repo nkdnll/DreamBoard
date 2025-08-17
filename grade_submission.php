@@ -22,11 +22,10 @@ if ($stmt->execute()) {
         logTransaction('admin', $adminEmail, 'GRADE_ASSIGNMENT', $description);
     }
 
-    header("Location: Admin-teamproj.php?ass_id=$assigned_id");
+    // Redirect back to the same student panel
+    header("Location: Admin-teamproj.php?ass_id=$assigned_id&selected=$userinfo_id");
     exit();
-}
-
- else {
+} else {
     echo "Error saving grade: " . $conn->error;
 }
 ?>
