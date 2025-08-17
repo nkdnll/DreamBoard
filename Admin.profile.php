@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'log1.php';
+include 'admin_sidebar.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $classesPages = [
@@ -50,6 +51,29 @@ if (!$user) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="Admin.profile.css" />
       </head>
+       <style>
+        .notification-badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+        .mark-read-btn {
+            margin-left: 15px;
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mark-read-btn:disabled {
+            background: grey;
+            cursor: not-allowed;
+        }
+    </style>
 <body>
 <header>
     <div class="navbar">
@@ -67,10 +91,13 @@ if (!$user) {
       </a>
     </li>
     <li>
-      <a href="#" class="<?= ($currentPage == '#') ? 'active' : '' ?>">
+    <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
-      </a>
-    </li>
+        <?php if ($unreadCount > 0): ?>
+            <span class="notification-badge"><?= $unreadCount ?></span>
+        <?php endif; ?>
+    </a>
+    </li> 
     <li>
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
@@ -101,8 +128,6 @@ if (!$user) {
     <i class="fas fa-sign-out-alt"></i> Logout
   </a>
 </div>
-
-   
             
     <div class="main-content">
       <div class="profile-box">
@@ -118,6 +143,10 @@ if (!$user) {
                   <div class="profile-row"><span class="profile-label">CITIZENSHIP:</span> <?php echo htmlspecialchars($user['CITIZENSHIP']); ?></div>
                   <div class="profile-row"><span class="profile-label">EMAIL:</span> <?php echo htmlspecialchars($user['EMAIL']); ?></div>
                   <div class="profile-row"><span class="profile-label">UNIVERSITY:</span> <?php echo htmlspecialchars($user['UNIVERSITY']); ?></div>
+
+                  <div class="edit-profile-container">
+  <a href="Admin-edit_profile.php" class="edit-profile-button">✏️ Edit Profile</a>
+</div>
 
                 
                   </div>
