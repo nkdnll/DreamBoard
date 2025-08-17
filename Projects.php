@@ -21,12 +21,13 @@ SELECT
     a.project_name AS assigned_proj_name, 
     p.project_name AS proj_name, 
     ai.INSTRUCTOR,
-    COALESCE(s.status, 'Not Started') AS status
+    COALESCE(s.status, 'Pending') AS status
 FROM assigned a
 JOIN projects p ON a.proj_id = p.proj_id
 JOIN admininfo ai ON p.admininfoID = ai.admininfoID
-JOIN assignment_students s ON s.assigned_id = a.ass_id
-WHERE s.userinfo_ID = ?
+LEFT JOIN assignment_students s ON s.assigned_id = a.ass_id AND s.userinfo_ID = ?
+WHERE (s.status IS NULL OR s.status != 'Completed')
+
 ";
 
 $current_tab = $_GET['tab'] ?? 'assigned'; // This variable is used to determine the active tab, but status is from DB

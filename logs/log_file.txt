@@ -539,3 +539,10 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 =======
 >>>>>>> origin/main
 >>>>>>> fc9ac1edc0137f4b488bea930690f200fb2f6a78
+[2025-08-17 20:37:01] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'sdfgbh' for team 'dfgh'
+[2025-08-17 20:41:52] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'sdfrg' (Project ID: 29) to students: zyy cortez.
+[2025-08-17 20:42:22] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'fghj' (Project ID: 29) to students: zyy cortez.
+[2025-08-17 20:46:53] [student:zyy Danielle cortez] [Turned In Task] Marked assignment ID 55 as submitted
+[2025-08-17 20:50:09] [student:zyy Danielle cortez] [Turned In Task] Marked assignment ID 46 as submitted
+[2025-08-17 20:52:54] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'test 1' for team 'dfgbhnj'
+[2025-08-17 20:54:36] [admin:Anika@gmail.com] [ASSIGN_TASK] Assigned task 'werty' (Project ID: 30) to students: zyy cortez.

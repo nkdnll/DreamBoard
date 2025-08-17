@@ -38,9 +38,23 @@ if (isset($_GET['proj_id']) && !empty($_GET['proj_id'])) {
 
     if ($result && $result->num_rows > 0) {
         $projects = [];
-        while ($row = $result->fetch_assoc()) {
-            $projects[] = $row;
-        }
+$projectInfo = null;
+
+while ($row = $result->fetch_assoc()) {
+    // Always keep basic project info (first row is fine since project data repeats)
+    if ($projectInfo === null) {
+        $projectInfo = [
+            'team_name' => $row['team_name'],
+            'join_code' => $row['join_code'],
+        ];
+    }
+
+    // Only keep rows that actually have assignments
+    if (!empty($row['ass_id'])) {
+        $projects[] = $row;
+    }
+}
+
     } else {
         die("Project not found.");
     }
@@ -183,8 +197,9 @@ if (!empty($ass_ids)) {
 
     <div class="main-content">
         <div class="team_name">
-            <h1><?= htmlspecialchars($projects[0]['team_name']) ?></h1>
-            <p class="join-code">Join Code: <strong><?= htmlspecialchars($projects[0]['join_code']) ?></strong></p>
+            <h1><?= htmlspecialchars($projectInfo['team_name']) ?></h1>
+<p class="join-code">Join Code: <strong><?= htmlspecialchars($projectInfo['join_code']) ?></strong></p>
+
         </div>
 
         <div class="box">

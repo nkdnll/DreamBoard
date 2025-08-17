@@ -19,11 +19,13 @@ $conn = new mysqli("localhost", "root", "", "projectmanagement");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$assignedUsernames = [];
 
+// Fetch project members for dropdown
+$assignedUsernames = [];
+$projectMembers = [];
 if ($proj_id) {
     $memberStmt = $conn->prepare("
-        SELECT CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.LASTNAME)) AS full_name
+        SELECT u.userinfo_ID, CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.LASTNAME)) AS full_name
         FROM project_members pm
         JOIN userinfo u ON pm.userinfo_id = u.userinfo_ID
         WHERE pm.proj_id = ?
@@ -33,28 +35,13 @@ if ($proj_id) {
     $result = $memberStmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $assignedUsernames[] = $row['full_name'];
+        $projectMembers[$row['full_name']] = $row['userinfo_ID'];
     }
     $memberStmt->close();
 }
 
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $selectedStudentsFromInput = array_filter(array_map('trim', explode(',', $assigned_students_input)));
-
-$studentsToAssign = [];
-// Check if "ALL" was effectively selected (i.e., if all project members are in the input)
-if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) === count($projectMembers)) {
-    // If all available project members were selected, assign to all
-    foreach ($projectMembers as $name => $id) {
-        $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
-    }
-} else {
-    // Otherwise, assign only to the explicitly selected ones (that are also project members)
-    foreach ($selectedStudentsFromInput as $name) {
-        if (isset($projectMembers[$name])) {
-            $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
-        }
-    }
-}
     $project_name = $conn->real_escape_string(trim($_POST['project_name'] ?? ''));
     $instructions = $conn->real_escape_string(trim($_POST['instructions'] ?? ''));
     $assigned_students_input = trim($_POST['assigned_students'] ?? '');
@@ -62,8 +49,27 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
     $due_date = $_POST['due_date'] ?? null;
     $today = date('Y-m-d');
 
-    if ($due_date > $today) {
-    die("Due date cannot be in the future.");
+    // Validate due date (cannot be in the past)
+    if ($due_date && $due_date < $today) {
+        die("Due date cannot be in the past.");
+    }
+
+    // Parse selected students
+    $selectedStudentsFromInput = array_filter(array_map('trim', explode(',', $assigned_students_input)));
+    $studentsToAssign = [];
+
+    if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) === count($projectMembers)) {
+        // ALL selected
+        foreach ($projectMembers as $name => $id) {
+            $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
+        }
+    } else {
+        // Specific students
+        foreach ($selectedStudentsFromInput as $name) {
+            if (isset($projectMembers[$name])) {
+                $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
+            }
+        }
     }
 
     // Insert into assigned table
@@ -73,58 +79,24 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
     if ($stmt->execute()) {
         $assigned_id = $stmt->insert_id;
 
-        // Get project members
-        $projectMembers = [];
-        $memberStmt = $conn->prepare("
-            SELECT u.userinfo_ID, CONCAT(TRIM(u.FIRSTNAME), ' ', TRIM(u.LASTNAME)) AS full_name
-            FROM project_members pm
-            JOIN userinfo u ON pm.userinfo_id = u.userinfo_ID
-            WHERE pm.proj_id = ?
-        ");
-        $memberStmt->bind_param("i", $proj_id);
-        $memberStmt->execute();
-        $result = $memberStmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            $projectMembers[$row['full_name']] = $row['userinfo_ID'];
-        }
-        $memberStmt->close();
-
-        // Parse selected student names
-       // In PHP, after getting $assigned_students_input
-$selectedStudentsFromInput = array_filter(array_map('trim', explode(',', $assigned_students_input)));
-
-$studentsToAssign = [];
-// Check if "ALL" was effectively selected (i.e., if all project members are in the input)
-if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) === count($projectMembers)) {
-    // If all available project members were selected, assign to all
-    foreach ($projectMembers as $name => $id) {
-        $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $id];
-    }
-} else {
-    // Otherwise, assign only to the explicitly selected ones (that are also project members)
-    foreach ($selectedStudentsFromInput as $name) {
-        if (isset($projectMembers[$name])) {
-            $studentsToAssign[] = ['username' => $name, 'userinfo_ID' => $projectMembers[$name]];
-        }
-    }
-}
         // Insert into assignment_students
-        $insertStmt = $conn->prepare("
-            INSERT INTO assignment_students (assigned_id, username, userinfo_ID, status)
-            VALUES (?, ?, ?, 'Not Started')
-        ");
-        foreach ($studentsToAssign as $student) {
-            $insertStmt->bind_param("isi", $assigned_id, $student['username'], $student['userinfo_ID']);
-            $insertStmt->execute();
+        if (!empty($studentsToAssign)) {
+            $insertStmt = $conn->prepare("
+                INSERT INTO assignment_students (assigned_id, username, userinfo_ID, status)
+                VALUES (?, ?, ?, 'Not Started')
+            ");
+            foreach ($studentsToAssign as $student) {
+                $insertStmt->bind_param("isi", $assigned_id, $student['username'], $student['userinfo_ID']);
+                $insertStmt->execute();
+            }
+            $insertStmt->close();
         }
-        $insertStmt->close();
 
         // Handle file uploads
         if (!empty($_FILES['attachments']) && !empty($_FILES['attachments']['name'][0])) {
             $attachStmt = $conn->prepare("INSERT INTO attachments (assigned_id, file_name, file_path, file_type, is_url) VALUES (?, ?, ?, ?, 0)");
             $fileCount = count($_FILES['attachments']['name']);
             $uploadDir = "uploads/";
-
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
             for ($i = 0; $i < $fileCount; $i++) {
@@ -175,10 +147,7 @@ if (count($selectedStudentsFromInput) > 0 && count($selectedStudentsFromInput) =
 
     $stmt->close();
 }
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
