@@ -144,6 +144,10 @@ if (!$user) {
                   <div class="profile-row"><span class="profile-label">EMAIL:</span> <?php echo htmlspecialchars($user['EMAIL']); ?></div>
                   <div class="profile-row"><span class="profile-label">UNIVERSITY:</span> <?php echo htmlspecialchars($user['UNIVERSITY']); ?></div>
 
+                  <div class="edit-profile-container">
+  <a href="Admin-edit_profile.php" class="edit-profile-button">✏️ Edit Profile</a>
+</div>
+
                 
                   </div>
         <div class="profilepic">
