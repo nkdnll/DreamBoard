@@ -135,7 +135,7 @@ $result = $stmt->get_result();
         <?php
         switch ($_GET['joined']) {
             case '1':
-                echo "<p style='color:green;'>You’ve joined the Class successfully!</p>";
+                echo "<p style='color:green;'>You’ve joined the Class successfully! </p>";
                 break;
             case 'exists':
                 echo "<p style='color:orange;'>You already joined this Class.</p>";
