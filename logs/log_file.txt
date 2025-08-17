@@ -530,6 +530,7 @@ HEAD
 [2025-08-16 15:30:49] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-16 15:32:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-16 17:44:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+<<<<<<< HEAD
 origin/main
 [2025-08-17 17:48:19] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 19:53:21] [student:Kizzy dsadsa Cortez] [Turned In Task] Marked assignment ID 54 as submitted
@@ -540,3 +541,16 @@ origin/main
 [2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
 [2025-08-17 19:54:45] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
 [2025-08-17 20:13:54] [user:kizzycortez78@gmail.com] [LOGIN] User successfully logged in.
+=======
+<<<<<<< HEAD
+[2025-08-17 19:53:10] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:53:36] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-17 19:54:01] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:54:20] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'testing notification' for team 'test 2'
+=======
+>>>>>>> origin/main
+>>>>>>> fc9ac1edc0137f4b488bea930690f200fb2f6a78
+>>>>>>> ad38c69e033ec8ab88346667771ef8ce06e55d85
+[2025-08-17 20:29:14] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 20:31:04] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'HOI' for team 'sda'
+[2025-08-17 20:31:15] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'HOI' (ID: 29)
