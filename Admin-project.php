@@ -73,9 +73,6 @@ $result = $conn->query($query);
       </a>
     </li>
     <li>
-<<<<<<< HEAD
-    
-=======
     <a href="notification.php" class="<?= ($currentPage == 'notification.php') ? 'active' : '' ?>">
         <i class='bx bxs-bell'></i> Notification
         <?php if ($unreadCount > 0): ?>
@@ -84,7 +81,6 @@ $result = $conn->query($query);
     </a>
     </li> 
     <li>
->>>>>>> origin/main
       <a href="Admin-Dashboard.php" class="<?= ($currentPage == 'Admin-Dashboard.php') ? 'active' : '' ?>">
         <i class="fas fa-th-large"></i> Dashboard
       </a>
@@ -147,4 +143,3 @@ $result = $conn->query($query);
 </div>
 </body>
 </html>
-
