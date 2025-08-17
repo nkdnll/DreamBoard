@@ -482,7 +482,7 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT command failed
 [2025-08-10 06:23:05] [user:genesissunga399@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-10 06:42:21] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
-<<<<<<< HEAD
+HEAD
 [2025-08-15 18:00:20] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-15 18:02:20] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-15 18:07:27] [user:ryanjosephlerio9@gmail.com] [LOGIN] User successfully logged in.
@@ -496,7 +496,6 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-17 12:21:22] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 12:25:41] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-17 14:24:02] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
-=======
 [2025-08-13 06:48:42] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-13 07:37:19] [user:anikaxbenetua@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-13 07:37:41] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
@@ -531,4 +530,13 @@ error:0A000086:SSL routines::certificate verify failed SMTP server error: QUIT c
 [2025-08-16 15:30:49] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
 [2025-08-16 15:32:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
 [2025-08-16 17:44:04] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
->>>>>>> origin/main
+origin/main
+[2025-08-17 17:48:19] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-17 19:53:21] [student:Kizzy dsadsa Cortez] [Turned In Task] Marked assignment ID 54 as submitted
+[2025-08-17 19:54:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:43] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:44] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 19:54:45] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 54 for student ID 20 with score 90.
+[2025-08-17 20:13:54] [user:kizzycortez78@gmail.com] [LOGIN] User successfully logged in.

@@ -181,7 +181,7 @@ body {
     align-items: flex-start;
   }
 .profile-row-box{
-  margin-top: 15px;
+  margin-top: 20px;
 }
   .profile-label {
     font-weight: bold;
@@ -199,7 +199,24 @@ body {
     border: 3px solid #caa07e; /* Optional: adds a nice border */
     margin-bottom: 15px;
 }
+.edit-profile-button {
+    background-color: #F7F2F2;
+    color: #000000;
+    padding: 10px 40px;
+    font-size: 13px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    margin-top: -10px;
+    margin-right: 150px;
+}
 
+.edit-profile-container {
+  text-align: right;
+  margin-top: 15px;
+}
 
   .edit-icon {
     position: absolute;

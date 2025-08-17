@@ -177,6 +177,7 @@ body {
     width: 2px;
     background: #ddd;
     z-index: 1;
+    background: none;
 }
 
 /* Notification card styling */
