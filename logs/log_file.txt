@@ -564,3 +564,12 @@ origin/main
 [2025-08-17 20:31:04] [admin:Anika@gmail.com] [CREATE_PROJECT] Created project 'HOI' for team 'sda'
 [2025-08-17 20:31:15] [admin:Anika@gmail.com] [DELETE_PROJECT] Deleted project 'HOI' (ID: 29)
 >>>>>>> 965f3a5822cd4e0b42b818670855f1e91fc4e704
+[2025-08-18 19:42:07] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-18 19:42:16] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-18 19:42:35] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-18 19:52:07] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 57 for student ID 18 with score 95.
+[2025-08-18 20:00:40] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 57 for student ID 18 with score 55.
+[2025-08-18 20:00:51] [admin:Anika@gmail.com] [GRADE_ASSIGNMENT] Graded assignment ID 57 for student ID 18 with score 95.
+[2025-08-19 07:20:28] [user:nikkibatuti@gmail.com] [LOGIN] User successfully logged in.
+[2025-08-19 07:20:41] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.
+[2025-08-19 07:29:20] [admin:Anika@gmail.com] [LOGIN] Admin successfully logged in.

@@ -11,7 +11,12 @@ $assigned_id = $_POST['assigned_id'];
 $userinfo_id = $_POST['userinfo_id'];
 $grade = $_POST['grade'];
 
-$stmt = $conn->prepare("UPDATE assignment_students SET grade = ? WHERE assigned_id = ? AND userinfo_ID = ?");
+$stmt = $conn->prepare("
+    UPDATE assignment_students
+    SET grade = ?, graded_at = NOW()
+    WHERE assigned_id = ? AND userinfo_ID = ?
+");
+
 $stmt->bind_param("iii", $grade, $assigned_id, $userinfo_id);
 
 if ($stmt->execute()) {
